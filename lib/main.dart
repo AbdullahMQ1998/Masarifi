@@ -12,9 +12,13 @@ class FlashChat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String Username;
+    String userName;
     String age;
     String gender;
+    String matiralStats;
+    String occupation;
+    String  monthlyIncome;
+
     return MaterialApp(
       initialRoute: WelcomeScreen.id,
       routes: {
@@ -23,7 +27,7 @@ class FlashChat extends StatelessWidget {
         RegistrationScreen.id: (context) => RegistrationScreen(),
         ChatScreen.id: (context) => ChatScreen(),
         RegisterUserInfo.id: (context) => RegisterUserInfo(),
-        HomeScreen.id: (context) => HomeScreen(Username,age,gender),
+        HomeScreen.id: (context) => HomeScreen(userName,age,gender,matiralStats,occupation,monthlyIncome),
 
 
       },

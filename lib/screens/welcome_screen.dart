@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flash_chat/Components/Rounded_button.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'register_user_info.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = "welcome_screen";
@@ -77,6 +78,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
             paddingButton(Colors.blueAccent, 'Register', (){
               Navigator.pushNamed(context, RegistrationScreen.id);
             }),
+            paddingButton(Colors.blue, "Take me to inf page", (){
+              Navigator.pushNamed(context, RegisterUserInfo.id);
+            })
           ],
         ),
       ),

@@ -9,8 +9,11 @@ class HomeScreen extends StatelessWidget {
   final String userName;
   final String age;
   final String gender;
+  final String matiralStats;
+  final String occupation;
+  final String monthlyIncome;
 
-  HomeScreen(this.userName,this.age,this.gender);
+  HomeScreen(this.userName,this.age,this.gender,this.matiralStats,this.occupation,this.monthlyIncome);
 
 
   @override
@@ -32,6 +35,15 @@ class HomeScreen extends StatelessWidget {
             ),),
             Text(gender,style: TextStyle(
               fontSize: 30
+            ),),
+            Text(matiralStats,style: TextStyle(
+                fontSize: 30
+            ),),
+            Text(occupation,style: TextStyle(
+                fontSize: 30
+            ),),
+            Text(monthlyIncome,style: TextStyle(
+                fontSize: 30
             ),),
 
             FloatingActionButton(onPressed: () {Navigator.pop(context);}),
