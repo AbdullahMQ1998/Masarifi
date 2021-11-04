@@ -62,10 +62,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                     height: 60,
                   ),
                 ),
-                TypewriterAnimatedTextKit(text: [ 'Flash Chat'], textStyle: TextStyle(
+                TypewriterAnimatedTextKit(text: [ 'Masaryfy'], textStyle: TextStyle(
                   fontSize: 45.0,
                   fontWeight: FontWeight.w900,
-                ),),
+                ),
+                speed: Duration(milliseconds: 250),),
 
               ],
             ),
@@ -78,7 +79,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
             paddingButton(Colors.blueAccent, 'Register', (){
               Navigator.pushNamed(context, RegistrationScreen.id);
             }),
-            paddingButton(Colors.blue, "Take me to inf page", (){
+            paddingButton(Colors.blue, "Take me to info page", (){
               Navigator.pushNamed(context, RegisterUserInfo.id);
             })
           ],
