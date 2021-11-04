@@ -1,14 +1,20 @@
+import 'package:flash_chat/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
+import 'package:flash_chat/screens/register_user_info.dart';
 
 void main() => runApp(FlashChat());
 
 class FlashChat extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    String Username;
+    String age;
+    String gender;
     return MaterialApp(
       initialRoute: WelcomeScreen.id,
       routes: {
@@ -16,6 +22,9 @@ class FlashChat extends StatelessWidget {
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
         ChatScreen.id: (context) => ChatScreen(),
+        RegisterUserInfo.id: (context) => RegisterUserInfo(),
+        HomeScreen.id: (context) => HomeScreen(Username,age,gender),
+
 
       },
     );
