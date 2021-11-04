@@ -12,13 +12,16 @@ class HomeScreen extends StatelessWidget {
   final String matiralStats;
   final String occupation;
   final String monthlyIncome;
+  final String nmbOfChild;
 
-  HomeScreen(this.userName,this.age,this.gender,this.matiralStats,this.occupation,this.monthlyIncome);
+  HomeScreen(this.userName,this.age,this.gender,this.matiralStats,this.occupation,this.monthlyIncome,this.nmbOfChild);
+
 
 
   @override
   Widget build(BuildContext context) {
 
+  print(userName);
 
     return Scaffold(
       body: SafeArea(
@@ -43,6 +46,9 @@ class HomeScreen extends StatelessWidget {
                 fontSize: 30
             ),),
             Text(monthlyIncome,style: TextStyle(
+                fontSize: 30
+            ),),
+            Text(nmbOfChild,style: TextStyle(
                 fontSize: 30
             ),),
 

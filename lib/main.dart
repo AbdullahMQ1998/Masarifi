@@ -17,7 +17,8 @@ class FlashChat extends StatelessWidget {
     String gender;
     String matiralStats;
     String occupation;
-    String  monthlyIncome;
+    String monthlyIncome;
+    String nmbOfChild;
 
     return MaterialApp(
       initialRoute: WelcomeScreen.id,
@@ -27,7 +28,7 @@ class FlashChat extends StatelessWidget {
         RegistrationScreen.id: (context) => RegistrationScreen(),
         ChatScreen.id: (context) => ChatScreen(),
         RegisterUserInfo.id: (context) => RegisterUserInfo(),
-        HomeScreen.id: (context) => HomeScreen(userName,age,gender,matiralStats,occupation,monthlyIncome),
+        HomeScreen.id: (context) => HomeScreen(userName,age,gender,matiralStats,occupation,monthlyIncome,nmbOfChild),
 
 
       },
