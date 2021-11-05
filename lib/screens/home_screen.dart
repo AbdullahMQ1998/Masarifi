@@ -53,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             final usersInfo = snapshot.data.docs;
             List<String> UserInformation = [];
+            //getting the user information here by adding it to a list "its the only way i found to fetch data from firebase :("
             for(var userInfo in usersInfo){
               UserInformation.add(userInfo.get('userName')); // index = 0
               UserInformation.add(userInfo.get('age')); // index = 1

@@ -153,6 +153,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                       loggedUser
                   ))
               );
+              // add the user information to the database from here
               _fireStore.collection('User_Info').add({
                 'userName':userName,
                 'email': loggedUser.email,
