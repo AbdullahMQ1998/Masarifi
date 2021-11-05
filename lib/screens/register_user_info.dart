@@ -4,9 +4,17 @@ import 'package:flash_chat/constants.dart';
 import 'home_screen.dart';
 import 'package:flutter_dropdown/flutter_dropdown.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class RegisterUserInfo extends StatelessWidget {
+class RegisterUserInfo extends StatefulWidget {
   static const String id = 'register_user_info';
+
+  @override
+  _RegisterUserInfoState createState() => _RegisterUserInfoState();
+}
+
+class _RegisterUserInfoState extends State<RegisterUserInfo> {
   String userName;
   String age;
   String gender;
@@ -15,17 +23,34 @@ class RegisterUserInfo extends StatelessWidget {
   String monthlyIncome;
   String nmbOfChild;
 
+  final _fireStore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
 
+  User loggedUser;
 
   @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
 
+  void getCurrentUser() async {
+    final user = await _auth.currentUser;
+    try {
+      if (user != null) {
+        loggedUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
 
   @override
   Widget build(BuildContext context) {
 
-
     bool checkNullorSpace(){
-
       if(userName != null && userName != '' && age != null && age != '' && monthlyIncome != null && monthlyIncome != '' && nmbOfChild != null && nmbOfChild != ''){
               return true;
       }
@@ -34,7 +59,6 @@ class RegisterUserInfo extends StatelessWidget {
             }
 
     }
-
 
     return Scaffold(
 
@@ -122,19 +146,23 @@ class RegisterUserInfo extends StatelessWidget {
 
 
             paddingButton(Colors.blue, "Submit", (){
-
+            // we move the loggedUser to the homeScreen so we can retrieve data from it.
             if(checkNullorSpace()) {
               Navigator.push(context, MaterialPageRoute(builder: (context) =>
                   HomeScreen(
-                      userName,
-                      age,
-                      gender,
-                      matiralStats,
-                      occupation,
-                      monthlyIncome,
-                      nmbOfChild
+                      loggedUser
                   ))
               );
+              _fireStore.collection('User_Info').add({
+                'userName':userName,
+                'email': loggedUser.email,
+                'age':age,
+                'gender':gender,
+                'matiralStats':matiralStats,
+                'monthlyIncome':monthlyIncome,
+                'nmbOfChild':nmbOfChild,
+                'occupation':occupation,
+              });
             }
             else{
               Alert(context: context, title: "ERROR", desc: "Make sure you have filled the required information").show();

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'home_screen.dart';
 class LoginScreen extends StatefulWidget {
   static const String id = "login_screen";
   @override
@@ -18,9 +19,25 @@ class _LoginScreenState extends State<LoginScreen> {
   bool showSpinner = false;
 
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void getCurrentUser() async {
+    final user = await _auth.currentUser;
+    try {
+      if (user != null) {
+        loggedUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: ModalProgressHUD(
@@ -69,8 +86,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 });
                 final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
                 try{
-                if(user != null){
-                  Navigator.pushNamed(context, ChatScreen.id);
+                if(user != null) {
+                  getCurrentUser();
+                  Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                      HomeScreen(
+                          loggedUser
+                      ))
+                  );
 
                 }
                 setState(() {
