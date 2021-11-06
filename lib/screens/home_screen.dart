@@ -30,11 +30,14 @@ class _HomeScreenState extends State<HomeScreen> {
   final _fireStore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   User loggedUser;
-
+  bool isEnable = true;
 @override
 
   @override
   Widget build(BuildContext context){
+
+
+
 
     return Scaffold (
       body: SafeArea(
@@ -66,41 +69,85 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
-              return Column(
-            children: [
-              Text(UserInformation[0],
-                style: TextStyle(
-                  fontSize: 30,
-                ),),
-              Text(UserInformation[1], style: TextStyle(
-                  fontSize: 30
-              ),),
-              Text(UserInformation[2],style: TextStyle(
-                  fontSize: 30
-              ),),
-              Text(UserInformation[3],style: TextStyle(
-                  fontSize: 30
-              ),),
-              Text(UserInformation[4],style: TextStyle(
-                  fontSize: 30
-              ),),
-              Text(UserInformation[5],style: TextStyle(
-                  fontSize: 30
-              ),),
-              Text(UserInformation[6],style: TextStyle(
-                  fontSize: 30
-              ),),
+              return Center(
+                child: Column(
 
-              FloatingActionButton(
+            children: [
+                Text(UserInformation[0],
+                  style: TextStyle(
+                    fontSize: 30,
+                  ),),
+                Text(UserInformation[1], style: TextStyle(
+                    fontSize: 30
+                ),),
+                Text(UserInformation[2],style: TextStyle(
+                    fontSize: 30
+                ),),
+                Text(UserInformation[3],style: TextStyle(
+                    fontSize: 30
+                ),),
+                Text(UserInformation[4],style: TextStyle(
+                    fontSize: 30
+                ),),
+                Text(UserInformation[5],style: TextStyle(
+                    fontSize: 30
+                ),),
+
+                Container(
+            child: isEnable
+                  ? Text(UserInformation[6],
+            style: TextStyle(
+                fontSize: 30
+            ),)
+                  : Container(
+              width: 100,
+                    child: TextFormField(
+                    initialValue: UserInformation[6],
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (value) {
+                      setState(() {
+                        isEnable = true;
+                        for (var userInfo in usersInfo) {
+                          //Here we update the Number of Childs
+                          userInfo.reference.update({'nmbOfChild': value});
+                          print(UserInformation[6]);
+                        }
+                      }
+                        );
+                    }),
+                  )),
+                IconButton(
+                  icon: Icon(Icons.edit),
                   onPressed: () {
-                    _auth.signOut();
-                    Navigator.pop(context);
-                    },
-                  backgroundColor: Colors.red,
-                  child:Text('Sign Out'),
-                  ),
+                    setState(() {
+                      isEnable= false;
+                    }
+                    );
+                  },
+                ),
+
+                FloatingActionButton(onPressed: () {
+
+                 for(var userInfo in usersInfo){
+                   userInfo.reference.update({'age' : '80'});
+                   print(UserInformation[1]);
+
+                 }
+
+
+                }),
+
+                FloatingActionButton(
+                    onPressed: () {
+                      _auth.signOut();
+                      Navigator.pop(context);
+                      },
+                    backgroundColor: Colors.red,
+                    child:Text('Sign Out'),
+                    ),
             ],
-    );
+    ),
+              );
           }
       ),
 
