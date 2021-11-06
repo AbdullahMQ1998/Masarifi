@@ -46,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
 
         StreamBuilder<QuerySnapshot> (
+          // Here in the stream we get the user info from the database based on his email, we will get all of his information
         stream: FirebaseFirestore.instance.collection('User_Info').where('email',isEqualTo: widget.loggedUser.email).snapshots(),
           builder:(context,snapshot) {
             if (!snapshot.hasData) {
@@ -55,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
             }
 
             final usersInfo = snapshot.data.docs;
-            List<String> UserInformation = [];
+            List<String> UserInformation = []; // in this list we will add the user information.
             //getting the user information here by adding it to a list "its the only way i found to fetch data from firebase :("
             for(var userInfo in usersInfo){
               UserInformation.add(userInfo.get('userName')); // index = 0
