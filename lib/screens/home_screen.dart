@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             reverse: true,
                             scrollDirection: Axis.horizontal,
                             children: expensesList,
-                            
+
                           );
                         },
 
