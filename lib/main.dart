@@ -28,6 +28,7 @@ class FlashChat extends StatelessWidget {
         HomeScreen.id: (context) => HomeScreen(loggedUser),
 
 
+
       },
     );
   }

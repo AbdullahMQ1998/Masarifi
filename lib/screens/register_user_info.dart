@@ -164,6 +164,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                 'nmbOfChild':nmbOfChild,
                 'occupation':occupation,
                 'totalExpense':"0",
+                'expenseNumber': 0,
               });
             }
             else{

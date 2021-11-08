@@ -4,19 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-
-
-
+import 'home_screen.dart';
 
 class AddExpenseScreen extends StatefulWidget {
-
 
   final Function addExpense;
   final User loggedUser;
   final List<QueryDocumentSnapshot> userInfo;
 
-
-  AddExpenseScreen(this.addExpense,this.loggedUser,this.userInfo);
+  AddExpenseScreen(this.addExpense, this.loggedUser, this.userInfo);
 
   @override
   _AddExpenseScreenState createState() => _AddExpenseScreenState();
@@ -25,6 +21,7 @@ class AddExpenseScreen extends StatefulWidget {
 class _AddExpenseScreenState extends State<AddExpenseScreen> {
   String expenseName;
   String expenseCost;
+  int expenseID;
   DateTime selectedDate = DateTime.now();
   bool isEnabled = false;
   String formattedDate;
@@ -32,21 +29,26 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   double currentTotalExpense;
   double currentTotalIncome;
   final _fireStore = FirebaseFirestore.instance;
+  String dropdownValue = 'Food';
 
-
-  bool checkNullorSpace(){
-    if(expenseName != null && expenseName != '' && expenseCost != null && expenseCost != '' && formattedDate != null && formattedDate != '' && formattedTime != null && formattedTime != ''){
+  bool checkNullorSpace() {
+    if (expenseName != null &&
+        expenseName != '' &&
+        expenseCost != null &&
+        expenseCost != '' &&
+        formattedDate != null &&
+        formattedDate != '' &&
+        formattedTime != null &&
+        formattedTime != '') {
       return true;
-    }
-    else{
+    } else {
       return false;
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       color: Color(0xff757575),
       child: Container(
         padding: EdgeInsets.all(30),
@@ -57,7 +59,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               topLeft: Radius.circular(20),
             )),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+
           children: [
             Text(
               'Add Expense',
@@ -70,80 +72,115 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
             Padding(
               padding: const EdgeInsets.only(
                   left: 50, right: 50, top: 20, bottom: 20),
-              child: Column(
-                children:[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      autofocus: true,
-                      onChanged: (text) {
-                        setState(() {
-                          expenseName = text;
-                        });
-                      },
-                      decoration: kTextFieldDecoration.copyWith(hintText:'Expense name'),
+              child: Column(children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                    autofocus: true,
+                    onChanged: (text) {
+                      setState(() {
+                        expenseName = text;
+                      });
+                    },
+                    decoration:
+                        kTextFieldDecoration.copyWith(hintText: 'Expense name'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      setState(() {
+                        expenseCost = value;
+                      });
+                    },
+                    decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Enter Expense cost',
+                      suffixText: 'SAR',
+                      suffixStyle: TextStyle(color: Colors.black),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
+                ),
+          DropdownButton(
+            value: dropdownValue,
+            icon: const Icon(Icons.arrow_downward),
+            iconSize: 24,
+            elevation: 10,
+            style: const TextStyle(color: Colors.black),
+            underline: Container(
+              height: 1,
+              color: Color(0xff50c878),
+            ),
+            onChanged: (String newValue) {
+              setState(() {
+                dropdownValue = newValue;
+              });
+            },
+            items: <String>['Food', 'Shopping', 'Gas', 'Other']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
 
-                      onChanged: (value) {
-                        setState(() {
-                          expenseCost = value;
-                        });
-                      },
-                      decoration: kTextFieldDecoration.copyWith(
-                        hintText:'Enter your Expense cost',
-                        suffixText: 'SAR',
-                        suffixStyle: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  ),
-
-
-
-                ]
-              ),
+              ]),
             ),
             FlatButton(
               onPressed: () {
                 formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
                 formattedTime = DateFormat().add_jm().format(selectedDate);
-                  if(checkNullorSpace()){
-                    currentTotalIncome = double.parse(widget.userInfo[0].get('monthlyIncome'));
-                    currentTotalIncome-=double.parse(expenseCost);
-                    widget.userInfo[0].reference.update({'monthlyIncome': currentTotalIncome.toString()});
+                if (checkNullorSpace()) {
+                  currentTotalIncome =
+                      double.parse(widget.userInfo[0].get('monthlyIncome'));
+                  currentTotalIncome -= double.parse(expenseCost);
+                  widget.userInfo[0].reference
+                      .update({'monthlyIncome': currentTotalIncome.toString()});
 
-                    currentTotalExpense = double.parse(widget.userInfo[0].get('totalExpense'));
-                    currentTotalExpense += double.parse(expenseCost);
-                    widget.userInfo[0].reference.update({'totalExpense': currentTotalExpense.toString()});
+                  currentTotalExpense =
+                      double.parse(widget.userInfo[0].get('totalExpense'));
+                  currentTotalExpense += double.parse(expenseCost);
+                  widget.userInfo[0].reference
+                      .update({'totalExpense': currentTotalExpense.toString()});
 
+                  expenseID = widget.userInfo[0].get('expenseNumber');
+                  expenseID += 1;
+                  widget.userInfo[0].reference
+                      .update({'expenseNumber': expenseID});
 
-                _fireStore.collection('expense').add({
-                  'email': widget.loggedUser.email,
-                  'expenseCost':expenseCost,
-                  'expenseDate':formattedDate,
-                  'expenseName':expenseName,
-                  'expenseTime':formattedTime,
-                });
-                  Navigator.pop(context);
-                  }
-                  else{
-                    Alert(context: context, title: "ERROR", desc: "Make sure you have filled the required information").show();
-                  }
+                  _fireStore.collection('expense').add({
+                    'email': widget.loggedUser.email,
+                    'expenseCost': expenseCost,
+                    'expenseDate': formattedDate,
+                    'expenseName': expenseName,
+                    'expenseTime': formattedTime,
+                    'expenseID': expenseID,
+                    'expenseIcon': dropdownValue,
+                  });
+                  Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                      HomeScreen(
+                          widget.loggedUser)
 
-
+                      ));
+                } else {
+                  Alert(
+                          context: context,
+                          title: "ERROR",
+                          desc:
+                              "Make sure you have filled the required information")
+                      .show();
+                }
               },
               child: Text(
                 'Add',
-                style: TextStyle(color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold
-                ),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
               ),
               color: Color(0xff50c878),
             ),
