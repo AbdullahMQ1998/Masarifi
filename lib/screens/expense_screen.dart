@@ -38,6 +38,8 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
   String todayDate;
   String dropdownValue = 'All';
 
+  List<QueryDocumentSnapshot> userInfoList;
+
 
 
 
@@ -106,13 +108,24 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
         child: Column(
           children:[
 
-            
+
+        StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('User_Info').where('email', isEqualTo: widget.loggedUser.email)
+            .snapshots(),
+          builder: (context, snapshot){
+
+          var userInfo = snapshot.data.docs;
+          userInfoList = userInfo;
+          return SizedBox();
+
+          }
+        ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10)),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
 
                  child: Padding(
@@ -346,7 +359,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                     }
 
                     else
-                    return normalView(expenses);
+                    return normalView(expenses,userInfoList);
             }
 
 

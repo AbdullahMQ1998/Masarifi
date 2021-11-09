@@ -87,12 +87,12 @@ class MonthlyBillsSVerticalListView extends StatelessWidget {
 
 
 class ExpenseListView extends StatelessWidget {
-  const ExpenseListView({
-    Key key,
-    @required this.widget,
-  }) : super(key: key);
+
 
   final HomeScreen widget;
+  final List<QueryDocumentSnapshot> userInfoList;
+
+  ExpenseListView(this.widget, this.userInfoList);
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +115,7 @@ class ExpenseListView extends StatelessWidget {
 
 
           return ListView(
-            children: normalView(expenses),
+            children: normalView(expenses , userInfoList),
           );
         },
       ),

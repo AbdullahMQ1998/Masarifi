@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flash_chat/modalScreens/edit_expense_screen.dart';
+
 
 
 
@@ -182,12 +186,75 @@ class ExpensesBubble extends StatelessWidget {
   final String expenseDate;
   final String expenseTime;
   final bool isLast;
+  final QueryDocumentSnapshot userExpenseList;
+  final List<QueryDocumentSnapshot> userInfoList;
 
 
-  ExpensesBubble({this.expenseIcon,this.expenseName,this.expenseTotal,this.isLast,this.expenseTime,this.expenseDate});
+
+  ExpensesBubble({this.expenseIcon,this.expenseName,this.expenseTotal,this.isLast,this.expenseTime,this.expenseDate,this.userExpenseList, this.userInfoList});
 
   @override
   Widget build(BuildContext context) {
+
+    bool shouldDelete = false;
+    
+    _showAlertDialog(BuildContext context) {
+
+      // set up the buttons
+      Widget cancelButton = TextButton(
+        child: Text("Cancel",
+        style:TextStyle(
+          color: Colors.grey
+        )
+          ,),
+        onPressed:  () {
+          Navigator.pop(context);
+        },
+      );
+      Widget continueButton = TextButton(
+        child: Text("Yes",
+        style: TextStyle(
+          color: Colors.red
+        ),),
+        onPressed:  () {
+
+          //Here we Delete the current Expense
+
+          double currentExpenseCost = double.parse(userExpenseList.get('expenseCost'));
+          double currentMonthlyIncome = double.parse(userInfoList[0].get('monthlyIncome'));
+          double currentTotalExpense = double.parse(userInfoList[0].get('totalExpense'));
+          double updatedMonthlyIncome = currentMonthlyIncome + currentExpenseCost;
+          double updatedTotalExpense = currentTotalExpense - currentExpenseCost;
+
+          userInfoList[0].reference.update({'monthlyIncome': updatedMonthlyIncome.toString()});
+          userInfoList[0].reference.update({'totalExpense': updatedTotalExpense.toString()});
+
+          userExpenseList.reference.delete();
+          
+          Navigator.pop(context);
+        },
+      );
+
+      // set up the AlertDialog
+      AlertDialog alert = AlertDialog(
+        title: Text("Delete Expense"),
+        content: Text("Would you like to delete the current expense?"),
+        actions: [
+          cancelButton,
+          continueButton,
+        ],
+      );
+
+      // show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
+
+
     return Padding(
       padding: const EdgeInsets.only(left: 20,right: 20),
       child: Container(
@@ -218,22 +285,55 @@ class ExpensesBubble extends StatelessWidget {
                     color: Colors.purple,
                   ),
                 ),
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children:[
+                      Text(userExpenseList.get('expenseName'),
+                        style: TextStyle(
+                            fontSize: 25
+                        ),),
+                      Text('$expenseDate $expenseTime',
+                        style: TextStyle(
+                            fontSize: 12
+                        ),),
+
+                    ]
+                ),
+
                 Expanded(
                   child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children:[
-                        Text(expenseName,
-                          style: TextStyle(
-                              fontSize: 25
-                          ),),
-                        Text('$expenseDate $expenseTime',
-                          style: TextStyle(
-                              fontSize: 12
-                          ),),
 
-                      ]
+                    children: [
+
+                      IconButton(onPressed:
+                      () {
+
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                EditExpenseScreen((taskTitle) {
+                                  Navigator.pop(context);
+                                },
+                                  userExpenseList,
+                                  userInfoList
+                                ));
+
+                      },
+                        icon: Icon(Icons.edit),
+                        iconSize: 25,
+
+                      ),
+                      IconButton(onPressed: (){
+
+                        _showAlertDialog(context);
+
+                      }, icon: Icon(Icons.delete),
+                      iconSize: 25,),
+
+                    ],
                   ),
                 ),
+
                 Text(expenseTotal,
                   style: TextStyle(
                       fontSize: 20,

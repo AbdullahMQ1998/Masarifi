@@ -76,6 +76,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
+                    maxLength: 10,
                     textAlign: TextAlign.center,
                     autofocus: true,
                     onChanged: (text) {
@@ -90,6 +91,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
+                    maxLength: 6,
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
@@ -135,8 +137,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
                 formattedTime = DateFormat().add_jm().format(selectedDate);
                 if (checkNullorSpace()) {
-                  currentTotalIncome =
-                      double.parse(widget.userInfo[0].get('monthlyIncome'));
+                  currentTotalIncome = double.parse(widget.userInfo[0].get('monthlyIncome'));
                   currentTotalIncome -= double.parse(expenseCost);
                   widget.userInfo[0].reference
                       .update({'monthlyIncome': currentTotalIncome.toString()});

@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       //ExpenseListView list in Components > ListViewWidgets file
 
-                      ExpenseListView(widget: widget),
+                      ExpenseListView(widget , userInfoList),
                     ],
                   );
                 }),

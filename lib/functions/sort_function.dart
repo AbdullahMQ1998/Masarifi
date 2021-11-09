@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:flash_chat/Components/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,7 +8,8 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 
-List<ExpensesBubble> normalView(List<QueryDocumentSnapshot> list){
+
+List<ExpensesBubble> normalView(List<QueryDocumentSnapshot> list , List<QueryDocumentSnapshot> userInfoList ){
 
   QueryDocumentSnapshot currentExpen;
   List<ExpensesBubble> expensesList = [];
@@ -50,6 +53,8 @@ List<ExpensesBubble> normalView(List<QueryDocumentSnapshot> list){
     final expenseIcon = expense.get('expenseIcon');
     final formattedTime = DateFormat('yyyy-MM-dd').format(expenseDate);
     expensesList.add(ExpensesBubble(
+      userInfoList: userInfoList,
+      userExpenseList: expense,
       expenseTotal: expenseTotal,
       expenseName: expenseName,
       expenseDate: formattedTime,
