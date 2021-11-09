@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flash_chat/main.dart';
 import 'add_expense_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'add_monthly_bill_screen.dart';
+
 
 class ChooseExpenseOrMonthlyScreen extends StatelessWidget {
   final Function function;
@@ -48,9 +49,22 @@ class ChooseExpenseOrMonthlyScreen extends StatelessWidget {
         ),
         Expanded(
           child: FlatButton(
-            onPressed: () {},
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      AddMonthlyBillScreen((taskTitle) {
+                        Navigator.pop(context);
+                      }, loggedUser, userInfo));
+            },
             child: Container(
-              color: Colors.blue,
+              height: 200,
+              width: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+                color: Colors.red,
+              ),
+              child: Center(child: Text("Add Monthly Bill")),
             ),
           ),
         ),

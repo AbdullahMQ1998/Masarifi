@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'chat_screen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'register_user_info.dart';
+
 class RegistrationScreen extends StatefulWidget {
   static const String id = "registration_screen";
 
@@ -17,7 +18,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   bool showSpinner = false;
   String email;
   String password;
-
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 onChanged: (value) {
                   email = value;
                 },
-                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your Email'),
+                decoration:
+                    kTextFieldDecoration.copyWith(hintText: 'Enter your Email'),
               ),
               SizedBox(
                 height: 8.0,
@@ -58,29 +59,29 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 onChanged: (value) {
                   password = value;
                 },
-                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your Password'),
+                decoration: kTextFieldDecoration.copyWith(
+                    hintText: 'Enter your Password'),
               ),
               SizedBox(
                 height: 24.0,
               ),
-             paddingButton(Colors.blueAccent, 'Register', () async {
-               setState(() {
-                 showSpinner = true;
-               });
-             final newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-             try{
-             if(newUser != null){
-               Navigator.pushNamed(context, RegisterUserInfo.id);
-             }
-             setState(() {
-               showSpinner = false;
-             });}
-             catch(e){
-               print(e);
-             }
-             }
-
-             )
+              paddingButton(Colors.blueAccent, 'Register', () async {
+                setState(() {
+                  showSpinner = true;
+                });
+                final newUser = await _auth.createUserWithEmailAndPassword(
+                    email: email, password: password);
+                try {
+                  if (newUser != null) {
+                    Navigator.pushNamed(context, RegisterUserInfo.id);
+                  }
+                  setState(() {
+                    showSpinner = false;
+                  });
+                } catch (e) {
+                  print(e);
+                }
+              })
             ],
           ),
         ),

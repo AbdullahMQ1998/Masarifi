@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'home_screen.dart';
+import '../screens/home_screen.dart';
 
 class AddExpenseScreen extends StatefulWidget {
 
@@ -155,17 +155,20 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   _fireStore.collection('expense').add({
                     'email': widget.loggedUser.email,
                     'expenseCost': expenseCost,
-                    'expenseDate': formattedDate,
+                    'expenseDate': selectedDate,
                     'expenseName': expenseName,
                     'expenseTime': formattedTime,
                     'expenseID': expenseID,
                     'expenseIcon': dropdownValue,
                   });
-                  Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                      HomeScreen(
-                          widget.loggedUser)
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                  //     HomeScreen(
+                  //         widget.loggedUser)
+                  //
+                  //     ));
 
-                      ));
+                  Navigator.pop(context);
+                  Navigator.pop(context);
                 } else {
                   Alert(
                           context: context,

@@ -1,12 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 
 
 class RowTextWithTotal extends StatelessWidget {
   //this widget for the planning ahead and last Month Expense
   final String text;
   final String totalAmount;
+  final Function onPress;
 
-  RowTextWithTotal({this.text,this.totalAmount});
+  RowTextWithTotal({this.text,this.totalAmount,this.onPress});
 
 
   @override
@@ -14,13 +17,18 @@ class RowTextWithTotal extends StatelessWidget {
     return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          HomeScreenTextWidget(
-            text: text,
-            fontSize: 20,
-            color: Colors.black,
-            fontWeight: FontWeight.w500,
-            padding: 20,
+          FlatButton(
+            child: HomeScreenTextWidget(
+              text: "$text >",
+              fontSize: 20,
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+              padding: 20,
+            ),
+            onPressed: onPress,
           ),
+
+
           HomeScreenTextWidget(
             text: "$totalAmount SAR",
             fontWeight: FontWeight.bold,
@@ -59,20 +67,22 @@ class HomeScreenTextWidget extends StatelessWidget {
   }
 }
 
-class ExpenseBubble extends StatelessWidget {
+class monthlyBillBubble extends StatelessWidget {
   //this widget for the squares which contains monthly bills
-  ExpenseBubble(this.expenseName, this.expenseCost, this.expenseDate,this.expenseTime);
+  monthlyBillBubble(this.billName, this.billCost, this.billDate,this.billIcon);
 
-  final String expenseName;
-  final String expenseCost;
-  final String expenseDate;
-  final String expenseTime;
+  final String billName;
+  final String billCost;
+  final String billDate;
+  final IconData billIcon;
+
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(8.0),
       child: Column(
+
         children: [
           Material(
             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -81,31 +91,40 @@ class ExpenseBubble extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                 crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 10,bottom: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children:[
 
 
-                    ExpenseBubbleTextStyle(firstText: "", secondText: expenseName, padding: 20, fontSize: 25,),
-                    ExpenseBubbleTextStyle(
+                          monthlyBubbleTextStyle(
+                          firstText: "", secondText: "$billName ", padding: 0, fontSize: 25,
+                        ),
+
+                         Icon(billIcon,
+                         size: 25,
+                           color: Colors.lightBlueAccent,
+                         ),
+                        ]
+                      ),
+                    ),
+                    monthlyBubbleTextStyle(
                       firstText: "Cost: ",
-                      secondText: "$expenseCost SAR",
-                      padding: 15,
+                      secondText: "$billCost SAR",
+                      padding: 1,
                       fontSize: 18,
                       color: Colors.green,
                     ),
-                    ExpenseBubbleTextStyle(
+                    monthlyBubbleTextStyle(
                       firstText: "Date: ",
-                      secondText: expenseDate,
+                      secondText: billDate,
                       fontSize: 15,
                       padding: 1,
                     ),
 
-                    ExpenseBubbleTextStyle(
-                      firstText: "Time: ",
-                      secondText: expenseTime,
-                      fontSize: 15,
-                      padding: 10,
-                    ),
 
                   ]),
             ),
@@ -116,7 +135,7 @@ class ExpenseBubble extends StatelessWidget {
   }
 }
 
-class ExpenseBubbleTextStyle extends StatelessWidget {
+class monthlyBubbleTextStyle extends StatelessWidget {
 
   final String firstText;
   final String secondText;
@@ -126,7 +145,7 @@ class ExpenseBubbleTextStyle extends StatelessWidget {
 
 
 
-  ExpenseBubbleTextStyle({this.firstText,this.secondText,this.padding,this.fontSize,this.color});
+  monthlyBubbleTextStyle({this.firstText,this.secondText,this.padding,this.fontSize,this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -233,3 +252,6 @@ class ExpensesBubble extends StatelessWidget {
     );
   }
 }
+
+
+

@@ -1,12 +1,13 @@
-import 'dart:math';
+
 import 'package:flash_chat/Components/widgets.dart';
+import 'package:flash_chat/screens/expense_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'register_user_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'add_expense_screen.dart';
-import 'choose_expense_or_monthly_screen.dart';
+import '../modalScreens/choose_expense_or_monthly_screen.dart';
+import 'welcome_screen.dart';
+import 'package:flash_chat/Components/ListViewWidgets.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String id = 'home_screen';
@@ -23,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final _fireStore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   List<QueryDocumentSnapshot> userInfoList;
+  List<QueryDocumentSnapshot> expenseList;
 
   @override
   @override
@@ -93,14 +95,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       RowTextWithTotal(
                         text: "Monthly Bills",
-                        totalAmount: usersInfo[0].get('totalExpense'),
+                        totalAmount: usersInfo[0].get('totalMonthlyBillCost'),
                       ),
 
 
-                      // Container(
-                      //     child: ExpenseBubble("hhhhhh", "yhyhyhy", "jajaja", "mehmeh"),
-                      // height: 100,
-                      // width: 100,),
+                      //MonthlyBill list in Components > ListviewWidgets file
+                      MonthlyBillsSVerticalListView(widget: widget),
+
+
 
                       Divider(
                         height: 10,
@@ -108,82 +110,28 @@ class _HomeScreenState extends State<HomeScreen> {
                         indent: 0,
                         endIndent: 0,
                       ),
+
+
                       RowTextWithTotal(
-                        text: "Expenses",
-                        totalAmount: "1800",
-                      ),
+                      text: "Expenses",
+                      totalAmount: usersInfo[0].get('totalExpense'),
+                        onPress: (){
+                          DateTime currentDate = DateTime.now();
+                          DateTime beforeOneMonthDate = DateTime(currentDate.year,currentDate.month-1,currentDate.day);
 
-                      Container(
-                        height: 200,
-                        child: StreamBuilder<QuerySnapshot>(
-                          stream: FirebaseFirestore.instance
-                              .collection('expense')
-                              .where('email',
-                                  isEqualTo: widget.loggedUser.email)
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
-                              return Text(
-                                'No Expense',
-                              );
-                            }
-                            var expenses = snapshot.data.docs;
-                            QueryDocumentSnapshot currentExpen;
-                            List<ExpensesBubble> expensesList = [];
-                            bool isLast = false;
-                            //We add expense from here
-                            int i = 0;
-                            int j = 0;
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                              ExpenseScreen(
+                                  widget.loggedUser,
+                                  beforeOneMonthDate
 
-
-                            for (i = 0; i < expenses.length; i++) {
-                              for (j = i; j < expenses.length; j++) {
-                                if (expenses[i].get('expenseID') <
-                                    expenses[j].get('expenseID')) {
-                                  currentExpen = expenses[i];
-                                  expenses[i] = expenses[j];
-                                  expenses[j] = currentExpen;
-                                }
-                              }
-                            }
-                            i = 0;
-                            j=0;
-                            //All the information above we add it into a list of bubbles which can be found below.
-                            isLast = true;
-
-                            Map<String, IconData> iconsMap = {
-                              'Food': Icons.restaurant_menu_outlined,
-                              'Shopping': Icons.shopping_cart,
-                              'Gas': Icons.local_gas_station_rounded,
-                              'Other': Icons.other_houses,
-                            };
-
-                            for (var expense in expenses) {
-
-                              final expenseName = expense.get('expenseName');
-                              final expenseTotal = expense.get('expenseCost');
-                              final expenseDate = expense.get('expenseDate');
-                              final expenseTime = expense.get('expenseTime');
-                              final expenseIcon = expense.get('expenseIcon');
-
-                              expensesList.add(ExpensesBubble(
-                                expenseTotal: expenseTotal,
-                                expenseName: expenseName,
-                                expenseDate:expenseDate ,
-                                expenseTime: expenseTime ,
-                                expenseIcon: iconsMap[expenseIcon],
-                                isLast: isLast,
-                              ));
-                              isLast= false;
-                            }
-
-
-                            return ListView(
-                              children: expensesList,
-                            );
-                          },
+                              ))
+                          );
+                        },
                         ),
-                      ),
+
+                      //ExpenseListView list in Components > ListViewWidgets file
+
+                      ExpenseListView(widget: widget),
                     ],
                   );
                 }),
@@ -208,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icon(Icons.settings),
                   onPressed: () {
                     _auth.signOut();
-                    Navigator.pop(context);
+                    Navigator.pushNamed(context,WelcomeScreen.id);
                   },
                 ),
               ),
@@ -232,5 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Icon(Icons.add)));
   }
 }
+
+
 
 
