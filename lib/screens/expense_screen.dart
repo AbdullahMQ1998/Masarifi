@@ -13,8 +13,9 @@ class ExpenseScreen extends StatefulWidget {
 
   final User loggedUser;
   final DateTime date;
-  final List<QueryDocumentSnapshot> userInfoList;
-  ExpenseScreen(this.loggedUser,this.date,this.userInfoList);
+  final QueryDocumentSnapshot userInfo;
+
+  ExpenseScreen(this.loggedUser,this.date,this.userInfo);
 
   @override
   _ExpenseScreenState createState() => _ExpenseScreenState();
@@ -24,7 +25,9 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
 
   int differenceBetweenDates;
   int picker = 0;
-  
+  int counter = 0;
+
+
   DateTime selectedDate = DateTime.now();
   DateTime selectedDate2 = DateTime.now();
   DateTime currentDay = DateTime.now();
@@ -39,12 +42,6 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
   String todayDate;
   String dropdownValue = 'All';
 
-  List<QueryDocumentSnapshot> userInfoList;
-
-
-
-
-
 
   _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -55,11 +52,11 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
     );
     if (picked != null && picked != selectedDate)
       setState(() {
+        counter++;
         picker = 4;
         selectedDate = picked;
         differenceBetweenDates = currentDay.difference(selectedDate).inDays;
         isEnabled = true;
-
       });
   }
 
@@ -77,7 +74,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
       initialDate: pastDate,
       firstDate: DateTime(2021),
       lastDate: DateTime(2030),
-        selectableDayPredicate: _decideWhichDayToEnable,
+      selectableDayPredicate: _decideWhichDayToEnable,
     );
     if (picked != null && picked != selectedDate2)
       setState(() {
@@ -94,6 +91,9 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+
+
 
     beforeOneMonthDate = DateFormat('yyyy-MM-dd').format(widget.date);
     todayDate = DateFormat('yyyy-MM-dd').format(pastDate);
@@ -264,6 +264,10 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                          padding: const EdgeInsets.all(15.0),
                          child: TextButton(onPressed: (){
                            setState(() {
+                             if(counter < 1){
+                               counter++;
+                             selectedDate = widget.date;
+                             }
                              picker = 1;
                              if(dropdownValue != 'All'){
                                picker = 2;
@@ -343,15 +347,15 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
 
 
             List<ExpensesBubble> sortPicker(int pick){
+              print(pick);
                     if(pick == 1){
-                     return sortByDate(expenses,selectedDate,selectedDate2,userInfoList);
+                     return sortByDate(expenses,selectedDate,selectedDate2,widget.userInfo);
                     }
                     if(pick == 2){
-                      return sortByDateAndType(expenses, selectedDate, selectedDate2, dropdownValue,userInfoList);
+                      return sortByDateAndType(expenses, selectedDate, selectedDate2, dropdownValue,widget.userInfo);
                     }
-
                     else
-                    return normalView(expenses,userInfoList);
+                    return normalView(expenses,widget.userInfo);
             }
 
 

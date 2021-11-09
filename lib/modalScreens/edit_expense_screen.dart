@@ -10,9 +10,9 @@ class EditExpenseScreen extends StatefulWidget {
 
   final Function addExpense;
   final QueryDocumentSnapshot userExpenseList;
-  final List<QueryDocumentSnapshot> userInfoList;
+  final QueryDocumentSnapshot userInfo;
 
-  EditExpenseScreen(this.addExpense,this.userExpenseList,this.userInfoList);
+  EditExpenseScreen(this.addExpense,this.userExpenseList,this.userInfo);
 
   @override
   _EditExpenseScreenState createState() => _EditExpenseScreenState();
@@ -130,13 +130,13 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                         double updatedCost = double.parse(expenseCost);
                         double differenceBetweenCosts = updatedCost - oldCost;
 
-                        double currentMonthlyIncome = double.parse(widget.userInfoList[0].get('monthlyIncome'));
+                        double currentMonthlyIncome = double.parse(widget.userInfo.get('monthlyIncome'));
                         double updatedMonthlyIncome = currentMonthlyIncome - differenceBetweenCosts;
-                        widget.userInfoList[0].reference.update({'monthlyIncome' : updatedMonthlyIncome.toString()});
+                        widget.userInfo.reference.update({'monthlyIncome' : updatedMonthlyIncome.toString()});
 
-                        double currentTotalExpense = double.parse(widget.userInfoList[0].get('totalExpense'));
+                        double currentTotalExpense = double.parse(widget.userInfo.get('totalExpense'));
                         double updatedTotalExpense = currentTotalExpense + differenceBetweenCosts;
-                        widget.userInfoList[0].reference.update({'totalExpense' : updatedTotalExpense.toString()});
+                        widget.userInfo.reference.update({'totalExpense' : updatedTotalExpense.toString()});
 
 
                         widget.userExpenseList.reference.update({'expenseCost': expenseCost});

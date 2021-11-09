@@ -90,7 +90,7 @@ class ExpenseListView extends StatelessWidget {
 
 
   final HomeScreen widget;
-  final List<QueryDocumentSnapshot> userInfoList;
+  final QueryDocumentSnapshot userInfoList;
 
   ExpenseListView(this.widget, this.userInfoList);
 

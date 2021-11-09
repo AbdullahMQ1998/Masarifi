@@ -187,7 +187,7 @@ class ExpensesBubble extends StatelessWidget {
   final String expenseTime;
   final bool isLast;
   final QueryDocumentSnapshot userExpenseList;
-  final List<QueryDocumentSnapshot> userInfoList;
+  final QueryDocumentSnapshot userInfoList;
 
 
 
@@ -197,15 +197,15 @@ class ExpensesBubble extends StatelessWidget {
   Widget build(BuildContext context) {
 
     bool shouldDelete = false;
-    
+
     _showAlertDialog(BuildContext context) {
 
       // set up the buttons
       Widget cancelButton = TextButton(
         child: Text("Cancel",
-        style:TextStyle(
-          color: Colors.grey
-        )
+          style:TextStyle(
+              color: Colors.grey
+          )
           ,),
         onPressed:  () {
           Navigator.pop(context);
@@ -213,24 +213,24 @@ class ExpensesBubble extends StatelessWidget {
       );
       Widget continueButton = TextButton(
         child: Text("Yes",
-        style: TextStyle(
-          color: Colors.red
-        ),),
+          style: TextStyle(
+              color: Colors.red
+          ),),
         onPressed:  () {
 
           //Here we Delete the current Expense
 
           double currentExpenseCost = double.parse(userExpenseList.get('expenseCost'));
-          double currentMonthlyIncome = double.parse(userInfoList[0].get('monthlyIncome'));
-          double currentTotalExpense = double.parse(userInfoList[0].get('totalExpense'));
+          double currentMonthlyIncome = double.parse(userInfoList.get('monthlyIncome'));
+          double currentTotalExpense = double.parse(userInfoList.get('totalExpense'));
           double updatedMonthlyIncome = currentMonthlyIncome + currentExpenseCost;
           double updatedTotalExpense = currentTotalExpense - currentExpenseCost;
 
-          userInfoList[0].reference.update({'monthlyIncome': updatedMonthlyIncome.toString()});
-          userInfoList[0].reference.update({'totalExpense': updatedTotalExpense.toString()});
+          userInfoList.reference.update({'monthlyIncome': updatedMonthlyIncome.toString()});
+          userInfoList.reference.update({'totalExpense': updatedTotalExpense.toString()});
 
           userExpenseList.reference.delete();
-          
+
           Navigator.pop(context);
         },
       );
@@ -281,7 +281,7 @@ class ExpensesBubble extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: Icon(expenseIcon,
-                  size: 30,
+                    size: 30,
                     color: Colors.purple,
                   ),
                 ),
@@ -306,7 +306,7 @@ class ExpensesBubble extends StatelessWidget {
                     children: [
 
                       IconButton(onPressed:
-                      () {
+                          () {
 
                         showModalBottomSheet(
                             context: context,
@@ -314,8 +314,8 @@ class ExpensesBubble extends StatelessWidget {
                                 EditExpenseScreen((taskTitle) {
                                   Navigator.pop(context);
                                 },
-                                  userExpenseList,
-                                  userInfoList
+                                    userExpenseList,
+                                    userInfoList
                                 ));
 
                       },
@@ -328,7 +328,7 @@ class ExpensesBubble extends StatelessWidget {
                         _showAlertDialog(context);
 
                       }, icon: Icon(Icons.delete),
-                      iconSize: 25,),
+                        iconSize: 25,),
 
                     ],
                   ),
@@ -337,8 +337,8 @@ class ExpensesBubble extends StatelessWidget {
                 Text(expenseTotal,
                   style: TextStyle(
                       fontSize: 20,
-                    color: Colors.green,
-                    fontWeight: FontWeight.bold
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold
                   ),
                   textAlign: TextAlign.right,
                 ),

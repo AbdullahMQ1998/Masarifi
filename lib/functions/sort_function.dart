@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 
 
 
-List<ExpensesBubble> normalView(List<QueryDocumentSnapshot> list , List<QueryDocumentSnapshot> userInfoList ){
+List<ExpensesBubble> normalView(List<QueryDocumentSnapshot> list , QueryDocumentSnapshot userInfo ){
 
   QueryDocumentSnapshot currentExpen;
   List<ExpensesBubble> expensesList = [];
@@ -53,7 +53,7 @@ List<ExpensesBubble> normalView(List<QueryDocumentSnapshot> list , List<QueryDoc
     final expenseIcon = expense.get('expenseIcon');
     final formattedTime = DateFormat('yyyy-MM-dd').format(expenseDate);
     expensesList.add(ExpensesBubble(
-      userInfoList: userInfoList,
+      userInfoList: userInfo,
       userExpenseList: expense,
       expenseTotal: expenseTotal,
       expenseName: expenseName,
@@ -68,7 +68,7 @@ List<ExpensesBubble> normalView(List<QueryDocumentSnapshot> list , List<QueryDoc
 }
 
 
-List<ExpensesBubble> sortByDate(List<QueryDocumentSnapshot> list , DateTime date1 , DateTime date2 , List<QueryDocumentSnapshot> userInfoList  ){
+List<ExpensesBubble> sortByDate(List<QueryDocumentSnapshot> list , DateTime date1 , DateTime date2 , QueryDocumentSnapshot userInfoList  ){
 
   QueryDocumentSnapshot currentExpen;
   List<ExpensesBubble> expensesList = [];
@@ -102,6 +102,10 @@ List<ExpensesBubble> sortByDate(List<QueryDocumentSnapshot> list , DateTime date
     'Other': Icons.other_houses,
   };
   Timestamp timestamp;
+
+
+
+
   expensesList.clear();
 
   for (var expense in list) {
@@ -135,7 +139,7 @@ List<ExpensesBubble> sortByDate(List<QueryDocumentSnapshot> list , DateTime date
 
 
 
-List<ExpensesBubble> sortByDateAndType(List<QueryDocumentSnapshot> list , DateTime date1 , DateTime date2, String type , List<QueryDocumentSnapshot> userInfoList ){
+List<ExpensesBubble> sortByDateAndType(List<QueryDocumentSnapshot> list , DateTime date1 , DateTime date2, String type , QueryDocumentSnapshot userInfoList ){
 
   QueryDocumentSnapshot currentExpen;
   List<ExpensesBubble> expensesList = [];
@@ -173,6 +177,8 @@ List<ExpensesBubble> sortByDateAndType(List<QueryDocumentSnapshot> list , DateTi
   };
   Timestamp timestamp;
 
+
+  expensesList.clear();
 
 
   for (var expense in list) {

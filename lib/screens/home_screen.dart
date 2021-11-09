@@ -51,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   final usersInfo = snapshot.data.docs;
                   userInfoList = usersInfo;
 
+
                   return Column(
                     children: [
                       Container(
@@ -123,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ExpenseScreen(
                                   widget.loggedUser,
                                   beforeOneMonthDate,
-                                  userInfoList,
+                                  userInfoList[0],
                               ))
                           );
                         },
@@ -131,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       //ExpenseListView list in Components > ListViewWidgets file
 
-                      ExpenseListView(widget , userInfoList),
+                      ExpenseListView(widget , userInfoList[0]),
                     ],
                   );
                 }),
