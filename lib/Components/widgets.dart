@@ -288,7 +288,7 @@ class ExpensesBubble extends StatelessWidget {
                 Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children:[
-                      Text(userExpenseList.get('expenseName'),
+                      Text(userExpenseList.get('expenseName') == null ? expenseName :userExpenseList.get('expenseName'),
                         style: TextStyle(
                             fontSize: 25
                         ),),

@@ -68,7 +68,7 @@ List<ExpensesBubble> normalView(List<QueryDocumentSnapshot> list , List<QueryDoc
 }
 
 
-List<ExpensesBubble> sortByDate(List<QueryDocumentSnapshot> list , DateTime date1 , DateTime date2){
+List<ExpensesBubble> sortByDate(List<QueryDocumentSnapshot> list , DateTime date1 , DateTime date2 , List<QueryDocumentSnapshot> userInfoList  ){
 
   QueryDocumentSnapshot currentExpen;
   List<ExpensesBubble> expensesList = [];
@@ -116,6 +116,8 @@ List<ExpensesBubble> sortByDate(List<QueryDocumentSnapshot> list , DateTime date
       final expenseIcon = expense.get('expenseIcon');
 
       expensesList.add(ExpensesBubble(
+        userInfoList: userInfoList,
+        userExpenseList: expense,
         expenseTotal: expenseTotal,
         expenseName: expenseName,
         expenseDate: formattedTime,
@@ -133,7 +135,7 @@ List<ExpensesBubble> sortByDate(List<QueryDocumentSnapshot> list , DateTime date
 
 
 
-List<ExpensesBubble> sortByDateAndType(List<QueryDocumentSnapshot> list , DateTime date1 , DateTime date2, String type){
+List<ExpensesBubble> sortByDateAndType(List<QueryDocumentSnapshot> list , DateTime date1 , DateTime date2, String type , List<QueryDocumentSnapshot> userInfoList ){
 
   QueryDocumentSnapshot currentExpen;
   List<ExpensesBubble> expensesList = [];
@@ -185,6 +187,8 @@ List<ExpensesBubble> sortByDateAndType(List<QueryDocumentSnapshot> list , DateTi
         final expenseIcon = expense.get('expenseIcon');
 
         expensesList.add(ExpensesBubble(
+          userInfoList: userInfoList,
+          userExpenseList: expense,
           expenseTotal: expenseTotal,
           expenseName: expenseName,
           expenseDate: formattedTime,

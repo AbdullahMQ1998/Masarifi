@@ -13,7 +13,8 @@ class ExpenseScreen extends StatefulWidget {
 
   final User loggedUser;
   final DateTime date;
-  ExpenseScreen(this.loggedUser,this.date);
+  final List<QueryDocumentSnapshot> userInfoList;
+  ExpenseScreen(this.loggedUser,this.date,this.userInfoList);
 
   @override
   _ExpenseScreenState createState() => _ExpenseScreenState();
@@ -109,17 +110,6 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           children:[
 
 
-        StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('User_Info').where('email', isEqualTo: widget.loggedUser.email)
-            .snapshots(),
-          builder: (context, snapshot){
-
-          var userInfo = snapshot.data.docs;
-          userInfoList = userInfo;
-          return SizedBox();
-
-          }
-        ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
@@ -255,6 +245,8 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                  ),
 
 
+
+
                                ]
                            ),
                            style: ButtonStyle(
@@ -352,10 +344,10 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
 
             List<ExpensesBubble> sortPicker(int pick){
                     if(pick == 1){
-                     return sortByDate(expenses,selectedDate,selectedDate2);
+                     return sortByDate(expenses,selectedDate,selectedDate2,userInfoList);
                     }
                     if(pick == 2){
-                      return sortByDateAndType(expenses, selectedDate, selectedDate2, dropdownValue);
+                      return sortByDateAndType(expenses, selectedDate, selectedDate2, dropdownValue,userInfoList);
                     }
 
                     else
