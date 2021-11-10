@@ -159,7 +159,6 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                 'email': loggedUser.email,
                 'age':age,
                 'gender':gender,
-                'matiralStats':matiralStats,
                 'monthlyIncome':monthlyIncome,
                 'nmbOfChild':nmbOfChild,
                 'occupation':occupation,

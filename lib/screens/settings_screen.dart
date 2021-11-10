@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_chat/screens/edit_profile_screen.dart';
 import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +77,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         width: 150,
                       child: TextButton(
                         onPressed: () {
-
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfileScreen(widget.userInfo)));
                         },
                         child: Text('Edit Profile',
                           style: TextStyle(
@@ -181,7 +182,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
                           CustomSwitch(
                             activeColor: Colors.green,
-                            value: widget.userInfo.get('darkMode'),
+                            value:false,
                             onChanged: (value) {
                               setState(() {
                                 status = value;
