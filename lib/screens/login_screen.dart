@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash_chat/Components/Rounded_button.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,6 +16,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
   User loggedUser;
+  QueryDocumentSnapshot userInfo;
   String email;
   String password;
   bool showSpinner = false;
@@ -33,6 +36,29 @@ class _LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       print(e);
     }
+  }
+
+  void getData() async {
+    StreamBuilder<QuerySnapshot>(
+      // Here in the stream we get the user info from the database based on his email, we will get all of his information
+        stream: FirebaseFirestore.instance
+            .collection('User_Info')
+            .where('email', isEqualTo: loggedUser.email)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return CircularProgressIndicator(
+              backgroundColor: Colors.blueAccent,
+            );
+          }
+
+          final user = snapshot.data.docs;
+          userInfo = user[0];
+          print(userInfo.get('darkMode'));
+
+
+          return Text('');
+        });
   }
 
   @override
@@ -80,17 +106,24 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 24.0,
               ),
+
+
+
+
+
               paddingButton(Colors.lightBlueAccent, 'Log in', () async{
                 setState(() {
                   showSpinner = true;
                 });
                 final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+
                 try{
                 if(user != null) {
                   getCurrentUser();
+                  getData();
                   Navigator.push(context, MaterialPageRoute(builder: (context) =>
                       HomeScreen(
-                          loggedUser
+                          loggedUser,
                       ))
                   );
 

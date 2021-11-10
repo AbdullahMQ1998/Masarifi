@@ -150,7 +150,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
             if(checkNullorSpace()) {
               Navigator.push(context, MaterialPageRoute(builder: (context) =>
                   HomeScreen(
-                      loggedUser
+                      loggedUser,
                   ))
               );
               // add the user information to the database from here

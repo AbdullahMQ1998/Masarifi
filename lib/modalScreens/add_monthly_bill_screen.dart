@@ -59,7 +59,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
         selectedDate = picked;
         formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
         isEnabled = true;
-        print(selectedDate);
+
       });
   }
 
@@ -100,13 +100,15 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                         monthlyBillName = text;
                       });
                     },
+                    maxLength: 10,
                     decoration:
-                        kTextFieldDecoration.copyWith(hintText: 'Bill name'),
+                        kTextFieldDecoration.copyWith(hintText: 'Bill name' , counter: Offstage()),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextField(
+                    maxLength: 4,
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.number,
                     onChanged: (value) {
@@ -117,7 +119,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                     decoration: kTextFieldDecoration.copyWith(
                       hintText: 'Enter Bill cost',
                       suffixText: 'SAR',
-                      suffixStyle: TextStyle(color: Colors.black),
+                      suffixStyle: TextStyle(color: Colors.black), counter: Offstage()
                     ),
                   ),
                 ),
@@ -154,14 +156,32 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
               ]),
             ),
 
-            RaisedButton(
-              onPressed: () => _selectDate(context),
-              child: Text(isEnabled? formattedDate : 'Select Bill Date',
-                style:
-                TextStyle(color: Colors.white
-                    , fontWeight: FontWeight.bold),
+            Container(
+              width: 150,
+              child: TextButton(
+                onPressed: () => _selectDate(context),
+                child: Row(
+                    children:[
+                      Icon(Icons.calendar_today_rounded,
+                        color: Colors.blueAccent,
+                      ),
+                      Text(formattedDate == null? " Select Bill Date" : ' $formattedDate',
+                        style:
+                        TextStyle(color: Colors.black
+                            , fontWeight: FontWeight.bold,
+                        fontSize: 15),
+                      ),
+                    ]
+                ),
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Colors.grey)
+                        )
+                    )
+                ),
               ),
-              color: Color(0xff50c878),
             ),
 
             FlatButton(
@@ -191,7 +211,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                   _fireStore.collection('monthly_bills').add({
                     'email': widget.loggedUser.email,
                     'billCost': monthlyBillCost,
-                    'billDate': formattedDate,
+                    'billDate': selectedDate,
                     'billName': monthlyBillName,
                     'bill_ID': monthlyBill_Id,
                     'billIcon': dropdownValue,

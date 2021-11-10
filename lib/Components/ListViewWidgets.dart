@@ -7,12 +7,10 @@ import 'widgets.dart';
 
 
 class MonthlyBillsSVerticalListView extends StatelessWidget {
-  const MonthlyBillsSVerticalListView({
-    Key key,
-    @required this.widget,
-  }) : super(key: key);
 
+  final QueryDocumentSnapshot userInfo;
   final HomeScreen widget;
+  MonthlyBillsSVerticalListView(this.widget,this.userInfo);
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +36,17 @@ class MonthlyBillsSVerticalListView extends StatelessWidget {
           //We add expense from here
           int i = 0;
           int j = 0;
+          DateTime firstDate = DateTime.now();
+          DateTime secondDate = DateTime.now();
 
-              //Sort the bills by ID
+              //Sort the bills by Daysleft
           for (i = 0; i < bills.length; i++) {
+            Timestamp FirstTime = bills[i].get('billDate');
+            firstDate = DateTime.parse(FirstTime.toDate().toString());
             for (j = i; j < bills.length; j++) {
-              if (bills[i].get('bill_ID') <
-                  bills[j].get('bill_ID')) {
+             Timestamp SecondTime = bills[j].get('billDate');
+             secondDate = DateTime.parse(SecondTime.toDate().toString());
+              if (secondDate.difference(firstDate).isNegative) {
                 currentExpen = bills[i];
                 bills[i] = bills[j];
                 bills[j] = currentExpen;
@@ -70,7 +73,7 @@ class MonthlyBillsSVerticalListView extends StatelessWidget {
             final billDate = bill.get('billDate');
             final billIcon = bill.get('billIcon');
 
-            monthlyBillList.add(monthlyBillBubble(billName, billCost, billDate,iconsMap2[billIcon]));
+            monthlyBillList.add(monthlyBillBubble(billName, billCost, billDate,iconsMap2[billIcon], bill, userInfo));
           }
 
 
@@ -96,29 +99,29 @@ class ExpenseListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 200,
-      child: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('expense').where('email', isEqualTo: widget.loggedUser.email)
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Text(
-              'No Expense',
-            );
-          }
-          var expenses = snapshot.data.docs;
-          
-
-
-
-
-
-          return ListView(
-            children: normalView(expenses , userInfoList),
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('expense').where('email', isEqualTo: widget.loggedUser.email)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Text(
+            'No Expense',
           );
-        },
-      ),
+        }
+        var expenses = snapshot.data.docs;
+
+
+
+        return Padding(
+          padding: const EdgeInsets.only(top: 3),
+          child: Container(
+            height: 242,
+            child: ListView(
+              children: normalView(expenses , userInfoList),
+            ),
+          ),
+        );
+      },
     );
   }
 }

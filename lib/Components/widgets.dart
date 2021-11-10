@@ -1,9 +1,10 @@
+import 'package:flash_chat/modalScreens/edit_monthlyBill_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash_chat/modalScreens/edit_expense_screen.dart';
-
+import 'package:flash_chat/functions/AlertButtonFunction.dart';
 
 
 
@@ -12,8 +13,9 @@ class RowTextWithTotal extends StatelessWidget {
   final String text;
   final String totalAmount;
   final Function onPress;
+  final QueryDocumentSnapshot userInfo;
 
-  RowTextWithTotal({this.text,this.totalAmount,this.onPress});
+  RowTextWithTotal({this.text,this.totalAmount,this.onPress,this.userInfo});
 
 
   @override
@@ -23,11 +25,11 @@ class RowTextWithTotal extends StatelessWidget {
         children: [
           FlatButton(
             child: HomeScreenTextWidget(
-              text: "$text >",
+              text: "$text",
               fontSize: 20,
               color: Colors.black,
               fontWeight: FontWeight.w500,
-              padding: 20,
+              padding: 10,
             ),
             onPressed: onPress,
           ),
@@ -58,7 +60,7 @@ class HomeScreenTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(padding),
+      padding: EdgeInsets.only(top: padding,right: padding,left: padding),
       child: Text(
         text,
         style: TextStyle(
@@ -73,16 +75,39 @@ class HomeScreenTextWidget extends StatelessWidget {
 
 class monthlyBillBubble extends StatelessWidget {
   //this widget for the squares which contains monthly bills
-  monthlyBillBubble(this.billName, this.billCost, this.billDate,this.billIcon);
+  monthlyBillBubble(this.billName, this.billCost, this.billDate,this.billIcon, this.userMonthlyBillList,this.userInfo);
 
   final String billName;
   final String billCost;
-  final String billDate;
+  final Timestamp billDate;
   final IconData billIcon;
+  final QueryDocumentSnapshot userMonthlyBillList;
+  final QueryDocumentSnapshot userInfo;
 
 
   @override
   Widget build(BuildContext context) {
+    DateTime todayDate = DateTime.now();
+    int daysLeft = billDate.toDate().difference(todayDate).inDays;
+
+    //if the date is tomorrow the function count it as 0 days so i added 1 day manually
+    if(!billDate.toDate().difference(todayDate).isNegative && daysLeft == 0){
+      daysLeft = 1;
+    }
+
+      // if the date is today
+    if(billDate.toDate().day == DateTime.now().day && billDate.toDate().month == DateTime.now().month){
+      daysLeft = 0;
+    }
+
+    // if the date is yesterday or more the function will make the bill to the next month
+    if(billDate.toDate().difference(todayDate).isNegative && daysLeft != 0){
+      DateTime newDate = DateTime(todayDate.year,todayDate.month+1,todayDate.day);
+      daysLeft = newDate.difference(billDate.toDate()).inDays;
+      userMonthlyBillList.reference.update({'billDate': newDate});
+    }
+    bool shouldDelete = false;
+
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: Column(
@@ -94,43 +119,66 @@ class monthlyBillBubble extends StatelessWidget {
             color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                 crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(right: 10,bottom: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children:[
+              child: FlatButton(
+                onPressed: (){
+
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          EditMonthlyBillScreen((taskTitle) {
+                            Navigator.pop(context);
+                          },
+                              userMonthlyBillList,
+                              userInfo
+                          ));
 
 
-                          monthlyBubbleTextStyle(
-                          firstText: "", secondText: "$billName ", padding: 0, fontSize: 25,
+                },
+                child: Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: 5,bottom: 10),
+                        child: Row(
+
+                          children:[
+
+                            monthlyBubbleTextStyle(
+                            firstText: "", secondText: "$billName ", padding: 0, fontSize: 25, color: Colors.black,
+                          ),
+
+                           Icon(billIcon,
+                           size: 25,
+                             color: Colors.grey,
+                           ),
+
+
+                            
+
+                          ]
                         ),
-
-                         Icon(billIcon,
-                         size: 25,
-                           color: Colors.lightBlueAccent,
-                         ),
-                        ]
                       ),
-                    ),
-                    monthlyBubbleTextStyle(
-                      firstText: "Cost: ",
-                      secondText: "$billCost SAR",
-                      padding: 1,
-                      fontSize: 18,
-                      color: Colors.green,
-                    ),
-                    monthlyBubbleTextStyle(
-                      firstText: "Date: ",
-                      secondText: billDate,
-                      fontSize: 15,
-                      padding: 1,
-                    ),
+                      
+
+                      
+                      monthlyBubbleTextStyle(
+                        firstText: "Cost: ",
+                        secondText: "$billCost SAR",
+                        padding: 1,
+                        fontSize: 18,
+                        color: Colors.green,
+                      ),
+                      monthlyBubbleTextStyle(
+                        firstText: "$daysLeft Days left",
+                        secondText: '',
+                        fontSize: 15,
+                        padding: 1,
+                        color: Colors.black,
+                      ),
 
 
-                  ]),
+                    ]),
+              ),
             ),
           ),
         ],
@@ -197,63 +245,6 @@ class ExpensesBubble extends StatelessWidget {
   Widget build(BuildContext context) {
 
     bool shouldDelete = false;
-
-    _showAlertDialog(BuildContext context) {
-
-      // set up the buttons
-      Widget cancelButton = TextButton(
-        child: Text("Cancel",
-          style:TextStyle(
-              color: Colors.grey
-          )
-          ,),
-        onPressed:  () {
-          Navigator.pop(context);
-        },
-      );
-      Widget continueButton = TextButton(
-        child: Text("Yes",
-          style: TextStyle(
-              color: Colors.red
-          ),),
-        onPressed:  () {
-
-          //Here we Delete the current Expense
-
-          double currentExpenseCost = double.parse(userExpenseList.get('expenseCost'));
-          double currentMonthlyIncome = double.parse(userInfoList.get('monthlyIncome'));
-          double currentTotalExpense = double.parse(userInfoList.get('totalExpense'));
-          double updatedMonthlyIncome = currentMonthlyIncome + currentExpenseCost;
-          double updatedTotalExpense = currentTotalExpense - currentExpenseCost;
-
-          userInfoList.reference.update({'monthlyIncome': updatedMonthlyIncome.toString()});
-          userInfoList.reference.update({'totalExpense': updatedTotalExpense.toString()});
-
-          userExpenseList.reference.delete();
-
-          Navigator.pop(context);
-        },
-      );
-
-      // set up the AlertDialog
-      AlertDialog alert = AlertDialog(
-        title: Text("Delete Expense"),
-        content: Text("Would you like to delete the current expense?"),
-        actions: [
-          cancelButton,
-          continueButton,
-        ],
-      );
-
-      // show the dialog
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
-    }
-
 
     return Padding(
       padding: const EdgeInsets.only(left: 20,right: 20),
@@ -325,7 +316,7 @@ class ExpensesBubble extends StatelessWidget {
                       ),
                       IconButton(onPressed: (){
 
-                        _showAlertDialog(context);
+                       showAlertDialogForExpense(context, shouldDelete, userInfoList, userExpenseList);
 
                       }, icon: Icon(Icons.delete),
                         iconSize: 25,),

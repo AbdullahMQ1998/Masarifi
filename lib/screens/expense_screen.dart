@@ -94,13 +94,11 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
 
 
 
-
     beforeOneMonthDate = DateFormat('yyyy-MM-dd').format(widget.date);
     todayDate = DateFormat('yyyy-MM-dd').format(pastDate);
 
     currentDate = DateFormat('yyyy-MM-dd').format(selectedDate);
     currentDate2 = DateFormat('yyyy-MM-dd').format(selectedDate2);
-
 
 
     return Scaffold(
@@ -347,7 +345,6 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
 
 
             List<ExpensesBubble> sortPicker(int pick){
-              print(pick);
                     if(pick == 1){
                      return sortByDate(expenses,selectedDate,selectedDate2,widget.userInfo);
                     }
