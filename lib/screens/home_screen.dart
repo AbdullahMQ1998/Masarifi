@@ -47,6 +47,46 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
+    Color _topContainerColor(String userBudget , String monthlyIncome){
+
+      double userBdget = double.parse(userBudget);
+      double monthlyIncm = double.parse(monthlyIncome);
+      
+      
+      double halfOfTheBudgetTracker = monthlyIncm * 0.5;
+      double quarterOfTheBudgetTracker = monthlyIncm * 0.25;
+
+      
+
+      //50% left from the budget => color change to orange;
+      if(userBdget <= halfOfTheBudgetTracker && userBdget >= quarterOfTheBudgetTracker){
+        return Color(0xffFF7600);
+      }
+
+      if(userBdget < halfOfTheBudgetTracker && userBdget <= quarterOfTheBudgetTracker){
+        return Color(0xffCD113B);
+      }
+      
+      else
+        return Color(0xff01937C);
+      
+    }
+
+
+
+    int _getDaysLeftForSalary(Timestamp salaryDate){
+      DateTime formattedSalaryDate = DateTime.parse(salaryDate.toDate().toString());
+      DateTime currentDate = DateTime.now();
+      int daysLeftForSalary = formattedSalaryDate.difference(currentDate).inDays;
+
+      return daysLeftForSalary;
+
+    }
+
+
+
+
+
 
     return Scaffold(
 
@@ -76,12 +116,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Column(
                   children: [
                     Container(
-                      color: Color(0xff50c878),
+                      color: _topContainerColor(userInfoList[0].get('userBudget'),userInfoList[0].get('monthlyIncome')),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(bottom: 30, top: 30),
+                            padding: EdgeInsets.only(bottom: 20, top: 30),
                             child: HomeScreenTextWidget(
                               text: 'Welcome ${usersInfo[0].get('userName')} !',
                               fontSize: 25,
@@ -101,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(left: 15, bottom: 30),
+                            padding: EdgeInsets.only(left: 15, bottom:0),
                             child: HomeScreenTextWidget(
                               text: "${usersInfo[0].get('userBudget')} SAR",
                               color: Colors.white,
@@ -109,7 +149,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontSize: 30,
                               padding: 5,
                             ),
+                          ),
+
+                          Padding(
+                            padding: EdgeInsets.only(left: 15,bottom: 10),
+                            child: HomeScreenTextWidget(
+                              text: "${_getDaysLeftForSalary(userInfoList[0].get('salaryDate'))} Days left",
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              padding: 10,
+                            ),
                           )
+
                         ],
                       ),
                     ),
