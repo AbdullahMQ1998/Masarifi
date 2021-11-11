@@ -20,6 +20,8 @@ dependencies:
   rflutter_alert: ^2.0.4
   intl: ^0.17.0
   custom_switch: ^0.0.1
+  syncfusion_flutter_charts: ^19.3.48
+  finance: ^0.1.0
 
 
 dev_dependencies:

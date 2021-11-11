@@ -1,5 +1,6 @@
 import 'package:flash_chat/Components/widgets.dart';
 import 'package:flash_chat/screens/expense_screen.dart';
+import 'package:flash_chat/screens/saving_plan_screen.dart';
 import 'package:flash_chat/screens/settings_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -102,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Padding(
                             padding: EdgeInsets.only(left: 15, bottom: 30),
                             child: HomeScreenTextWidget(
-                              text: "${usersInfo[0].get('monthlyIncome')} SAR",
+                              text: "${usersInfo[0].get('userBudget')} SAR",
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 30,
@@ -169,9 +170,26 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             IconButton(
                 icon: Icon(Icons.show_chart),
+              onPressed: (){
+
+
+
+              },
 
             ),
-            IconButton(icon: Icon(Icons.tab)),
+            IconButton(icon: Icon(Icons.tab),
+
+              onPressed: (){
+              double monthlyIncome = double.parse(userInfoList[0].get('monthlyIncome'));
+              double needs = monthlyIncome * 0.50;
+              double wants = monthlyIncome * 0.30;
+              double saving = monthlyIncome * 0.20;
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> SavingPlanScreen(widget.loggedUser,userInfoList[0],needs,wants,saving)
+
+              ));
+              },
+
+            ),
             IconButton(
               icon: Icon(Icons.settings),
               onPressed: () {

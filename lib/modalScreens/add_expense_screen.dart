@@ -27,7 +27,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   String formattedDate;
   String formattedTime;
   double currentTotalExpense;
-  double currentTotalIncome;
+  double currentTotalBudget;
   final _fireStore = FirebaseFirestore.instance;
   String dropdownValue = 'Food';
 
@@ -137,10 +137,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
                 formattedTime = DateFormat().add_jm().format(selectedDate);
                 if (checkNullorSpace()) {
-                  currentTotalIncome = double.parse(widget.userInfo[0].get('monthlyIncome'));
-                  currentTotalIncome -= double.parse(expenseCost);
+                  currentTotalBudget = double.parse(widget.userInfo[0].get('userBudget'));
+                  currentTotalBudget -= double.parse(expenseCost);
                   widget.userInfo[0].reference
-                      .update({'monthlyIncome': currentTotalIncome.toString()});
+                      .update({'userBudget': currentTotalBudget.toString()});
 
                   currentTotalExpense =
                       double.parse(widget.userInfo[0].get('totalExpense'));

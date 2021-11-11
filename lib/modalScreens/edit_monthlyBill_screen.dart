@@ -180,9 +180,9 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                         double updatedCost = double.parse(billCost);
                         double differenceBetweenCosts = updatedCost - oldCost;
 
-                        double currentMonthlyIncome = double.parse(widget.userInfo.get('monthlyIncome'));
-                        double updatedMonthlyIncome = currentMonthlyIncome - differenceBetweenCosts;
-                        updateMonthlyIncome = updatedMonthlyIncome.toString();
+                        double currentTotalBudget = double.parse(widget.userInfo.get('userBudget'));
+                        double updatedTotalBudget = currentTotalBudget - differenceBetweenCosts;
+                        updateMonthlyIncome = updatedTotalBudget.toString();
 
 
 
@@ -342,7 +342,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                     billCost = widget.userMonthlyBillList.get('billCost');
                     }
                     if(updateMonthlyIncome == null){
-                    updateMonthlyIncome = widget.userInfo.get('monthlyIncome');
+                    updateMonthlyIncome = widget.userInfo.get('userBudget');
                     }
                     if(updatedTotalMonthlyBillCost == null){
                     updatedTotalMonthlyBillCost = widget.userInfo.get('totalMonthlyBillCost');
@@ -358,7 +358,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
 
                     widget.userMonthlyBillList.reference.update({'billName': billName});
                     widget.userMonthlyBillList.reference.update({'billCost': billCost});
-                    widget.userInfo.reference.update({'monthlyIncome' : updateMonthlyIncome});
+                    widget.userInfo.reference.update({'userBudget' : updateMonthlyIncome});
                     widget.userInfo.reference.update({'totalMonthlyBillCost' : updatedTotalMonthlyBillCost});
 
                     widget.userMonthlyBillList.reference.update({'billIcon': dropdownValue});

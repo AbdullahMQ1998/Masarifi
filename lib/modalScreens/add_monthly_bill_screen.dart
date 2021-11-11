@@ -27,7 +27,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
   String formattedDate;
   String formattedTime;
   double currentTotalMonthlyBill;
-  double currentTotalIncome;
+  double currentTotalBudget;
   final _fireStore = FirebaseFirestore.instance;
   String dropdownValue = 'Phone';
 
@@ -192,9 +192,9 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
 
                 if (checkNullorSpace()) {
                   //Update MonthlyIncome.
-                  currentTotalIncome = double.parse(widget.userInfo[0].get('monthlyIncome'));
-                  currentTotalIncome -= double.parse(monthlyBillCost);
-                  widget.userInfo[0].reference.update({'monthlyIncome': currentTotalIncome.toString()});
+                  currentTotalBudget = double.parse(widget.userInfo[0].get('userBudget'));
+                  currentTotalBudget -= double.parse(monthlyBillCost);
+                  widget.userInfo[0].reference.update({'userBudget': currentTotalBudget.toString()});
 
 
                   //Update The total for monthly bills

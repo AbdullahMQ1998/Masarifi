@@ -1,10 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:flash_chat/constants.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
-import '../screens/home_screen.dart';
+
 
 class EditExpenseScreen extends StatefulWidget {
 
@@ -21,12 +19,15 @@ class EditExpenseScreen extends StatefulWidget {
 class _EditExpenseScreenState extends State<EditExpenseScreen> {
   String expenseName;
   String expenseCost;
-  int expenseID;
   String newExpenseName;
-  double currentTotalExpense;
-  double currentTotalIncome;
-  final _fireStore = FirebaseFirestore.instance;
-  String dropdownValue = 'Food';
+
+  double updatedTotalBudget;
+  double updatedExpenseTotal;
+
+
+  String dropdownValue;
+  bool editDropDownMenu = false;
+  int counter = 0;
 
   bool expenseNameEnabled = false;
   bool expenseNameEnabled2 = true;
@@ -48,7 +49,10 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    newExpenseName = widget.userExpenseList.get('expenseName');
+
+    if(editDropDownMenu == false && counter == 0)
+    dropdownValue = widget.userExpenseList.get('expenseIcon');
+
     return Container(
       color: Color(0xff757575),
       child: Container(
@@ -79,7 +83,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                   child: expenseNameEnabled? TextField(
                     onSubmitted: (value){
                       setState(() {
-                        widget.userExpenseList.reference.update({'expenseName': expenseName});
+
                         expenseNameEnabled = false;
                         expenseNameEnabled2 = false;
                         if(expenseName == null){
@@ -130,16 +134,18 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                         double updatedCost = double.parse(expenseCost);
                         double differenceBetweenCosts = updatedCost - oldCost;
 
-                        double currentMonthlyIncome = double.parse(widget.userInfo.get('monthlyIncome'));
-                        double updatedMonthlyIncome = currentMonthlyIncome - differenceBetweenCosts;
-                        widget.userInfo.reference.update({'monthlyIncome' : updatedMonthlyIncome.toString()});
+                        double currentUserBudget = double.parse(widget.userInfo.get('userBudget'));
+                        double updatedMonthlyIncome = currentUserBudget - differenceBetweenCosts;
+                        updatedTotalBudget = updatedMonthlyIncome;
+
 
                         double currentTotalExpense = double.parse(widget.userInfo.get('totalExpense'));
                         double updatedTotalExpense = currentTotalExpense + differenceBetweenCosts;
-                        widget.userInfo.reference.update({'totalExpense' : updatedTotalExpense.toString()});
+                        updatedExpenseTotal = updatedTotalExpense;
 
 
-                        widget.userExpenseList.reference.update({'expenseCost': expenseCost});
+
+
                         expenseCostEnabled = false;
                         expenseCostEnabled2 = false;
                         if(expenseCost == null){
@@ -195,7 +201,8 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                   onChanged: (String newValue) {
                     setState(() {
                       dropdownValue = newValue;
-                      widget.userExpenseList.reference.update({'expenseIcon': dropdownValue});
+                      counter++;
+
                     });
                   },
                   items: <String>['Food', 'Shopping', 'Gas']
@@ -211,6 +218,33 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
             ),
             FlatButton(
               onPressed: () {
+
+                if(expenseName == null){
+                  expenseName = widget.userExpenseList.get('expenseName');
+                }
+                widget.userExpenseList.reference.update({'expenseName': expenseName});
+
+                if(updatedTotalBudget == null){
+                  updatedTotalBudget = double.parse(widget.userInfo.get('userBudget'));
+                }
+                widget.userInfo.reference.update({'userBudget' : updatedTotalBudget.toString()});
+
+                if(updatedExpenseTotal == null){
+                  updatedExpenseTotal = double.parse(widget.userInfo.get('totalExpense'));
+                }
+                widget.userInfo.reference.update({'totalExpense' : updatedExpenseTotal.toString()});
+
+                if(expenseCost == null){
+                  expenseCost = widget.userExpenseList.get('expenseCost');
+                }
+                widget.userExpenseList.reference.update({'expenseCost': expenseCost});
+
+                if(dropdownValue == null){
+                  dropdownValue = widget.userExpenseList.get('expenseIcon');
+                }
+                widget.userExpenseList.reference.update({'expenseIcon': dropdownValue});
+
+
                     Navigator.pop(context);
                 },
 

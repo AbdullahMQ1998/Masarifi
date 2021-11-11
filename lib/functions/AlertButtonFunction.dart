@@ -29,12 +29,12 @@ showAlertDialogForExpense(BuildContext context , bool shouldDelete,QueryDocument
       //Here we Delete the current Expense
 
       double currentExpenseCost = double.parse(userExpenseList.get('expenseCost'));
-      double currentMonthlyIncome = double.parse(userInfoList.get('monthlyIncome'));
+      double currentTotalBudget = double.parse(userInfoList.get('userBudget'));
       double currentTotalExpense = double.parse(userInfoList.get('totalExpense'));
-      double updatedMonthlyIncome = currentMonthlyIncome + currentExpenseCost;
+      double updatedTotalBudget = currentTotalBudget + currentExpenseCost;
       double updatedTotalExpense = currentTotalExpense - currentExpenseCost;
 
-      userInfoList.reference.update({'monthlyIncome': updatedMonthlyIncome.toString()});
+      userInfoList.reference.update({'userBudget': updatedTotalBudget.toString()});
       userInfoList.reference.update({'totalExpense': updatedTotalExpense.toString()});
 
       userExpenseList.reference.delete();
@@ -87,12 +87,12 @@ showAlertDialogForMonthlyBill(BuildContext context , bool shouldDelete,QueryDocu
       //Here we Delete the current Expense
 
       double currentMonthlyBillCost = double.parse(userMonthlyBillList.get('billCost'));
-      double currentMonthlyIncome = double.parse(userInfo.get('monthlyIncome'));
+      double currentTotalBudget = double.parse(userInfo.get('userBudget'));
       double currentTotalMonthlyBillCost = double.parse(userInfo.get('totalMonthlyBillCost'));
-      double updatedMonthlyIncome = currentMonthlyIncome + currentTotalMonthlyBillCost;
+      double updatedTotalBudget = currentTotalBudget + currentTotalMonthlyBillCost;
       double updatedTotalMonthlyBillCost = currentTotalMonthlyBillCost - currentTotalMonthlyBillCost;
 
-      userInfo.reference.update({'monthlyIncome': updatedMonthlyIncome.toString()});
+      userInfo.reference.update({'userBudget': updatedTotalBudget.toString()});
       userInfo.reference.update({'totalMonthlyBillCost': updatedTotalMonthlyBillCost.toString()});
 
       userMonthlyBillList.reference.delete();
