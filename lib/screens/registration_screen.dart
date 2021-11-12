@@ -1,3 +1,4 @@
+import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/Components/Rounded_button.dart';
 import 'package:flash_chat/constants.dart';
@@ -22,7 +23,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xffF4F9F9),
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Padding(
@@ -43,12 +44,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               TextField(
                 textAlign: TextAlign.center,
-                keyboardType: TextInputType.emailAddress,
-                onChanged: (value) {
-                  email = value;
-                },
-                decoration:
-                    kTextFieldDecoration.copyWith(hintText: 'Enter your Email'),
+
+
+                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your Email',fillColor: Colors.white ,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 1.0),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  ),),
               ),
               SizedBox(
                 height: 8.0,
@@ -56,16 +59,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               TextField(
                 textAlign: TextAlign.center,
                 obscureText: true,
-                onChanged: (value) {
-                  password = value;
-                },
-                decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter your Password'),
+
+
+                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your Password',fillColor: Colors.white ,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 1.0),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  ),),
               ),
               SizedBox(
                 height: 24.0,
               ),
-              paddingButton(Colors.blueAccent, 'Register', () async {
+              paddingButton( Color(0xff01937C), 'Register', () async {
                 setState(() {
                   showSpinner = true;
                 });
@@ -81,7 +87,30 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 } catch (e) {
                   print(e);
                 }
-              })
+              }),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Already have an account?',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold
+                    ),),
+                  TextButton(onPressed: (){
+
+                    Navigator.push( (context), MaterialPageRoute(
+                            builder: (BuildContext context) => LoginScreen()));
+                  }, child: Text('Login here',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff01937C),
+                        fontSize: 15
+                    ),))
+                ],
+              ),
+
+
+
             ],
           ),
         ),

@@ -80,6 +80,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           }
                           widget.userInfo.reference.update({'monthlyIncome': monthlyIncome});
 
+                          double totalExpense = double.parse(widget.userInfo.get('totalExpense'));
+                          double totalMonthlyBill = double.parse(widget.userInfo.get('totalMonthlyBillCost'));
+
+                          double totalBudget = (double.parse(monthlyIncome) * 0.80) - totalExpense - totalMonthlyBill;
+                          widget.userInfo.reference.update({'userBudget': totalBudget.toString() });
+
 
                           if(monthlyIncome == null){
                             gender = widget.userInfo.get('gender');

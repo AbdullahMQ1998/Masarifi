@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../modalScreens/choose_expense_or_monthly_screen.dart';
 import 'welcome_screen.dart';
 import 'package:flash_chat/Components/ListViewWidgets.dart';
+import 'package:mccounting_text/mccounting_text.dart';
 import 'package:path/path.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -56,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
       double halfOfTheBudgetTracker = monthlyIncm * 0.5;
       double quarterOfTheBudgetTracker = monthlyIncm * 0.25;
 
+
       
 
       //50% left from the budget => color change to orange;
@@ -85,11 +87,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
+   double totalBudget = double.parse(userInfoList[0].get('userBudget'));
 
 
 
     return Scaffold(
 
+      
+      
       body: Column(
         children: [
           StreamBuilder<QuerySnapshot>(
@@ -140,27 +145,50 @@ class _HomeScreenState extends State<HomeScreen> {
                               padding: 5,
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 15, bottom:0),
-                            child: HomeScreenTextWidget(
-                              text: "${usersInfo[0].get('userBudget')} SAR",
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30,
-                              padding: 5,
-                            ),
-                          ),
+
 
                           Padding(
-                            padding: EdgeInsets.only(left: 15,bottom: 10),
-                            child: HomeScreenTextWidget(
-                              text: "${_getDaysLeftForSalary(userInfoList[0].get('salaryDate'))} Days left",
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              padding: 10,
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Row(
+                              children: [
+                                McCountingText(
+                                  begin: totalBudget,
+                                  end: double.parse(usersInfo[0].get('userBudget')),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 30,
+                                  ),
+                                  duration: Duration(seconds: 1),
+                                  curve: Curves.decelerate,
+                                ),
+
+                                Text(' SAR',
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white
+                                ),),
+                              ],
                             ),
-                          )
+                          ),
+                          
+
+
+                          SizedBox(
+                            height: 20,
+                          ),
+
+                          // Padding(
+                          //   padding: EdgeInsets.only(left: 15,bottom: 10),
+                          //   child: HomeScreenTextWidget(
+                          //     text: "${_getDaysLeftForSalary(userInfoList[0].get('salaryDate'))} Days left",
+                          //     color: Colors.white,
+                          //     fontWeight: FontWeight.bold,
+                          //     fontSize: 20,
+                          //     padding: 10,
+                          //   ),
+                          // )
 
                         ],
                       ),

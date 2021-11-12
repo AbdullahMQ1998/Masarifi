@@ -73,15 +73,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
             SizedBox(
               height: 48.0,
             ),
-            paddingButton(Colors.lightBlueAccent,'Log in' , () {
+            paddingButton(Color(0xff16C79A),'Log in' , () {
               Navigator.pushNamed(context, LoginScreen.id);
             }),
-            paddingButton(Colors.blueAccent, 'Register', (){
+            paddingButton(Color(0xff01937C), 'Register', (){
               Navigator.pushNamed(context, RegistrationScreen.id);
             }),
-            paddingButton(Colors.blue, "Take me to info page", (){
-              Navigator.pushNamed(context, RegisterUserInfo.id);
-            })
+
           ],
         ),
       ),

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash_chat/Components/Rounded_button.dart';
+import 'package:flash_chat/modalScreens/reset_password.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
+import 'package:flash_chat/screens/registration_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
@@ -65,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xffF4F9F9),
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Padding(
@@ -86,23 +88,57 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextField(
                 textAlign: TextAlign.center,
-                keyboardType: TextInputType.emailAddress,
                 onChanged: (value) {
-                  email = value;
-                },
-                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your Email'),
+
+                  setState(() {
+                    email = value;
+                  });
+
+                  },
+
+                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your Email',fillColor: Colors.white ,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 1.0),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  ),),
               ),
               SizedBox(
-                height: 8.0,
+                height: 10.0,
               ),
               TextField(
                 textAlign: TextAlign.center,
                 obscureText: true,
-                onChanged: (value) {
-                  password = value;
+
+                onChanged: (value){
+                  setState(() {
+                    password = value;
+                  });
                 },
-                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your Password'),
+
+                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your password',fillColor: Colors.white ,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white, width: 1.0),
+                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  ),),
               ),
+              
+              Row(children: [
+                Expanded(child: SizedBox()),
+                
+                TextButton(onPressed: (){
+
+
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) => ResetPassword()
+                         );
+
+                }, child: Text('Forgot Password?')),
+              ],),
+              
+             
               SizedBox(
                 height: 24.0,
               ),
@@ -111,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
 
-              paddingButton(Colors.lightBlueAccent, 'Log in', () async{
+              paddingButton(Color(0xff01937C), 'Log in', () async{
                 setState(() {
                   showSpinner = true;
                 });
@@ -121,10 +157,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 if(user != null) {
                   getCurrentUser();
                   getData();
-                  Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                      HomeScreen(
-                          loggedUser,
-                      ))
+
+                  Navigator.of(context).pop();
+                  Navigator
+                      .of(context)
+                      .pushReplacement(
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => HomeScreen(
+                            loggedUser,
+                          )
+                      )
                   );
 
                 }
@@ -134,11 +176,38 @@ class _LoginScreenState extends State<LoginScreen> {
                 catch(e){
                   print(e);
                 }
-              })
+              },),
+
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Don\'t have an account?',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold
+                    ),),
+                  TextButton(onPressed: (){
+
+                    Navigator.push( (context),
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => RegistrationScreen()));
+
+
+                  }, child: Text('Sign Up',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff01937C),
+                        fontSize: 15
+                    ),))
+                ],
+              ),
+
+
             ],
           ),
         ),
       ),
+      resizeToAvoidBottomInset: false,
     );
   }
 }
