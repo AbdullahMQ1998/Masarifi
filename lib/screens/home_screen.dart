@@ -23,8 +23,6 @@ class HomeScreen extends StatefulWidget {
   double totalExpense = 0;
   int count = 0;
 
-
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -41,72 +39,47 @@ class _HomeScreenState extends State<HomeScreen> {
   bool darkMode = false;
 
   @override
-
-
-@override
-
-
-
-
+  @override
   @override
   @override
   Widget build(BuildContext context) {
-
-
-
-    Color _topContainerColor(String userBudget , String monthlyIncome){
-
+    Color _topContainerColor(String userBudget, String monthlyIncome) {
       double userBdget = double.parse(userBudget);
       double monthlyIncm = double.parse(monthlyIncome);
-      
-      
+
       double halfOfTheBudgetTracker = monthlyIncm * 0.5;
       double quarterOfTheBudgetTracker = monthlyIncm * 0.25;
 
-
-      
-
       //50% left from the budget => color change to orange;
-      if(userBdget <= halfOfTheBudgetTracker && userBdget >= quarterOfTheBudgetTracker){
+      if (userBdget <= halfOfTheBudgetTracker &&
+          userBdget >= quarterOfTheBudgetTracker) {
         return Color(0xffFF7600);
       }
 
-      if(userBdget < halfOfTheBudgetTracker && userBdget <= quarterOfTheBudgetTracker){
+      if (userBdget < halfOfTheBudgetTracker &&
+          userBdget <= quarterOfTheBudgetTracker) {
         return Color(0xffCD113B);
-      }
-      
-      else
+      } else
         return Color(0xff01937C);
-      
     }
 
-
-
-    int _getDaysLeftForSalary(Timestamp salaryDate){
-      DateTime formattedSalaryDate = DateTime.parse(salaryDate.toDate().toString());
+    int _getDaysLeftForSalary(Timestamp salaryDate) {
+      DateTime formattedSalaryDate =
+          DateTime.parse(salaryDate.toDate().toString());
       DateTime currentDate = DateTime.now();
-      int daysLeftForSalary = formattedSalaryDate.difference(currentDate).inDays;
+      int daysLeftForSalary =
+          formattedSalaryDate.difference(currentDate).inDays;
 
       return daysLeftForSalary;
-
     }
-
-
 
     double totalBudget = 0;
 
-    Future.delayed(const Duration(milliseconds: 1000), (){
-     totalBudget = double.parse(userInfoList[0].get('userBudget'));
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      totalBudget = double.parse(userInfoList[0].get('userBudget'));
     });
 
-
-
-
-
     return Scaffold(
-
-      
-      
       body: Column(
         children: [
           StreamBuilder<QuerySnapshot>(
@@ -127,46 +100,49 @@ class _HomeScreenState extends State<HomeScreen> {
                 final usersInfo = snapshot.data.docs;
                 userInfoList = usersInfo;
 
-
-
-
-
-
-
                 return Column(
                   children: [
+                    StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('User_Info')
+                          .where('email', isNotEqualTo: widget.loggedUser.email)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return CircularProgressIndicator(
+                            backgroundColor: Colors.blueAccent,
+                          );
+                        }
 
+                        final otheruser = snapshot.data.docs;
+                        otherUserInfoList = otheruser;
 
-                StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection('User_Info')
-                    .where('email', isNotEqualTo: widget.loggedUser.email)
-                    .snapshots(),
-                builder: (context,snapshot){
+                        return SizedBox();
+                      },
+                    ),
 
+                    StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('expense')
+                            .where('email', isEqualTo: widget.loggedUser.email)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Text(
+                              'No Expense',
+                            );
+                          }
+                          var expenses = snapshot.data.docs;
+                          expenseList = expenses;
 
-                if (!snapshot.hasData) {
-                return CircularProgressIndicator(
-                backgroundColor: Colors.blueAccent,
-                );
-                }
-
-                final otheruser = snapshot.data.docs;
-                otherUserInfoList = otheruser;
-
-
-                return SizedBox();
-                },
-                ),
-
+                          return SizedBox();
+                        }),
                     StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
                           .collection('expense')
                           .where('email', isNotEqualTo: widget.loggedUser.email)
                           .snapshots(),
-                      builder: (context,snapshot){
-
-
+                      builder: (context, snapshot) {
                         if (!snapshot.hasData) {
                           return CircularProgressIndicator(
                             backgroundColor: Colors.blueAccent,
@@ -176,16 +152,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         final otheruser = snapshot.data.docs;
                         otherUserExpenseList = otheruser;
 
-
                         return SizedBox();
-
-
                       },
                     ),
 
-
                     Container(
-                      color: _topContainerColor(userInfoList[0].get('userBudget'),userInfoList[0].get('monthlyIncome')),
+                      color: _topContainerColor(
+                          userInfoList[0].get('userBudget'),
+                          userInfoList[0].get('monthlyIncome')),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -210,14 +184,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
 
-
                           Padding(
                             padding: const EdgeInsets.only(left: 20),
                             child: Row(
                               children: [
                                 McCountingText(
                                   begin: totalBudget,
-                                  end: double.parse(usersInfo[0].get('userBudget')),
+                                  end: double.parse(
+                                      usersInfo[0].get('userBudget')),
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -226,18 +200,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                   duration: Duration(seconds: 1),
                                   curve: Curves.decelerate,
                                 ),
-
-                                Text(' SAR',
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white
-                                ),),
+                                Text(
+                                  ' SAR',
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
                               ],
                             ),
                           ),
-                          
-
 
                           SizedBox(
                             height: 20,
@@ -253,7 +225,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           //     padding: 10,
                           //   ),
                           // )
-
                         ],
                       ),
                     ),
@@ -307,34 +278,40 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             IconButton(
               icon: Icon(Icons.home),
-              onPressed: (){
-              },
+              onPressed: () {},
               color: Colors.green,
-
             ),
             IconButton(
-                icon: Icon(Icons.show_chart),
-              onPressed: (){
-
-                    Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                        AnalysisScreen(userInfoList[0], otherUserExpenseList,otherUserInfoList)));
-
-
+              icon: Icon(Icons.show_chart),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AnalysisScreen(
+                            userInfoList[0],
+                            expenseList,
+                            otherUserExpenseList,
+                            otherUserInfoList)));
               },
-
             ),
-            IconButton(icon: Icon(Icons.tab),
-
-              onPressed: (){
-              double monthlyIncome = double.parse(userInfoList[0].get('monthlyIncome'));
-              double needs = monthlyIncome * 0.50;
-              double wants = monthlyIncome * 0.30;
-              double saving = monthlyIncome * 0.20;
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> SavingPlanScreen(widget.loggedUser,userInfoList[0],needs,wants,saving)
-
-              ));
+            IconButton(
+              icon: Icon(Icons.tab),
+              onPressed: () {
+                double monthlyIncome =
+                    double.parse(userInfoList[0].get('monthlyIncome'));
+                double needs = monthlyIncome * 0.50;
+                double wants = monthlyIncome * 0.30;
+                double saving = monthlyIncome * 0.20;
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SavingPlanScreen(
+                            widget.loggedUser,
+                            userInfoList[0],
+                            needs,
+                            wants,
+                            saving)));
               },
-
             ),
             IconButton(
               icon: Icon(Icons.settings),
@@ -342,13 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-
-                        builder: (context) => SettingScreen(
-                          userInfoList[0]
-                        )
-                )
-                );
-
+                        builder: (context) => SettingScreen(userInfoList[0])));
               },
             ),
             SizedBox(
@@ -372,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      backgroundColor: Color(0xfff2f3f4)  ,
+      backgroundColor: Color(0xfff2f3f4),
     );
   }
 }
