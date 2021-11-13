@@ -18,9 +18,6 @@ class AnalysisScreen extends StatefulWidget {
 
 class _AnalysisScreenState extends State<AnalysisScreen> {
 
-
-
-
   int userResturantCounter;
   int userShoppingCounter;
   int userGasCounter;
@@ -32,9 +29,6 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
   int userEntertainmentCounter;
   int userOnlineShoppingCounter;
   int userEducationCounter;
-
-
-
 
 
 
@@ -50,6 +44,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
   int onlineShoppingCounter;
   int educationCounter;
 
+
   double avgRestaurant = 0;
   double avgGas = 0;
   double avgShopping = 0;
@@ -64,12 +59,21 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
 
 
+  int percent = 0;
+
+
   var userSortedCounter;
   var othersSortedCounter;
 
   Map<String , int> userExpenseCounter;
   double maxUser = 0;
-  Map<String , double> OthersExpensescounters;
+
+
+  Map<int , String> othersExpensescounters;
+  Map<String , int> maxOtherExpenserList;
+
+
+  Map<String , double> avgOthersExpensescounters;
   double maxOther = 0;
 
 
@@ -80,6 +84,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
   void initState() {
     getCatagoryInfo();
     getUserCategoryInfo();
+    getMaxOtherUsersList();
     _charData = getChartData();
     _avgcharData = getAvgChartData();
     super.initState();
@@ -141,6 +146,37 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
 
 
+
+    maxOtherExpenserList = {
+      'Restaurants': resturantCounter ,
+       'Shopping' : shoppingCounter,
+      'Gas': gasCounter,
+        'Coffee':coffeCounter,
+       'Finance': financeCounter ,
+       'Grocery':groceryCounter,
+      'Furniture': furnitureCounter,
+      'Health' : healthCounter ,
+      'Online-Shopping':onlineShoppingCounter ,
+    'Entertainment': entertainmentCounter ,
+      'Education': educationCounter
+    };
+
+
+    othersExpensescounters = {
+      resturantCounter :'Restaurants',
+      shoppingCounter : 'Shopping',
+      gasCounter:'Gas',
+      coffeCounter:'Coffee',
+      financeCounter : 'Finance',
+      groceryCounter :'Grocery',
+      furnitureCounter: 'Furniture',
+      healthCounter :'Health' ,
+      onlineShoppingCounter :'Online-Shopping',
+      entertainmentCounter: 'Entertainment',
+      educationCounter: 'Education',
+    };
+
+
     avgRestaurant = resturantCounter / widget.otherUsersInfo.length;
     avgGas = gasCounter / widget.otherUsersInfo.length;
     avgShopping = shoppingCounter / widget.otherUsersInfo.length;
@@ -153,7 +189,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
     avgGrocery = groceryCounter / widget.otherUsersInfo.length;
     avgFinance = financeCounter / widget.otherUsersInfo.length;
 
-    OthersExpensescounters = {
+    avgOthersExpensescounters = {
       'Restaurants' : avgRestaurant,
       'Shopping' : avgShopping,
       'Gas': avgGas,
@@ -168,14 +204,14 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
     };
 
 
-    var sortedKeys = OthersExpensescounters.keys.toList(growable:true)
-      ..sort((k1, k2) => OthersExpensescounters[k1].compareTo(OthersExpensescounters[k2]));
+    var sortedKeys = avgOthersExpensescounters.keys.toList(growable:true)
+      ..sort((k1, k2) => avgOthersExpensescounters[k1].compareTo(avgOthersExpensescounters[k2]));
     LinkedHashMap sortedMap = new LinkedHashMap
-        .fromIterable(sortedKeys, key: (k) => k, value: (k) => OthersExpensescounters[k]);
+        .fromIterable(sortedKeys, key: (k) => k, value: (k) => avgOthersExpensescounters[k]);
 
     othersSortedCounter = sortedKeys;
 
-    maxOther = OthersExpensescounters[othersSortedCounter[othersSortedCounter.length - 1]].toDouble();
+    maxOther = avgOthersExpensescounters[othersSortedCounter[othersSortedCounter.length - 1]].toDouble();
 
 
   }
@@ -261,88 +297,147 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
   }
 
 
+  List<int> getMaxOtherUsersList(){
+    List<int> sort = [];
+    int max  = 0;
+
+
+    max = resturantCounter;
+    int secondBest = 0;
+    secondBest = max;
+
+
+    int lowest =0;
+    lowest = resturantCounter;
+
+    int total = 0;
+
+
+    for(int i = 0 ; i < maxOtherExpenserList.length ; i++){
+
+      total += maxOtherExpenserList.values.elementAt(i);
+      if(max< maxOtherExpenserList.values.elementAt(i)){
+        secondBest = max;
+        max = maxOtherExpenserList.values.elementAt(i);
+      }
+
+      if(lowest > maxOtherExpenserList.values.elementAt(i)){
+        lowest = maxOtherExpenserList.values.elementAt(i);
+      }
+
+    }
+
+    sort.add(max);
+    sort.add(secondBest);
+    sort.add(lowest);
+    percent = total;
+
+    return sort;
+
+  }
 
 
 
   @override
   Widget build(BuildContext context) {
-    resturantCounter = 0;
-    shoppingCounter = 0;
-    gasCounter = 0;
-    coffeCounter = 0;
-    financeCounter = 0;
-    groceryCounter = 0;
-    furnitureCounter = 0;
-    healthCounter = 0;
-    entertainmentCounter = 0;
-    onlineShoppingCounter = 0;
-    educationCounter = 0;
+
 
 
 
 
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              height: 200,
-              child: SfCircularChart(
-                legend: Legend(isVisible: true),
-                title: ChartTitle(
-                    text: 'Masaryfy Expense Count',
-                    textStyle: TextStyle(fontWeight: FontWeight.bold)),
-                series: <CircularSeries>[
-                  DoughnutSeries<CategoryData, String>(
-                    dataSource: _charData,
-                    xValueMapper: (CategoryData data, _) => data.continent,
-                    yValueMapper: (CategoryData data, _) => data.gdp,
-                    dataLabelSettings: DataLabelSettings(
-                        showCumulativeValues: true, useSeriesColor: true),
-                    pointColorMapper: (CategoryData data, _) => data.color,
+        child: ListView(
+          children:[
+            Column(
+              children: [
+                Container(
+                  height: 300,
+                  child: SfCircularChart(
+                    legend: Legend(isVisible: true),
+                    title: ChartTitle(
+                        text: 'Masaryfy Category Count',
+                        textStyle: TextStyle(fontWeight: FontWeight.bold)),
+                    series: <CircularSeries>[
+                      PieSeries<CategoryData, String>(
+                        explode: true,
+                        dataSource: _charData,
+                        xValueMapper: (CategoryData data, _) => data.continent,
+                        yValueMapper: (CategoryData data, _) => data.gdp,
+                        dataLabelSettings: DataLabelSettings(
+
+                            showCumulativeValues: true, useSeriesColor: true),
+                        pointColorMapper: (CategoryData data, _) => data.color,
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+
+                Divider(),
+
+                Container(
+                  color: Colors.white,
+                  child: Column(
+
+                    children: [
+
+                      Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: Text('From the above chart, we can see the total amount of categories among the users in Masaryfy excluding you.'),
+                      ),
+
+                      Text("By observing the data from the above chart we discovered the next:"),
+                      Text("The majority of expenses goes to ${othersExpensescounters[getMaxOtherUsersList()[0]]} by ${((getMaxOtherUsersList()[0]/percent) * 100).toInt()}%"),
+                      Text("The second most category goes to ${othersExpensescounters[getMaxOtherUsersList()[1]]} by ${((getMaxOtherUsersList()[1]/percent) * 100).toInt()}%"),
+                      Text("The least category goes to ${othersExpensescounters[getMaxOtherUsersList()[2]]} by ${((getMaxOtherUsersList()[2]/percent)* 100).toInt()}%"),
+
+
+
+                    ],
+                  ),
+                ),
+
+
+                Container(
+
+                  child: SfCartesianChart(
+                    legend: Legend(isVisible: true),
+                    title: ChartTitle(
+                        text: 'Masaryfy Average Users Expense Compare To You',
+                        textStyle: TextStyle(fontWeight: FontWeight.bold,
+                            fontSize: 10)),
+                    primaryXAxis: CategoryAxis(),
+                    primaryYAxis: NumericAxis(minimum: 0 , maximum: maxUser > maxOther? maxUser : maxOther , interval: maxUser / 2),
+                    series: <CartesianSeries>[
+                      BarSeries<avgCategoryData, String>(
+                        dataSource: _avgcharData,
+                        xValueMapper: (avgCategoryData data, _) => data.expenseName,
+                        yValueMapper: (avgCategoryData data, _) => data.otherUserstotalAmount,
+                        name: 'Avg Expense',
+                        dataLabelSettings: DataLabelSettings(
+                          showCumulativeValues: true, useSeriesColor: true,),
+
+                      ),
+
+                      BarSeries<avgCategoryData, String>(
+                        dataSource: _avgcharData,
+                        xValueMapper: (avgCategoryData data, _) => data.expenseName,
+                        yValueMapper: (avgCategoryData data, _) => data.myTotalAmount,
+                        name: 'Your Expense',
+                        dataLabelSettings: DataLabelSettings(
+                          showCumulativeValues: true, useSeriesColor: true,
+                        ),
+
+                      ),
+
+                    ],
+                  ),
+                ),
+
+
+              ],
             ),
-
-            Container(
-
-              child: SfCartesianChart(
-                legend: Legend(isVisible: true),
-                title: ChartTitle(
-                    text: 'Masaryfy Average Users Expense Compare To You',
-                    textStyle: TextStyle(fontWeight: FontWeight.bold,
-                    fontSize: 10)),
-                primaryXAxis: CategoryAxis(),
-                primaryYAxis: NumericAxis(minimum: 0 , maximum: maxUser > maxOther? maxUser : maxOther , interval: maxUser / 2),
-                series: <CartesianSeries>[
-                  BarSeries<avgCategoryData, String>(
-                    dataSource: _avgcharData,
-                    xValueMapper: (avgCategoryData data, _) => data.expenseName,
-                    yValueMapper: (avgCategoryData data, _) => data.otherUserstotalAmount,
-                    name: 'Avg Expense',
-                    dataLabelSettings: DataLabelSettings(
-                        showCumulativeValues: true, useSeriesColor: true,),
-
-                  ),
-
-                  BarSeries<avgCategoryData, String>(
-                    dataSource: _avgcharData,
-                    xValueMapper: (avgCategoryData data, _) => data.expenseName,
-                    yValueMapper: (avgCategoryData data, _) => data.myTotalAmount,
-                    name: 'Your Expense',
-                    dataLabelSettings: DataLabelSettings(
-                        showCumulativeValues: true, useSeriesColor: true,
-                   ),
-
-                  ),
-
-                ],
-              ),
-            ),
-
-
-          ],
+          ]
         ),
       ),
     );
