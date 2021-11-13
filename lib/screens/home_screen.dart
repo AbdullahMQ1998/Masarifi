@@ -1,4 +1,5 @@
 import 'package:flash_chat/Components/widgets.dart';
+import 'package:flash_chat/screens/analysis_screen.dart';
 import 'package:flash_chat/screens/expense_screen.dart';
 import 'package:flash_chat/screens/saving_plan_screen.dart';
 import 'package:flash_chat/screens/settings_screen.dart';
@@ -10,6 +11,8 @@ import '../modalScreens/choose_expense_or_monthly_screen.dart';
 import 'welcome_screen.dart';
 import 'package:flash_chat/Components/ListViewWidgets.dart';
 import 'package:mccounting_text/mccounting_text.dart';
+import 'package:clock/clock.dart';
+import 'package:fake_async/fake_async.dart';
 import 'package:path/path.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -31,6 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final _auth = FirebaseAuth.instance;
   List<QueryDocumentSnapshot> userInfoList;
   List<QueryDocumentSnapshot> expenseList;
+
+  List<QueryDocumentSnapshot> otherUserExpenseList;
+  List<QueryDocumentSnapshot> otherUserInfoList;
 
   bool darkMode = false;
 
@@ -87,7 +93,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
-   double totalBudget = double.parse(userInfoList[0].get('userBudget'));
+    double totalBudget = 0;
+
+    Future.delayed(const Duration(milliseconds: 1000), (){
+     totalBudget = double.parse(userInfoList[0].get('userBudget'));
+    });
+
+
 
 
 
@@ -118,8 +130,60 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
+
+
+
                 return Column(
                   children: [
+
+
+                StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('User_Info')
+                    .where('email', isNotEqualTo: widget.loggedUser.email)
+                    .snapshots(),
+                builder: (context,snapshot){
+
+
+                if (!snapshot.hasData) {
+                return CircularProgressIndicator(
+                backgroundColor: Colors.blueAccent,
+                );
+                }
+
+                final otheruser = snapshot.data.docs;
+                otherUserInfoList = otheruser;
+
+
+                return SizedBox();
+                },
+                ),
+
+                    StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('expense')
+                          .where('email', isNotEqualTo: widget.loggedUser.email)
+                          .snapshots(),
+                      builder: (context,snapshot){
+
+
+                        if (!snapshot.hasData) {
+                          return CircularProgressIndicator(
+                            backgroundColor: Colors.blueAccent,
+                          );
+                        }
+
+                        final otheruser = snapshot.data.docs;
+                        otherUserExpenseList = otheruser;
+
+
+                        return SizedBox();
+
+
+                      },
+                    ),
+
+
                     Container(
                       color: _topContainerColor(userInfoList[0].get('userBudget'),userInfoList[0].get('monthlyIncome')),
                       child: Column(
@@ -252,6 +316,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icon(Icons.show_chart),
               onPressed: (){
 
+                    Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                        AnalysisScreen(userInfoList[0], otherUserExpenseList,otherUserInfoList)));
 
 
               },

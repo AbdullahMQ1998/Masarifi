@@ -29,7 +29,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   double currentTotalExpense;
   double currentTotalBudget;
   final _fireStore = FirebaseFirestore.instance;
-  String dropdownValue = 'Food';
+  String dropdownValue = 'Restaurants';
 
   bool checkNullorSpace() {
     if (expenseName != null &&
@@ -121,7 +121,20 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 dropdownValue = newValue;
               });
             },
-            items: <String>['Food', 'Shopping', 'Gas', 'Other']
+            items: <String>[
+              'Restaurants',
+              'Shopping',
+              'Gas',
+              'Coffee',
+              'Finance',
+              'Grocery',
+              'Furniture',
+              'Health',
+              'Online-Shopping',
+              'Entertainment',
+              'Education',
+              'Other'
+            ]
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,

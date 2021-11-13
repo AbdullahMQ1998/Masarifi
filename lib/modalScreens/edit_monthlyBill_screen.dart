@@ -374,7 +374,6 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                       ),),
                   ),
                   style: ButtonStyle(
-
                       backgroundColor: MaterialStateProperty.all<Color>(
                           Colors.green
                       ),

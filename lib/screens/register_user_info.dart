@@ -25,6 +25,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
   String occupation;
   String monthlyIncome;
   String nmbOfChild;
+  double userBudget;
 
   bool isEmployee = true;
 
@@ -92,7 +93,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
   Widget build(BuildContext context) {
 
     bool checkNullorSpace(){
-      if(userName != null && userName != '' && age != null && age != '' && monthlyIncome != null && monthlyIncome != '' && nmbOfChild != null && nmbOfChild != ''){
+      if(userName != null && userName != '' &&  monthlyIncome != null && monthlyIncome != ''){
               return true;
       }
             else{
@@ -299,6 +300,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                 paddingButton(Color(0xff01937C), "Create an account", (){
                 // we move the loggedUser to the homeScreen so we can retrieve data from it.
                 if(checkNullorSpace()) {
+                  userBudget = double.parse(monthlyIncome) * 0.80;
                   Navigator.push(context, MaterialPageRoute(builder: (context) =>
                       HomeScreen(
                           loggedUser,
@@ -315,6 +317,8 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                     'occupation':occupation,
                     'totalExpense':"0",
                     'totalMonthlyBillCost':"0",
+                    'userBudget': userBudget.toString(),
+
                     'expenseNumber': 0,
                   });
                 }

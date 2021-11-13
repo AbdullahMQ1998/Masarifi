@@ -205,7 +205,20 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
 
                     });
                   },
-                  items: <String>['Food', 'Shopping', 'Gas']
+                  items: <String>[
+                    'Restaurants',
+                    'Shopping',
+                    'Gas',
+                    'Coffee',
+                    'Finance',
+                    'Grocery',
+                    'Furniture',
+                    'Health',
+                    'Online-Shopping',
+                    'Entertainment',
+                    'Education',
+                    'Other'
+                  ]
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,

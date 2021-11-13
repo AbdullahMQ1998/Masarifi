@@ -229,7 +229,21 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                        dropdownValue = newValue;
                                      });
                                    },
-                                   items: <String>['All','Food', 'Shopping', 'Gas']
+                                   items: <String>[
+                                     'All',
+                                     'Restaurants',
+                                     'Shopping',
+                                     'Gas',
+                                     'Coffee',
+                                     'Finance',
+                                     'Grocery',
+                                     'Furniture',
+                                     'Health',
+                                     'Online-Shopping',
+                                     'Entertainment',
+                                     'Education',
+                                     'Other'
+                                   ]
                                        .map<DropdownMenuItem<String>>((String value) {
                                      return DropdownMenuItem<String>(
                                        value: value,

@@ -23,7 +23,7 @@ class SavingPlanScreen extends StatefulWidget {
 
 
 class _SavingPlanScreenState extends State<SavingPlanScreen> with SingleTickerProviderStateMixin {
-// List<GDPData> _charData;
+
 
 Timestamp retirementDate;
 
@@ -400,37 +400,8 @@ class PlanBubble extends StatelessWidget {
 
 
 
-// SfCircularChart(
-// series: <CircularSeries>[
-// PieSeries<GDPData,String>(
-// dataSource:_charData,
-// xValueMapper: (GDPData data, _) => data.continent,
-// yValueMapper: (GDPData data, _) => data.gdp,
-// dataLabelSettings: DataLabelSettings(isVisible: true)
-// ),
-//
-//
-// ],
-// ),
 
 
-// List<GDPData> getChartData(){
-//   final List<GDPData> chartData = [
-//
-//     GDPData('Neeeds', widget.needs),
-//     GDPData('Wants', widget.wants),
-//     GDPData('Saving', widget.saving),
-//
-//
-//   ];
-//   return chartData;
-// }
 
 
-// class GDPData{
-//   final String continent;
-//   final double gdp;
-//   GDPData(this.continent,this.gdp);
-//
-// }
 

@@ -23,6 +23,7 @@ dependencies:
   syncfusion_flutter_charts: ^19.3.48
   finance: ^0.1.0
   mccounting_text: ^0.1.0
+  clock: ^1.1.0
 
 
 dev_dependencies:

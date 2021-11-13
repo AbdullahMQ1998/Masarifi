@@ -44,8 +44,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               TextField(
                 textAlign: TextAlign.center,
-
-
+                onChanged: (value){
+                  email = value;
+                },
                 decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your Email',fillColor: Colors.white ,
                   filled: true,
                   enabledBorder: OutlineInputBorder(
@@ -60,7 +61,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 textAlign: TextAlign.center,
                 obscureText: true,
 
-
+                onChanged: (value){
+                  password = value;
+                },
                 decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your Password',fillColor: Colors.white ,
                   filled: true,
                   enabledBorder: OutlineInputBorder(

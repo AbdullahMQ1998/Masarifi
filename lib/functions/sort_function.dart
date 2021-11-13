@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:flash_chat/Components/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
@@ -35,10 +36,20 @@ List<ExpensesBubble> normalView(List<QueryDocumentSnapshot> list , QueryDocument
   isLast = true;
 
   Map<String, IconData> iconsMap = {
-    'Food': Icons.restaurant_menu_outlined,
+
+    'Restaurants': Icons.restaurant_menu_outlined,
     'Shopping': Icons.shopping_cart,
-    'Gas': Icons.local_gas_station_rounded,
-    'Other': Icons.other_houses,
+    'Gas':  Icons.local_gas_station_rounded,
+    'Coffee': Icons.coffee,
+    'Finance': Icons.monetization_on,
+    'Grocery': Icons.shopping_bag,
+    'Furniture': Icons.event_seat,
+    'Health': Icons.health_and_safety,
+    'Entertainment': Icons.videogame_asset,
+    'Online-Shopping': Icons.credit_card,
+    'Education': Icons.book,
+    'Other': Icons.sort,
+
   };
   
   Timestamp timestamp;
@@ -96,10 +107,20 @@ List<ExpensesBubble> sortByDate(List<QueryDocumentSnapshot> list , DateTime date
 
 
   Map<String, IconData> iconsMap = {
-    'Food': Icons.restaurant_menu_outlined,
+
+    'Restaurants': Icons.restaurant_menu_outlined,
     'Shopping': Icons.shopping_cart,
-    'Gas': Icons.local_gas_station_rounded,
-    'Other': Icons.other_houses,
+    'Gas':  Icons.local_gas_station_rounded,
+    'Coffee': Icons.coffee,
+    'Finance': Icons.monetization_on,
+    'Grocery': Icons.shopping_bag,
+    'Furniture': Icons.event_seat,
+    'Health': Icons.health_and_safety,
+    'Entertainment': Icons.videogame_asset,
+    'Online-Shopping': Icons.credit_card,
+    'Education': Icons.book,
+    'Other': Icons.sort,
+
   };
   Timestamp timestamp;
 
@@ -170,10 +191,19 @@ List<ExpensesBubble> sortByDateAndType(List<QueryDocumentSnapshot> list , DateTi
 
 
   Map<String, IconData> iconsMap = {
-    'Food': Icons.restaurant_menu_outlined,
+    'Restaurants': Icons.restaurant_menu_outlined,
     'Shopping': Icons.shopping_cart,
-    'Gas': Icons.local_gas_station_rounded,
-    'Other': Icons.other_houses,
+    'Gas':  Icons.local_gas_station_rounded,
+    'Coffee': Icons.coffee,
+    'Finance': Icons.monetization_on,
+    'Grocery': Icons.shopping_bag,
+    'Furniture': Icons.event_seat,
+    'Health': Icons.health_and_safety,
+    'Entertainment': Icons.videogame_asset,
+    'Online-Shopping': Icons.credit_card,
+    'Education': Icons.book,
+    'Other': Icons.sort,
+
   };
   Timestamp timestamp;
 
