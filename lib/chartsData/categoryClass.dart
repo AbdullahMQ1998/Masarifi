@@ -56,6 +56,7 @@ Map<String , int> maxOtherExpenserList;
 Map<int , String> othersExpensescounters;
 
 Map<String , double> avgOthersExpensescounters;
+Map<double , String> avgOthersExpensescountersString;
 double maxOther = 0;
 
 
@@ -248,6 +249,20 @@ void getCatagoryInfo(List<QueryDocumentSnapshot> otherUsersExpense , List<QueryD
     'Online-Shopping': avgOnlineShopping,
     'Entertainment': avgEntertainment,
     'Education': avgEntertainment
+  };
+
+  avgOthersExpensescountersString = {
+     avgRestaurant:'Restaurants',
+   avgShopping : 'Shopping',
+    avgGas : 'Gas',
+     avgCoffee:'Coffee',
+    avgFinance :'Finance',
+    avgGrocery: 'Grocery',
+   avgFurniture:  'Furniture',
+    avgHealth  :'Health',
+   avgOnlineShopping: 'Online-Shopping',
+    avgEntertainment :'Entertainment',
+    avgEntertainment :'Education'
   };
 
 
