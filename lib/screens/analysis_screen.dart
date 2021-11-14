@@ -50,6 +50,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: Color(0xff1F1D36),
       body: SafeArea(
         child: ListView(
           children:[
@@ -81,7 +82,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                   ),
                 ),
 
-                // Divider( thickness: 1,color: Colors.black,),
+
 
                 Container(
                   color:  Color(0xff1F1D36),
@@ -92,123 +93,134 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                        child: IntrinsicHeight(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
 
-                            Container(
-                              child: Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Column(
-                                  children: [
-                                    Text('Most Category',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20
-                                      ),),
-                                    Divider(),
-                                    new CircularPercentIndicator(
+                              Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
+                                    children: [
+                                      Text('Most Category',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20
+                                        ),),
+                                      Divider(),
+                                      new CircularPercentIndicator(
 
-                                      radius: 80.0,
-                                      lineWidth: 10.0,
-                                      animation: true,
-                                      percent: ((getMaxOtherUsersList()[0]/percent)),
-                                      center: new Text(
-                                        "${((getMaxOtherUsersList()[0]/percent) * 100).toInt()}%",
-                                        style:
-                                        new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,color: Colors.white),
-                                      ),
-                                      footer: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: new Text(
-                                          "${othersExpensescounters[getMaxOtherUsersList()[0]]}",
+                                        radius: 80.0,
+                                        lineWidth: 10.0,
+                                        animation: true,
+                                        percent: ((getMaxOtherUsersList()[0]/percent)),
+                                        center: new Text(
+                                          "${((getMaxOtherUsersList()[0]/percent) * 100).toInt()}%",
                                           style:
                                           new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,color: Colors.white),
                                         ),
+                                        footer: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: new Text(
+                                            "${othersExpensescounters[getMaxOtherUsersList()[0]]}",
+                                            style:
+                                            new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,color: Colors.white),
+                                          ),
+                                        ),
+                                        circularStrokeCap: CircularStrokeCap.round,
+                                        progressColor: Colors.white,
                                       ),
-                                      circularStrokeCap: CircularStrokeCap.round,
-                                      progressColor: Colors.white,
-                                    ),
 
-                                  ],
+                                    ],
+                                  ),
+                                ),
+                                decoration: BoxDecoration(
+                                    color: Color(0xff864879),
+                                    borderRadius: BorderRadius.all(Radius.circular(30))
                                 ),
                               ),
-                              decoration: BoxDecoration(
-                                  color: Color(0xff864879),
-                                  borderRadius: BorderRadius.all(Radius.circular(30))
+                              VerticalDivider(
+                                color: Colors.white,
+                                thickness: 1,
+                                indent: 0,
+                                endIndent: 0,
                               ),
-                            ),
-                            Container(
-                              child: Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Column(
-                                  children: [
-                                    Text('Least Category',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20
-                                      ),),
-                                    Divider(),
-                                    new CircularPercentIndicator(
+                              Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
+                                    children: [
+                                      Text('Least Category',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20
+                                        ),),
+                                      Divider(),
+                                      new CircularPercentIndicator(
 
-                                      radius: 80.0,
-                                      lineWidth: 10.0,
-                                      animation: true,
-                                      percent: ((getMaxOtherUsersList()[2]/percent)),
-                                      center: new Text(
-                                        "${((getMaxOtherUsersList()[2]/percent)* 100).toInt()}%",
-                                        style:
-                                        new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,color: Colors.white),
-                                      ),
-                                      footer: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: new Text(
-                                          "${othersExpensescounters[getMaxOtherUsersList()[2]]}",
+                                        radius: 80.0,
+                                        lineWidth: 10.0,
+                                        animation: true,
+                                        percent: ((getMaxOtherUsersList()[2]/percent)),
+                                        center: new Text(
+                                          "${((getMaxOtherUsersList()[2]/percent)* 100).toInt()}%",
                                           style:
                                           new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,color: Colors.white),
                                         ),
+                                        footer: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: new Text(
+                                            "${othersExpensescounters[getMaxOtherUsersList()[2]]}",
+                                            style:
+                                            new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,color: Colors.white),
+                                          ),
+                                        ),
+                                        circularStrokeCap: CircularStrokeCap.round,
+                                        progressColor: Colors.white,
                                       ),
-                                      circularStrokeCap: CircularStrokeCap.round,
-                                      progressColor: Colors.white,
-                                    ),
 
-                                  ],
+                                    ],
+                                  ),
+                                ),
+                                decoration: BoxDecoration(
+                                    color: Color(0xff864879),
+                                    borderRadius: BorderRadius.all(Radius.circular(30))
                                 ),
                               ),
-                              decoration: BoxDecoration(
-                                  color: Color(0xff864879),
-                                  borderRadius: BorderRadius.all(Radius.circular(30))
-                              ),
-                            ),
 
 
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-
-                      // Text("The second most category goes to ${othersExpensescounters[getMaxOtherUsersList()[1]]} by ${((getMaxOtherUsersList()[1]/percent) * 100).toInt()}%"),
-                      // Text("The least category goes to  by "),
-
-
-
                     ],
                   ),
                 ),
 
+                Divider( thickness: 2,color: Colors.white,
+                  indent: 30,endIndent: 30,),
 
                 Container(
 
                   child: SfCartesianChart(
-                    backgroundColor: Color(0xff1F1D36),
-                    legend: Legend(isVisible: true),
+
+                    legend: Legend(isVisible: true,textStyle: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold
+                    )),
                     title: ChartTitle(
                         text: 'Masaryfy Average Users Expense Compare To You',
                         textStyle: TextStyle(fontWeight: FontWeight.bold,
-                            fontSize: 10)),
-                    primaryXAxis: CategoryAxis(),
-                    primaryYAxis: NumericAxis(minimum: 0 , maximum: maxUser > maxOther? maxUser : maxOther , interval: maxUser == 0 ? maxOther / 2 : maxUser / 2),
+                            fontSize: 10, color: Colors.white)),
+                    primaryXAxis: CategoryAxis(labelStyle: TextStyle(
+                      color: Colors.white,fontWeight: FontWeight.bold, fontSize: 13
+                    )),
+                    primaryYAxis: NumericAxis(minimum: 0 , maximum: maxUser > maxOther? maxUser : maxOther , interval: maxUser == 0 ? maxOther / 2 : maxUser / 2,labelStyle: TextStyle(
+                        color: Colors.white,fontWeight: FontWeight.bold, fontSize: 13
+                    )),
                     series: <CartesianSeries>[
                       BarSeries<avgCategoryData, String>(
                         dataSource: _avgcharData,
@@ -237,8 +249,9 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
 
 
+
                 Container(
-                  color: Color(0xff1F1D36),
+
                   child: Column(
 
                     children: [
@@ -286,7 +299,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: Color(0xff01937C),
+                                  color: Color(0xff864879),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
@@ -326,7 +339,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: Color(0xff01937C),
+                                  color: Color(0xff864879),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
@@ -338,18 +351,24 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                     ],
                   ),
                 ),
-                Divider( thickness: 2,color: Colors.black,),
+                Divider( thickness: 2,color: Colors.white, indent: 20, endIndent: 20,),
 
 
                 SfCartesianChart(
-                  backgroundColor: Colors.white,
-                  legend: Legend(isVisible: true),
+                  legend: Legend(isVisible: true , textStyle: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold
+                  )),
                   title: ChartTitle(
                       text: 'Masaryfy Users Daily Expense Count',
                       textStyle: TextStyle(fontWeight: FontWeight.bold,
-                          fontSize: 10)),
-                  primaryXAxis: CategoryAxis(),
-                  primaryYAxis: NumericAxis(minimum: 0 , maximum: getMaxDailyExpenseCount()[0].toDouble() , interval: getMaxDailyExpenseCount()[0]/4.0),
+                          fontSize: 10,color: Colors.white)),
+                  primaryXAxis: CategoryAxis( labelStyle: TextStyle(
+                      color: Colors.white,fontWeight: FontWeight.bold, fontSize: 13
+                  )),
+                  primaryYAxis: NumericAxis(minimum: 0 , maximum: getMaxDailyExpenseCount()[0].toDouble() , interval: getMaxDailyExpenseCount()[0]/4.0,labelStyle: TextStyle(
+                      color: Colors.white,fontWeight: FontWeight.bold, fontSize: 13
+                  )),
                   series: <CartesianSeries>[
                     BarSeries<avgDayData, String>(
                       dataSource: _dayData,
@@ -365,10 +384,10 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                 ),
 
 
-                Divider( thickness: 2,color: Colors.black,),
+                Divider( thickness: 2,color: Colors.white,indent: 20,endIndent: 20,),
 
                 Container(
-                  color: Colors.white,
+
                   child: Column(
 
                     children: [
@@ -422,7 +441,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: Color(0xff01937C),
+                                  color: Color(0xff864879),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
@@ -467,7 +486,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: Color(0xff01937C),
+                                  color: Color(0xff864879),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
@@ -479,18 +498,24 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                     ],
                   ),
                 ),
-                Divider( thickness: 2,color: Colors.black,),
+                Divider( thickness: 2,color: Colors.white,endIndent: 20,indent: 20,),
 
 
                 SfCartesianChart(
-                  legend: Legend(isVisible: true),
+                  legend: Legend(isVisible: true, textStyle: TextStyle(
+                    fontWeight: FontWeight.bold,color: Colors.white
+                  )),
                   title: ChartTitle(
-                    backgroundColor: Colors.white,
+
                       text: 'Masaryfy Users Monthly Expense Count',
                       textStyle: TextStyle(fontWeight: FontWeight.bold,
-                          fontSize: 10)),
-                  primaryXAxis: CategoryAxis(),
-                  primaryYAxis: NumericAxis(minimum: 0 , maximum: getMaxMonthlyExpenseCount()[0].toDouble() , interval: getMaxMonthlyExpenseCount()[0]/4.0),
+                          fontSize: 10,color: Colors.white)),
+                  primaryXAxis: CategoryAxis(labelStyle: TextStyle(
+                      color: Colors.white,fontWeight: FontWeight.bold, fontSize: 13
+                  )),
+                  primaryYAxis: NumericAxis(minimum: 0 , maximum: getMaxMonthlyExpenseCount()[0].toDouble() , interval: getMaxMonthlyExpenseCount()[0]/4.0,labelStyle: TextStyle(
+                      color: Colors.white,fontWeight: FontWeight.bold, fontSize: 13
+                  )),
                   series: <CartesianSeries>[
                     BarSeries<avgMonthData, String>(
                       dataSource: _monthData,
@@ -505,10 +530,10 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                   ],
                 ),
 
-                Divider( thickness: 2,color: Colors.black,),
+                Divider( thickness: 2,color: Colors.white,),
 
                 Container(
-                  color: Colors.white,
+
                   child: Column(
 
                     children: [
@@ -562,7 +587,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: Color(0xff01937C),
+                                  color: Color(0xff864879),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
@@ -607,19 +632,17 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: Color(0xff01937C),
+                                  color: Color(0xff864879),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
-
-
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                Divider( thickness: 2,color: Colors.black,),
+
 
               ],
             ),
