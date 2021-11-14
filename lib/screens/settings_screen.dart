@@ -31,7 +31,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
       appBar: AppBar(
         title: Text('Back'),
-        backgroundColor: Color(0xff50c878),
+        backgroundColor: Color(0xff01937C),
       ),
       body: SafeArea(
         child: Column(
@@ -88,7 +88,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         style: ButtonStyle(
 
                             backgroundColor: MaterialStateProperty.all<Color>(
-                                Colors.green.shade700
+                                Color(0xff01937C)
                             ),
                             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(

@@ -39,7 +39,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            color: Color(0xff50c878),
+            color: Color(0xff01937C),
             child: Column(
               children: [
                 Padding(
@@ -119,7 +119,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           'images/${widget.userInfo.get('gender')}.png'),
                     ),
                     decoration: BoxDecoration(
-                      color: Color(0xff50c878),
+                      color: Color(0xff01937C),
                     ),
                   ),
                 ),
@@ -324,7 +324,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           style: const TextStyle(color: Colors.black),
                           underline: Container(
                             height: 1,
-                            color: Color(0xff50c878),
+                            color: Color(0xff01937C),
                           ),
                           onChanged: (String newValue) {
                             setState(() {

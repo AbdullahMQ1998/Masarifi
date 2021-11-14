@@ -27,7 +27,10 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
+
+
 class _HomeScreenState extends State<HomeScreen> {
+
   final _fireStore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   List<QueryDocumentSnapshot> userInfoList;
@@ -75,13 +78,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     double totalBudget = 0;
 
-    Future.delayed(const Duration(milliseconds: 1000), () {
-      totalBudget = double.parse(userInfoList[0].get('userBudget'));
-    });
+
+
+
 
     return Scaffold(
       body: Column(
         children: [
+
           StreamBuilder<QuerySnapshot>(
               // Here in the stream we get the user info from the database based on his email, we will get all of his information
               stream: FirebaseFirestore.instance
@@ -279,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               icon: Icon(Icons.home),
               onPressed: () {},
-              color: Colors.green,
+              color:  Color(0xff01937C),
             ),
             IconButton(
               icon: Icon(Icons.show_chart),
@@ -326,7 +330,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 10,
             ),
             FloatingActionButton(
-                backgroundColor: Color(0xff50c878),
+                backgroundColor:  Color(0xff01937C),
                 onPressed: () {
                   showModalBottomSheet(
                       context: context,
