@@ -164,7 +164,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                ),
 
 
-                             Text("To",
+                             Text("to",
                              style: TextStyle(
                                fontSize: 25,
                                fontWeight: FontWeight.bold
@@ -211,12 +211,12 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                    color: Colors.grey,
                                  ),
                                  Expanded(
-                                   child: Text(' Expense type',
+                                   child: Text('Expense type',
                                      style:
                                      TextStyle(
                                          // color: Colors.black45,
                                          fontWeight: FontWeight.bold,
-                                       fontSize: 15,
+                                       fontSize: 10,
                                        color: Colors.grey
                                      ),
                                    ),
@@ -296,7 +296,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                children: [
                                  Container(
                                    child: Icon(Icons.search,
-                                     color: Colors.green.shade700,
+                                     color: Colors.white,
                                      size: 30,
                                    ),
                                    decoration: BoxDecoration(
@@ -315,7 +315,6 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                  SizedBox(
                                    width: 40,
                                  ),
-
                                ],
                              ),
                              style: ButtonStyle(

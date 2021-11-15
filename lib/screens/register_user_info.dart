@@ -4,6 +4,7 @@ import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'home_screen.dart';
 import 'package:flutter_dropdown/flutter_dropdown.dart';
@@ -148,7 +149,10 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
 
                 TextField(
                   textAlign: TextAlign.center,
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.numberWithOptions(signed: true),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   onChanged: (value) {
                     setState(() {
                       monthlyIncome = value;
@@ -159,7 +163,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
 
                     setState(() {
                       if(double.parse(monthlyIncome)  <= 999){
-                        Alert(context: context, title: "ERROR", desc: "Please enter amount over 999 for the monthly income").show();
+                        showGeneralErrorAlertDialog(context, 'Error', 'Please enter amount over 999 for the monthly income');
                         monthlyIncome = null;
                       }
                     });
@@ -279,7 +283,13 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                 // we move the loggedUser to the homeScreen so we can retrieve data from it.
                 if(checkNullorSpace()) {
                   userBudget = double.parse(monthlyIncome) * 0.80;
-                  Navigator.push(context, MaterialPageRoute(builder: (context) =>
+
+                  Navigator.of(context).pop();
+                  Navigator
+                      .of(context)
+                      .pushReplacement(
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
                       HomeScreen(
                           loggedUser,
                       ))

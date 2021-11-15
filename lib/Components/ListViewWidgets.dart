@@ -63,7 +63,7 @@ class MonthlyBillsSVerticalListView extends StatelessWidget {
             'Internet': Icons.wifi,
             'Phone':Icons.phone_android,
             'Electric':Icons.flash_on,
-            'installment':Icons.receipt,
+            'Installment':Icons.receipt,
           };
 
           for (var bill in bills) {
