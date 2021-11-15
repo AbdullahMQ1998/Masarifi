@@ -63,6 +63,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
 
     return Scaffold(
+      appBar: AppBar(backgroundColor: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),),
       backgroundColor: themChange.getDarkTheme() ? Color(0xff1F1D36) : Colors.grey.shade50 ,
       body: SafeArea(
         child: ListView(
@@ -106,7 +107,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: IntrinsicHeight(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
 
                               Container(
@@ -118,7 +119,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 20
+                                            fontSize: 15
                                         ),),
                                       Divider(),
                                       new CircularPercentIndicator(
@@ -130,7 +131,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                         center: new Text(
                                           "${((getMaxOtherUsersList()[0]/percent) * 100).toInt()}%",
                                           style:
-                                          new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,color: Colors.white),
+                                          new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0,color: Colors.white),
                                         ),
                                         footer: Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -167,7 +168,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 20
+                                            fontSize: 15
                                         ),),
                                       Divider(),
                                       new CircularPercentIndicator(
@@ -186,7 +187,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                           child: new Text(
                                             "${othersExpensescounters[getMaxOtherUsersList()[2]]}",
                                             style:
-                                            new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,color: Colors.white),
+                                            new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0,color: Colors.white),
                                           ),
                                         ),
                                         circularStrokeCap: CircularStrokeCap.round,
@@ -269,9 +270,9 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
 
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
 
                             Container(
@@ -284,7 +285,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                       style: TextStyle(
                                           color:   Colors.white ,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 15
+                                          fontSize: 10
                                       ),),
                                     Divider(),
 
@@ -292,7 +293,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 25
+                                          fontSize: 20
                                       ),),
 
                                     SizedBox(
@@ -300,9 +301,9 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                     ),
 
 
-                                    Text('$maxOther per User',
+                                    Text('${maxOther.toStringAsFixed(2)} per User',
                                       style: TextStyle(
-                                          fontSize: 25,
+                                          fontSize: 10,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white
                                       ),),
@@ -314,6 +315,9 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
+
+                            SizedBox(width: 10),
+
                             Container(
                               child: Padding(
                                 padding: const EdgeInsets.all(15.0),
@@ -323,7 +327,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 15
+                                          fontSize: 10
                                       ),),
                                     Divider(),
 
@@ -331,17 +335,17 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 25
+                                          fontSize: 15
                                       ),),
+
 
                                     SizedBox(
                                       height: 15,
                                     ),
 
-
                                     Text('Total: $maxUser',
                                       style: TextStyle(
-                                          fontSize: 25,
+                                          fontSize: 15,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white
                                       ),),
@@ -407,7 +411,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
 
                             Container(
@@ -420,7 +424,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 15
+                                          fontSize: 10
                                       ),),
                                     Divider(),
 
@@ -441,7 +445,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                         child: new Text(
                                           "${dailyExpenseCount[getMaxDailyExpenseCount()[0]]}",
                                           style:
-                                          new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,color: Colors.white),
+                                          new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0,color: Colors.white),
                                         ),
                                       ),
                                       circularStrokeCap: CircularStrokeCap.round,
@@ -465,7 +469,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 15
+                                          fontSize: 10
                                       ),),
                                     Divider(),
 
@@ -486,7 +490,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                         child: new Text(
                                           "${dailyExpenseCount[getMaxDailyExpenseCount()[2]]}",
                                           style:
-                                          new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,color: Colors.white),
+                                          new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0,color: Colors.white),
                                         ),
                                       ),
                                       circularStrokeCap: CircularStrokeCap.round,
@@ -553,7 +557,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
 
                             Container(
@@ -566,7 +570,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 15
+                                          fontSize: 10
                                       ),),
                                     Divider(),
 
@@ -587,7 +591,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                         child: new Text(
                                           "${monthlyExpenseCount[getMaxMonthlyExpenseCount()[0]]}",
                                           style:
-                                          new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,color: Colors.white),
+                                          new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0,color: Colors.white),
                                         ),
                                       ),
                                       circularStrokeCap: CircularStrokeCap.round,
@@ -611,7 +615,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 15
+                                          fontSize: 10
                                       ),),
                                     Divider(),
 
@@ -632,7 +636,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                         child: new Text(
                                           "${monthlyExpenseCount[getMaxMonthlyExpenseCount()[2]]}",
                                           style:
-                                          new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,color: Colors.white),
+                                          new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0,color: Colors.white),
                                         ),
                                       ),
                                       circularStrokeCap: CircularStrokeCap.round,
