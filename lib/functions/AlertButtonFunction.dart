@@ -1,6 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+
+
+
+  showIOSGeneralAlert(BuildContext context, String text){
+
+    showCupertinoDialog<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text('Alert'),
+        content: Text(text),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            child: const Text('Confirm'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+
+        ],
+      ),
+    );
+  }
 
 
 

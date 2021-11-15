@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash_chat/Components/Rounded_button.dart';
+import 'package:flash_chat/functions/AlertButtonFunction.dart';
 import 'package:flash_chat/modalScreens/reset_password.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
@@ -102,6 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderSide: BorderSide( width: 1.0),
                     borderRadius: BorderRadius.all(Radius.circular(32.0)),
                   ),),
+
               ),
               SizedBox(
                 height: 10.0,
@@ -149,10 +153,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
               paddingButton(Color(0xff01937C), 'Log in', () async{
+
+
                 setState(() {
                   showSpinner = true;
                 });
-                final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+
+                if(email == null || password == null){
+                  email = '';
+                  password = '';
+                }
+                final user = await _auth.signInWithEmailAndPassword(email: email, password: password).catchError((err) {
+
+                  Platform.isIOS ? showIOSGeneralAlert(context,err.message): showGeneralErrorAlertDialog(context, 'Error', err.message);
+
+                });
 
                 try{
                 if(user != null) {
