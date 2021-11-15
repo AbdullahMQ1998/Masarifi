@@ -1,4 +1,5 @@
 import 'package:flash_chat/Components/Rounded_button.dart';
+import 'package:flash_chat/functions/AlertButtonFunction.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -79,13 +80,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
   }
 
 
-  Widget dialog(){
 
-    return Container(
-      child:Text("HAHA") ,
-    );
-
-  }
 
   @override
 
@@ -109,7 +104,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Container(
-            color: Color(0xffF4F9F9),
+
             child: Column(
 
               children: [
@@ -120,14 +115,12 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
 
                 Text('Let\'s Get Started!',
                 style: TextStyle(
-                  color: Colors.black,
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),),
 
                 Text('Create an account to Masaryfy to get all the features',
                   style: TextStyle(
-                    color: Colors.black,
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),),
@@ -141,8 +134,6 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                      userName = value;
                   },
                   decoration: kTextFieldDecoration.copyWith(hintText: 'User name',
-                    fillColor: Colors.white ,
-                     filled: true,
                       enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white, width: 1.0),
                   borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -174,8 +165,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                     });
 
                   },
-                  decoration: kTextFieldDecoration.copyWith(hintText: 'Monthly income',fillColor: Colors.white ,
-                    filled: true,
+                  decoration: kTextFieldDecoration.copyWith(hintText: 'Monthly income',
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white, width: 1.0),
                       borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -193,7 +183,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                   initialValue: gender = "Male",
                   icon: Icon(
                     Icons.expand_more,
-                    color: Colors.blue,
+                    color:  Color(0xff01937C),
                   ),
                   onChanged: (value) {
                       gender = value;
@@ -205,7 +195,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                   initialValue: occupation = "Employed",
                   icon: Icon(
                     Icons.expand_more,
-                    color: Colors.blue,
+                    color:  Color(0xff01937C),
                   ),
                   onChanged: (value) {
                       occupation = value;
@@ -227,11 +217,14 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
 
                 Visibility(
                   visible: isEmployee,
-                  child: Text('Expected Retirement Date',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                  ),),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Expected Retirement Date',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
+                    ),),
+                  ),
                 ),
 
 
@@ -249,19 +242,16 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                           child: Row(
                               children:[
                                 Icon(Icons.calendar_today_rounded,
-                                  color: Colors.blueAccent,
+                                  color: Colors.grey,
                                 ),
-                                Text("${DateFormat('yyyy-MM-dd').format(selectedDate)}",
+                                Text(" ${DateFormat('yyyy-MM-dd').format(selectedDate)}",
                                   style:
-                                  TextStyle(color: Colors.black
-                                      , fontWeight: FontWeight.bold),
+                                  TextStyle( fontWeight: FontWeight.bold , color: Colors.grey),
                                 ),
                               ]
                           ),
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.white
-                              ),
+
                               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(18.0),
@@ -273,19 +263,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                       ),
 
                       IconButton(onPressed: () {
-                        Alert(context: context, title: "Retirement Date", desc: "We need the retirement date to calculate the amount of years left to retire and use it to give the best advices to you",
-
-                          buttons: [
-                            DialogButton(child: Text('Understood',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20
-                            ),), onPressed:(){
-                              Navigator.pop(context);
-                            })
-                          ]
-
-                        ).show();
+                        showGeneralErrorAlertDialog(context,'Retirement Date','We need the retirement date to calculate the amount of years left to retire and use it to give the best advices to you');
                       }, icon: Icon(Icons.info_outline))
 
 
@@ -323,7 +301,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                   });
                 }
                 else{
-                  Alert(context: context, title: "ERROR", desc: "Make sure you have filled the required information").show();
+                  showErrorAlertDialog(context);
                 }
 
                 }),
@@ -336,7 +314,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
           ),
         ),
       ),
-      backgroundColor: Color(0xffF4F9F9),
+
       resizeToAvoidBottomInset: false,
     );
 

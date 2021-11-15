@@ -11,14 +11,14 @@ class ChooseExpenseOrMonthlyScreen extends StatelessWidget {
   final List<QueryDocumentSnapshot> userInfo;
   ChooseExpenseOrMonthlyScreen(this.function, this.loggedUser, this.userInfo);
 
+
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Color(0xff757575),
+
         child: Container(
         padding: EdgeInsets.all(30),
     decoration: BoxDecoration(
-    color: Colors.white,
     borderRadius: BorderRadius.only(
     topRight: Radius.circular(20),
     topLeft: Radius.circular(20),
@@ -30,6 +30,7 @@ class ChooseExpenseOrMonthlyScreen extends StatelessWidget {
           child: FlatButton(
             onPressed: () {
               showModalBottomSheet(
+                  barrierColor: Colors.transparent,
                   context: context,
                   builder: (BuildContext context) =>
                       AddExpenseScreen((taskTitle) {
@@ -51,6 +52,7 @@ class ChooseExpenseOrMonthlyScreen extends StatelessWidget {
           child: FlatButton(
             onPressed: () {
               showModalBottomSheet(
+                  barrierColor: Colors.transparent,
                   context: context,
                   builder: (BuildContext context) =>
                       AddMonthlyBillScreen((taskTitle) {

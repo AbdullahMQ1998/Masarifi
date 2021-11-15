@@ -325,7 +325,7 @@ AnimationController animationController;
                       ),
 
                     ])),
-            backgroundColor: Colors.white,
+
           );
         }
     );

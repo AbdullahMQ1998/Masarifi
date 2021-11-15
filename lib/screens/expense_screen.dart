@@ -102,7 +102,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
 
 
     return Scaffold(
-      backgroundColor: Color(0xfff2f3f4),
+      // backgroundColor: Color(0xfff2f3f4),
       body: SafeArea(
         child: Column(
           children:[
@@ -112,7 +112,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
               padding: const EdgeInsets.all(20.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
 
@@ -142,12 +142,14 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                child: Row(
                                  children:[
                                    Icon(Icons.calendar_today_rounded,
-                                   color: Colors.blueAccent,
+                                   color: Colors.grey,
                                    ),
                                    Text(isEnabled? '  $currentDate' : "  $beforeOneMonthDate",
                                      style:
-                                     TextStyle(color: Colors.black
-                                         , fontWeight: FontWeight.bold),
+                                     TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                       color: Colors.grey
+                                     ),
                                    ),
                                  ]
                                ),
@@ -173,12 +175,13 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                child: Row(
                                    children:[
                                      Icon(Icons.calendar_today_rounded,
-                                       color: Colors.blueAccent,
+                                       color: Colors.grey,
                                      ),
                                      Text(isEnabled2 ? ' $currentDate2':' $todayDate',
                                        style:
-                                       TextStyle(color: Colors.black
-                                           , fontWeight: FontWeight.bold),
+                                       TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                       color: Colors.grey),
                                      ),
                                    ]
                                ),
@@ -205,14 +208,16 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                            child: Row(
                                children:[
                                  Icon(Icons.menu_open_outlined,
-                                   color: Colors.blueAccent,
+                                   color: Colors.grey,
                                  ),
                                  Expanded(
                                    child: Text(' Expense type',
                                      style:
-                                     TextStyle(color: Colors.black45
-                                         , fontWeight: FontWeight.bold,
-                                       fontSize: 15
+                                     TextStyle(
+                                         // color: Colors.black45,
+                                         fontWeight: FontWeight.bold,
+                                       fontSize: 15,
+                                       color: Colors.grey
                                      ),
                                    ),
                                  ),
@@ -222,7 +227,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                    icon: const Icon(Icons.arrow_downward),
                                    iconSize: 20,
                                    elevation: 10,
-                                   style: const TextStyle(color: Colors.black),
+                                   style: const TextStyle(),
                                    underline: SizedBox(),
                                    onChanged: (newValue) {
                                      setState(() {
@@ -295,14 +300,15 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                      size: 30,
                                    ),
                                    decoration: BoxDecoration(
-                                     color: Colors.white,
+
                                      borderRadius: BorderRadius.all(Radius.circular(100))
                                    ),
                                    
                                  ),
-                                 Text('GO',
+                                 Text('Search',
                                    style: TextStyle(
                                      color: Colors.white,
+                                     fontWeight: FontWeight.bold,
                                      fontSize: 30
                                    ),
                                  ),
@@ -314,7 +320,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                              ),
                              style: ButtonStyle(
                                backgroundColor:MaterialStateProperty.all<Color>(
-                                   Colors.green.shade700
+                                   Color(0xff01937C)
                                ) ,
                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
 

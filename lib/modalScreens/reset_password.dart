@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_chat/functions/AlertButtonFunction.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -25,11 +26,9 @@ class _ResetPasswordState extends State<ResetPassword> {
 
 
     return Container(
-        color: Color(0xff757575),
     child: Container(
     padding: EdgeInsets.all(50),
     decoration: BoxDecoration(
-    color: Colors.white,
     borderRadius: BorderRadius.only(
     topRight: Radius.circular(20),
     topLeft: Radius.circular(20),
@@ -75,8 +74,8 @@ class _ResetPasswordState extends State<ResetPassword> {
 
           TextButton(
             onPressed: () {
-              if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)){
-                Alert(context: context, title: "ERROR", desc: "Please make sure you've entered a valid Email").show();
+              if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email) || email == null || email == '' || email == ' '){
+                showEmailAlertDialog(context);
               }
               else{
                 _auth.sendPasswordResetEmail(email: email);
@@ -86,7 +85,7 @@ class _ResetPasswordState extends State<ResetPassword> {
               padding: const EdgeInsets.all(8.0),
               child: Text('Reset Password',
                 style: TextStyle(
-                    color: Colors.white,
+                  color: Colors.white,
                     fontSize: 20
                 ),),
             ),

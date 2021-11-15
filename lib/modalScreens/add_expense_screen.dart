@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import '../screens/home_screen.dart';
+import 'package:flash_chat/functions/AlertButtonFunction.dart';
 
 class AddExpenseScreen extends StatefulWidget {
 
@@ -49,11 +49,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xff757575),
       child: Container(
         padding: EdgeInsets.all(30),
         decoration: BoxDecoration(
-            color: Colors.white,
+
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(20),
               topLeft: Radius.circular(20),
@@ -64,7 +63,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
             Text(
               'Add Expense',
               style: TextStyle(
-                  color: Color(0xff50c878),
+                  color: Color(0xff01937C),
                   fontSize: 30,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
@@ -102,7 +101,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     decoration: kTextFieldDecoration.copyWith(
                       hintText: 'Enter Expense cost',
                       suffixText: 'SAR',
-                      suffixStyle: TextStyle(color: Colors.black),
+                      suffixStyle: TextStyle(),
+
                     ),
                   ),
                 ),
@@ -111,10 +111,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
             icon: const Icon(Icons.arrow_downward),
             iconSize: 24,
             elevation: 10,
-            style: const TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.grey),
             underline: Container(
               height: 1,
-              color: Color(0xff50c878),
+              color: Color(0xff01937C),
             ),
             onChanged: (String newValue) {
               setState(() {
@@ -184,12 +184,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   Navigator.pop(context);
                   Navigator.pop(context);
                 } else {
-                  Alert(
-                          context: context,
-                          title: "ERROR",
-                          desc:
-                              "Make sure you have filled the required information")
-                      .show();
+                  showErrorAlertDialog(context);
                 }
               },
               child: Text(
@@ -199,7 +194,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
-              color: Color(0xff50c878),
+              color: Color(0xff01937C),
             ),
           ],
         ),

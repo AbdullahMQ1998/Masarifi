@@ -1,4 +1,6 @@
 import 'package:flash_chat/Components/widgets.dart';
+import 'package:flash_chat/Provider/dark_them.dart';
+import 'package:flash_chat/models/dark_them_prefrence.dart';
 import 'package:flash_chat/screens/analysis_screen.dart';
 import 'package:flash_chat/screens/expense_screen.dart';
 import 'package:flash_chat/screens/saving_plan_screen.dart';
@@ -7,13 +9,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 import '../modalScreens/choose_expense_or_monthly_screen.dart';
-import 'welcome_screen.dart';
 import 'package:flash_chat/Components/ListViewWidgets.dart';
 import 'package:mccounting_text/mccounting_text.dart';
-import 'package:clock/clock.dart';
-import 'package:fake_async/fake_async.dart';
-import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
+
 
 class HomeScreen extends StatefulWidget {
   static const String id = 'home_screen';
@@ -31,6 +34,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+
+
+
   final _fireStore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   List<QueryDocumentSnapshot> userInfoList;
@@ -39,13 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
   List<QueryDocumentSnapshot> otherUserExpenseList;
   List<QueryDocumentSnapshot> otherUserInfoList;
 
-  bool darkMode = false;
+
 
   @override
-  @override
-  @override
-  @override
   Widget build(BuildContext context) {
+
+    final themChange = Provider.of<DarkThemProvider>(context);
     Color _topContainerColor(String userBudget, String monthlyIncome) {
       double userBdget = double.parse(userBudget);
       double monthlyIncm = double.parse(monthlyIncome);
@@ -77,6 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     double totalBudget = 0;
+
 
 
 
@@ -288,6 +294,7 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               icon: Icon(Icons.show_chart),
               onPressed: () {
+
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -295,7 +302,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             userInfoList[0],
                             expenseList,
                             otherUserExpenseList,
-                            otherUserInfoList)));
+                            otherUserInfoList,
+                       )));
               },
             ),
             IconButton(
@@ -330,9 +338,12 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 10,
             ),
             FloatingActionButton(
+
                 backgroundColor:  Color(0xff01937C),
                 onPressed: () {
                   showModalBottomSheet(
+
+                      barrierColor: themChange.getDarkTheme() ? Colors.transparent : null,
                       context: context,
                       builder: (BuildContext context) =>
                           ChooseExpenseOrMonthlyScreen(
@@ -347,7 +358,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      backgroundColor: Color(0xfff2f3f4),
+      // backgroundColor: Color(0xfff2f3f4),
     );
   }
 }

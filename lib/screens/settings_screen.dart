@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_chat/Provider/dark_them.dart';
 import 'package:flash_chat/screens/edit_profile_screen.dart';
 import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:custom_switch/custom_switch.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -23,11 +25,12 @@ class _SettingScreenState extends State<SettingScreen> {
   bool status = false;
   final _auth = FirebaseAuth.instance;
   Widget build(BuildContext context) {
+final themChange = Provider.of<DarkThemProvider>(context);
 
 
 
     return Scaffold(
-      backgroundColor: Color(0xfff2f3f4),
+
 
       appBar: AppBar(
         title: Text('Back'),
@@ -105,7 +108,6 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
 
               decoration: BoxDecoration(
-                color: Colors.white,
 
               ),
             ),
@@ -156,7 +158,7 @@ class _SettingScreenState extends State<SettingScreen> {
                             ),
                           ),
                           Icon(Icons.chevron_right,
-                          color: Colors.black,)
+                          )
                         ],
                       ),
                     ),
@@ -182,10 +184,10 @@ class _SettingScreenState extends State<SettingScreen> {
 
                           CustomSwitch(
                             activeColor: Colors.green,
-                            value:false,
+                            value: themChange.getDarkTheme(),
                             onChanged: (value) {
                               setState(() {
-                                status = value;
+                               themChange.setDarkThem(value);
                               });
                             },
                           ),
@@ -204,12 +206,12 @@ class _SettingScreenState extends State<SettingScreen> {
                         children: [
                           Icon(Icons.logout,
                           size: 30,
-                          color: Colors.black,),
+                          ),
                           Text("  Sign out",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black
+
                           ),),
                         ],
                       ),
@@ -217,7 +219,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     Divider()
                   ],
                 ),
-                color: Colors.white,
+
 
               ),
             ),

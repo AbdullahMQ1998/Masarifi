@@ -1,17 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flash_chat/Provider/dark_them.dart';
+import 'package:flash_chat/models/dark_them_prefrence.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flash_chat/chartsData/categoryClass.dart';
 import 'package:flash_chat/chartsData/dailyChartClass.dart';
 import 'package:flash_chat/chartsData/monthlyChartClass.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:flash_chat/them_data.dart';
+
+
+
 
 class AnalysisScreen extends StatefulWidget {
   final QueryDocumentSnapshot userInfo;
   final List<QueryDocumentSnapshot> userExpenseList;
   final List<QueryDocumentSnapshot> otherUsersExpense;
   final List<QueryDocumentSnapshot> otherUsersInfo;
+
 
   AnalysisScreen(this.userInfo, this.userExpenseList,this.otherUsersExpense, this.otherUsersInfo);
 
@@ -20,6 +28,8 @@ class AnalysisScreen extends StatefulWidget {
 }
 
 class _AnalysisScreenState extends State<AnalysisScreen> {
+
+
 
   List<CategoryData> _charData;
   List<avgCategoryData> _avgcharData;
@@ -48,9 +58,12 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themChange = Provider.of<DarkThemProvider>(context);
+
+
 
     return Scaffold(
-      backgroundColor: Color(0xff1F1D36),
+      backgroundColor: themChange.getDarkTheme() ? Color(0xff1F1D36) : Colors.grey.shade50 ,
       body: SafeArea(
         child: ListView(
           children:[
@@ -58,15 +71,14 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
               children: [
                 Container(
                   child: SfCircularChart(
-                    backgroundColor: Color(0xff1F1D36),
                     legend: Legend(isVisible: true,textStyle: TextStyle(
-                      color: Colors.white,
+                      color: themChange.getDarkTheme() ? Colors.white :  Colors.black ,
                       fontWeight: FontWeight.bold
                     )),
                     title: ChartTitle(
                         text: 'Masaryfy Category Count',
                         textStyle: TextStyle(fontWeight: FontWeight.bold,
-                        color: Colors.white)),
+                        color: themChange.getDarkTheme() ? Colors.white :  Colors.black ,)),
                     series: <CircularSeries>[
                       PieSeries<CategoryData, String>(
                         explode: true,
@@ -85,7 +97,6 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
 
                 Container(
-                  color:  Color(0xff1F1D36),
                   child: Column(
 
                     children: [
@@ -137,12 +148,12 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                   ),
                                 ),
                                 decoration: BoxDecoration(
-                                    color: Color(0xff864879),
+                                    color: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),
                                     borderRadius: BorderRadius.all(Radius.circular(30))
                                 ),
                               ),
                               VerticalDivider(
-                                color: Colors.white,
+                                color:  themChange.getDarkTheme() ? Colors.white :  Colors.black,
                                 thickness: 1,
                                 indent: 0,
                                 endIndent: 0,
@@ -186,7 +197,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                   ),
                                 ),
                                 decoration: BoxDecoration(
-                                    color: Color(0xff864879),
+                                    color: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),
                                     borderRadius: BorderRadius.all(Radius.circular(30))
                                 ),
                               ),
@@ -200,7 +211,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                   ),
                 ),
 
-                Divider( thickness: 2,color: Colors.white,
+                Divider( thickness: 2,color: themChange.getDarkTheme() ? Colors.white :  Colors.black,
                   indent: 30,endIndent: 30,),
 
                 Container(
@@ -208,18 +219,18 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                   child: SfCartesianChart(
 
                     legend: Legend(isVisible: true,textStyle: TextStyle(
-                      color: Colors.white,
+                      color:  themChange.getDarkTheme() ? Colors.white :  Colors.black,
                       fontWeight: FontWeight.bold
                     )),
                     title: ChartTitle(
                         text: 'Masaryfy Average Users Expense Compare To You',
                         textStyle: TextStyle(fontWeight: FontWeight.bold,
-                            fontSize: 10, color: Colors.white)),
+                            fontSize: 10, color:  themChange.getDarkTheme() ? Colors.white :  Colors.black)),
                     primaryXAxis: CategoryAxis(labelStyle: TextStyle(
-                      color: Colors.white,fontWeight: FontWeight.bold, fontSize: 13
+                      color: themChange.getDarkTheme() ? Colors.white :  Colors.black,fontWeight: FontWeight.bold, fontSize: 13
                     )),
                     primaryYAxis: NumericAxis(minimum: 0 , maximum: maxUser > maxOther? maxUser : maxOther , interval: maxUser == 0 ? maxOther / 2 : maxUser / 2,labelStyle: TextStyle(
-                        color: Colors.white,fontWeight: FontWeight.bold, fontSize: 13
+                        color:  themChange.getDarkTheme() ? Colors.white :  Colors.black,fontWeight: FontWeight.bold, fontSize: 13
                     )),
                     series: <CartesianSeries>[
                       BarSeries<avgCategoryData, String>(
@@ -271,7 +282,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                   children: [
                                     Text('Most Average Category',
                                       style: TextStyle(
-                                          color: Colors.white,
+                                          color:   Colors.white ,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15
                                       ),),
@@ -299,7 +310,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: Color(0xff864879),
+                                  color: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
@@ -339,7 +350,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: Color(0xff864879),
+                                  color: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
@@ -351,23 +362,23 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                     ],
                   ),
                 ),
-                Divider( thickness: 2,color: Colors.white, indent: 20, endIndent: 20,),
+                Divider( thickness: 2,color:  themChange.getDarkTheme() ? Colors.white :  Colors.black, indent: 20, endIndent: 20,),
 
 
                 SfCartesianChart(
                   legend: Legend(isVisible: true , textStyle: TextStyle(
-                    color: Colors.white,
+                    color:  themChange.getDarkTheme() ? Colors.white :  Colors.black,
                     fontWeight: FontWeight.bold
                   )),
                   title: ChartTitle(
                       text: 'Masaryfy Users Daily Expense Count',
                       textStyle: TextStyle(fontWeight: FontWeight.bold,
-                          fontSize: 10,color: Colors.white)),
+                          fontSize: 10,color:  themChange.getDarkTheme() ? Colors.white :  Colors.black)),
                   primaryXAxis: CategoryAxis( labelStyle: TextStyle(
-                      color: Colors.white,fontWeight: FontWeight.bold, fontSize: 13
+                      color:  themChange.getDarkTheme() ? Colors.white :  Colors.black,fontWeight: FontWeight.bold, fontSize: 13
                   )),
                   primaryYAxis: NumericAxis(minimum: 0 , maximum: getMaxDailyExpenseCount()[0].toDouble() , interval: getMaxDailyExpenseCount()[0]/4.0,labelStyle: TextStyle(
-                      color: Colors.white,fontWeight: FontWeight.bold, fontSize: 13
+                      color: themChange.getDarkTheme() ? Colors.white :  Colors.black,fontWeight: FontWeight.bold, fontSize: 13
                   )),
                   series: <CartesianSeries>[
                     BarSeries<avgDayData, String>(
@@ -384,7 +395,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                 ),
 
 
-                Divider( thickness: 2,color: Colors.white,indent: 20,endIndent: 20,),
+                Divider( thickness: 2,color: themChange.getDarkTheme() ? Colors.white :  Colors.black,indent: 20,endIndent: 20,),
 
                 Container(
 
@@ -441,7 +452,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: Color(0xff864879),
+                                  color: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
@@ -486,7 +497,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: Color(0xff864879),
+                                  color: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
@@ -498,23 +509,23 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                     ],
                   ),
                 ),
-                Divider( thickness: 2,color: Colors.white,endIndent: 20,indent: 20,),
+                Divider( thickness: 2,color:  themChange.getDarkTheme() ? Colors.white :  Colors.black,endIndent: 20,indent: 20,),
 
 
                 SfCartesianChart(
                   legend: Legend(isVisible: true, textStyle: TextStyle(
-                    fontWeight: FontWeight.bold,color: Colors.white
+                    fontWeight: FontWeight.bold,color:  themChange.getDarkTheme() ? Colors.white :  Colors.black
                   )),
                   title: ChartTitle(
 
                       text: 'Masaryfy Users Monthly Expense Count',
                       textStyle: TextStyle(fontWeight: FontWeight.bold,
-                          fontSize: 10,color: Colors.white)),
+                          fontSize: 10,color:  themChange.getDarkTheme() ? Colors.white :  Colors.black)),
                   primaryXAxis: CategoryAxis(labelStyle: TextStyle(
-                      color: Colors.white,fontWeight: FontWeight.bold, fontSize: 13
+                      color:  themChange.getDarkTheme() ? Colors.white :  Colors.black,fontWeight: FontWeight.bold, fontSize: 13
                   )),
                   primaryYAxis: NumericAxis(minimum: 0 , maximum: getMaxMonthlyExpenseCount()[0].toDouble() , interval: getMaxMonthlyExpenseCount()[0]/4.0,labelStyle: TextStyle(
-                      color: Colors.white,fontWeight: FontWeight.bold, fontSize: 13
+                      color:  themChange.getDarkTheme() ? Colors.white :  Colors.black,fontWeight: FontWeight.bold, fontSize: 13
                   )),
                   series: <CartesianSeries>[
                     BarSeries<avgMonthData, String>(
@@ -587,7 +598,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: Color(0xff864879),
+                                  color: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
@@ -632,7 +643,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: Color(0xff864879),
+                                  color: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),

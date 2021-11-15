@@ -27,7 +27,6 @@ class RowTextWithTotal extends StatelessWidget {
             child: HomeScreenTextWidget(
               text: "$text",
               fontSize: 20,
-              color: Colors.black,
               fontWeight: FontWeight.w500,
               padding: 10,
             ),
@@ -39,7 +38,6 @@ class RowTextWithTotal extends StatelessWidget {
             text: "$totalAmount SAR",
             fontWeight: FontWeight.bold,
             fontSize: 15,
-            color: Colors.grey,
             padding: 20,
           ),
         ]);
@@ -116,7 +114,7 @@ class monthlyBillBubble extends StatelessWidget {
           Material(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             elevation: 5,
-            color: Colors.white,
+
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: FlatButton(
@@ -144,7 +142,7 @@ class monthlyBillBubble extends StatelessWidget {
                           children:[
 
                             monthlyBubbleTextStyle(
-                            firstText: "", secondText: "$billName ", padding: 0, fontSize: 25, color: Colors.black,
+                            firstText: "", secondText: "$billName ", padding: 0, fontSize: 25,
                           ),
 
                            Icon(billIcon,
@@ -173,7 +171,7 @@ class monthlyBillBubble extends StatelessWidget {
                         secondText: '',
                         fontSize: 15,
                         padding: 1,
-                        color: Colors.black,
+
                       ),
 
 
@@ -207,7 +205,7 @@ class monthlyBubbleTextStyle extends StatelessWidget {
           children:[
             Text(firstText,
               style: TextStyle(
-                  color: Colors.black,
+
                   fontSize: fontSize,
                   fontWeight: FontWeight.bold
               ),
@@ -262,7 +260,7 @@ class ExpensesBubble extends StatelessWidget {
             topRight: isLast? Radius.circular(10) : Radius.circular(0),
           ),
           elevation: 0,
-          color: Colors.white,
+
 
           child: Padding(
             padding: const EdgeInsets.all(30.0),
@@ -273,7 +271,7 @@ class ExpensesBubble extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 10),
                   child: Icon(expenseIcon,
                     size: 30,
-                    color: Colors.purple,
+
                   ),
                 ),
                 Column(
@@ -328,7 +326,7 @@ class ExpensesBubble extends StatelessWidget {
                 Text(expenseTotal,
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.green,
+
                       fontWeight: FontWeight.bold
                   ),
                   textAlign: TextAlign.right,

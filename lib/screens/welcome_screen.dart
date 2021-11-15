@@ -46,7 +46,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: animation.value,
+
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(

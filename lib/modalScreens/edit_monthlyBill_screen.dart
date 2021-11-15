@@ -100,11 +100,10 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
     dropdownValue = widget.userMonthlyBillList.get('billIcon');
     }
     return Container(
-      color: Color(0xff757575),
       child: Container(
         padding: EdgeInsets.all(30),
         decoration: BoxDecoration(
-            color: Colors.white,
+
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(20),
               topLeft: Radius.circular(20),
@@ -115,7 +114,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
             Text(
               'Edit Monthly Bill',
               style: TextStyle(
-                  color: Color(0xff50c878),
+                  color: Color(0xff01937C),
                   fontSize: 30,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
@@ -242,10 +241,10 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                     icon: const Icon(Icons.arrow_downward),
                     iconSize: 24,
                     elevation: 10,
-                    style: const TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.grey),
                     underline: Container(
                       height: 1,
-                      color: Color(0xff50c878),
+                      color: Color(0xff01937C),
                     ),
                     onChanged: (String newValue) {
                       setState(() {
@@ -277,12 +276,12 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                       child: Row(
                           children:[
                             Icon(Icons.calendar_today_rounded,
-                              color: Colors.blueAccent,
+                              color: Colors.grey,
                             ),
-                            Text(formattedDate == null?  billDateForrmated : formattedDate,
+                            Text(formattedDate == null?  ' $billDateForrmated' : ' $formattedDate',
                               style:
-                              TextStyle(color: Colors.black
-                                  , fontWeight: FontWeight.bold),
+                              TextStyle( color: Colors.grey,
+                                   fontWeight: FontWeight.bold),
                             ),
                           ]
                       ),
@@ -375,7 +374,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                   ),
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                          Colors.green
+                          Color(0xff01937C)
                       ),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(

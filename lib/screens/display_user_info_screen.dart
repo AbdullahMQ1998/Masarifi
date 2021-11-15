@@ -44,7 +44,7 @@ class _DisplayUserInfoScreen extends State<DisplayUserInfoScreen> {
                 builder:(context,snapshot) {
                   if (!snapshot.hasData) {
                     return CircularProgressIndicator(
-                      backgroundColor: Colors.blueAccent,
+                      backgroundColor: Colors.grey,
                     );
                   }
 

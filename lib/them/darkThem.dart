@@ -6,7 +6,7 @@ class myThemes{
 
   static final darkTheme = ThemeData(
       scaffoldBackgroundColor: Colors.black12,
-      primaryColor: Colors.green,
+
 
   );
 

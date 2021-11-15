@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Color(0xffF4F9F9),
+      // backgroundColor: Color(0xffF4F9F9),
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Padding(
@@ -96,10 +96,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   },
 
-                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your Email',fillColor: Colors.white ,
-                  filled: true,
+                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your Email' ,
+
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white, width: 1.0),
+                    borderSide: BorderSide( width: 1.0),
                     borderRadius: BorderRadius.all(Radius.circular(32.0)),
                   ),),
               ),
@@ -116,10 +116,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   });
                 },
 
-                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your password',fillColor: Colors.white ,
-                  filled: true,
+                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your password',
+
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white, width: 1.0),
+                    borderSide: BorderSide( width: 1.0),
                     borderRadius: BorderRadius.all(Radius.circular(32.0)),
                   ),),
               ),
@@ -131,6 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
                   showModalBottomSheet(
+                    barrierColor: Colors.transparent,
                       context: context,
                       builder: (BuildContext context) => ResetPassword()
                          );

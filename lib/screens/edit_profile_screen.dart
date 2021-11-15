@@ -130,7 +130,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
           Expanded(
             child: Container(
-              color: Colors.white,
+              // color: Colors.white,
               child: Padding(
                 padding: const EdgeInsets.all(30.0),
                 child: Container(
@@ -177,7 +177,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               ):Text(
                                 userName == null ? widget.userInfo.get('userName') : userName,
                                 style: TextStyle(
-                                    color: Colors.black,
                                     fontWeight: FontWeight.bold),
                               ),
                               Padding(
@@ -221,7 +220,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                              child: Text(
                                 widget.userInfo.get('email'),
                                 style: TextStyle(
-                                    color: Colors.black,
                                     fontWeight: FontWeight.bold),
                               ),
                            ),
@@ -276,7 +274,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ):Text(
                               monthlyIncome == null ? '${widget.userInfo.get('monthlyIncome')} SAR' : '$monthlyIncome SAR',
                               style: TextStyle(
-                                  color: Colors.black,
                                   fontWeight: FontWeight.bold),
                             ),
                             Padding(
@@ -306,7 +303,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         child: Text(
                           'Gender',
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: Colors.grey
                           ),
                         ),
                       ),
@@ -321,7 +318,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           icon: const Icon(Icons.arrow_downward),
                           iconSize: 24,
                           elevation: 10,
-                          style: const TextStyle(color: Colors.black),
+                          style: const TextStyle(),
                           underline: Container(
                             height: 1,
                             color: Color(0xff01937C),
@@ -347,7 +344,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         )) :Text(
                               editGender2 ? widget.userInfo.get('gender') : gender,
                               style: TextStyle(
-                                  color: Colors.black,
+
                                   fontWeight: FontWeight.bold),
                             ),
                             Padding(
@@ -376,7 +373,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                     ],
                   ),
-                  color: Colors.white,
                 ),
               ),
             ),

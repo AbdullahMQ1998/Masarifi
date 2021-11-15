@@ -3,8 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flash_chat/constants.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
-import '../screens/home_screen.dart';
+import 'package:flash_chat/functions/AlertButtonFunction.dart';
 
 class AddMonthlyBillScreen extends StatefulWidget {
   final Function addMonthlyBill;
@@ -47,6 +46,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
   }
 
 
+
   _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
@@ -67,11 +67,10 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xff757575),
       child: Container(
         padding: EdgeInsets.all(30),
         decoration: BoxDecoration(
-            color: Colors.white,
+
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(20),
               topLeft: Radius.circular(20),
@@ -81,7 +80,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
             Text(
               'Add Monthly Bill',
               style: TextStyle(
-                  color: Color(0xff50c878),
+                  color: Color(0xff01937C),
                   fontSize: 30,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
@@ -128,10 +127,10 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                   icon: const Icon(Icons.arrow_downward),
                   iconSize: 24,
                   elevation: 10,
-                  style: const TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.grey),
                   underline: Container(
                     height: 1,
-                    color: Color(0xff50c878),
+                    color: Color(0xff01937C),
                   ),
                   onChanged: (String newValue) {
                     setState(() {
@@ -163,12 +162,13 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                 child: Row(
                     children:[
                       Icon(Icons.calendar_today_rounded,
-                        color: Colors.blueAccent,
+                        color: Colors.grey,
                       ),
                       Text(formattedDate == null? " Select Bill Date" : ' $formattedDate',
                         style:
-                        TextStyle(color: Colors.black
-                            , fontWeight: FontWeight.bold,
+                        TextStyle(
+                          color: Colors.grey,
+                             fontWeight: FontWeight.bold,
                         fontSize: 15),
                       ),
                     ]
@@ -219,12 +219,11 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                   Navigator.pop(context);
                   Navigator.pop(context);
                 } else {
-                  Alert(
-                          context: context,
-                          title: "ERROR",
-                          desc:
-                              "Make sure you have filled the required information")
-                      .show();
+
+
+                  showErrorAlertDialog(context);
+
+
                 }
               },
               child: Text(
@@ -234,7 +233,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
-              color: Color(0xff50c878),
+              color: Color(0xff01937C),
             ),
           ],
         ),

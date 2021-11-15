@@ -54,11 +54,10 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
     dropdownValue = widget.userExpenseList.get('expenseIcon');
 
     return Container(
-      color: Color(0xff757575),
       child: Container(
         padding: EdgeInsets.all(30),
         decoration: BoxDecoration(
-            color: Colors.white,
+
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(20),
               topLeft: Radius.circular(20),
@@ -69,7 +68,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
             Text(
               'Edit Expense',
               style: TextStyle(
-                  color: Color(0xff50c878),
+                  color: Color(0xff01937C),
                   fontSize: 30,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
@@ -193,10 +192,10 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                   icon: const Icon(Icons.arrow_downward),
                   iconSize: 24,
                   elevation: 10,
-                  style: const TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.grey),
                   underline: Container(
                     height: 1,
-                    color: Color(0xff50c878),
+                    color: Color(0xff01937C),
                   ),
                   onChanged: (String newValue) {
                     setState(() {
@@ -268,7 +267,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
-              color: Color(0xff50c878),
+              color: Color(0xff01937C),
             ),
           ],
         ),
