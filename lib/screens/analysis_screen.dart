@@ -223,7 +223,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                       fontWeight: FontWeight.bold
                     )),
                     title: ChartTitle(
-                        text: 'Masaryfy Average Users Expense Compare To You',
+                        text: 'Masaryfy Average Users Categories Compare To You',
                         textStyle: TextStyle(fontWeight: FontWeight.bold,
                             fontSize: 10, color:  themChange.getDarkTheme() ? Colors.white :  Colors.black)),
                     primaryXAxis: CategoryAxis(labelStyle: TextStyle(
@@ -292,7 +292,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 30
+                                          fontSize: 25
                                       ),),
 
                                     SizedBox(
@@ -331,7 +331,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 30
+                                          fontSize: 25
                                       ),),
 
                                     SizedBox(

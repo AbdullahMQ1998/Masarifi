@@ -1,3 +1,4 @@
+import 'package:flash_chat/Provider/dark_them.dart';
 import 'package:flash_chat/modalScreens/edit_monthlyBill_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash_chat/modalScreens/edit_expense_screen.dart';
 import 'package:flash_chat/functions/AlertButtonFunction.dart';
+import 'package:provider/provider.dart';
+
 
 
 
@@ -20,6 +23,7 @@ class RowTextWithTotal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -72,6 +76,7 @@ class HomeScreenTextWidget extends StatelessWidget {
 }
 
 class monthlyBillBubble extends StatelessWidget {
+
   //this widget for the squares which contains monthly bills
   monthlyBillBubble(this.billName, this.billCost, this.billDate,this.billIcon, this.userMonthlyBillList,this.userInfo);
 
@@ -85,6 +90,7 @@ class monthlyBillBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themChange = Provider.of<DarkThemProvider>(context);
     DateTime todayDate = DateTime.now();
     int daysLeft = billDate.toDate().difference(todayDate).inDays;
 
@@ -121,6 +127,7 @@ class monthlyBillBubble extends StatelessWidget {
                 onPressed: (){
 
                   showModalBottomSheet(
+                    barrierColor: themChange.getDarkTheme()? Colors.transparent : null,
                       context: context,
                       builder: (BuildContext context) =>
                           EditMonthlyBillScreen((taskTitle) {
@@ -150,8 +157,6 @@ class monthlyBillBubble extends StatelessWidget {
                              color: Colors.grey,
                            ),
 
-
-                            
 
                           ]
                         ),
@@ -241,6 +246,7 @@ class ExpensesBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themChange = Provider.of<DarkThemProvider>(context);
 
     bool shouldDelete = false;
 
@@ -298,6 +304,7 @@ class ExpensesBubble extends StatelessWidget {
                           () {
 
                         showModalBottomSheet(
+                          barrierColor: themChange.getDarkTheme() ? Colors.transparent : null,
                             context: context,
                             builder: (BuildContext context) =>
                                 EditExpenseScreen((taskTitle) {
