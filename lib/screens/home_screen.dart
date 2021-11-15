@@ -1,5 +1,7 @@
 import 'package:flash_chat/Components/widgets.dart';
 import 'package:flash_chat/Provider/dark_them.dart';
+import 'package:flash_chat/Provider/language_change_provider.dart';
+import 'package:flash_chat/generated/l10n.dart';
 import 'package:flash_chat/models/dark_them_prefrence.dart';
 import 'package:flash_chat/screens/analysis_screen.dart';
 import 'package:flash_chat/screens/expense_screen.dart';
@@ -49,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
 
     final themChange = Provider.of<DarkThemProvider>(context);
     Color _topContainerColor(String userBudget, String monthlyIncome) {
@@ -176,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Padding(
                             padding: EdgeInsets.only(bottom: 20, top: 30),
                             child: HomeScreenTextWidget(
-                              text: 'Welcome ${usersInfo[0].get('userName')} !',
+                              text: '${S.of(context).welcomeText} ${usersInfo[0].get('userName')} !',
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -186,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Padding(
                             padding: EdgeInsets.only(left: 15),
                             child: HomeScreenTextWidget(
-                              text: "Total balance to spend",
+                              text: "${S.of(context).balanceToSpend}",
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
                               color: Colors.white70,
@@ -211,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   curve: Curves.decelerate,
                                 ),
                                 Text(
-                                  ' SAR',
+                                  ' ${S.of(context).saudiRyal}',
                                   style: TextStyle(
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
@@ -239,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     RowTextWithTotal(
-                      text: "Monthly Bills",
+                      text: "${S.of(context).monthlyBills}",
                       totalAmount: usersInfo[0].get('totalMonthlyBillCost'),
                       userInfo: usersInfo[0],
                     ),
@@ -256,9 +259,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     RowTextWithTotal(
                       userInfo: usersInfo[0],
-                      text: "Expenses >",
+                      text: "${S.of(context).expense} >",
                       totalAmount: usersInfo[0].get('totalExpense'),
                       onPress: () {
+                        context.read<LanguageChangeProvider>().changeLocale('ar');
                         DateTime currentDate = DateTime.now();
                         DateTime beforeOneMonthDate = DateTime(currentDate.year,
                             currentDate.month - 1, currentDate.day);

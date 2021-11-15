@@ -8,6 +8,7 @@ import 'package:flash_chat/modalScreens/edit_expense_screen.dart';
 import 'package:flash_chat/functions/AlertButtonFunction.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flash_chat/generated/l10n.dart';
 
 
 
@@ -39,7 +40,7 @@ class RowTextWithTotal extends StatelessWidget {
 
 
           HomeScreenTextWidget(
-            text: "$totalAmount SAR",
+            text: "$totalAmount ${S.of(context).saudiRyal}",
             fontWeight: FontWeight.bold,
             fontSize: 15,
             padding: 20,
@@ -165,14 +166,14 @@ class monthlyBillBubble extends StatelessWidget {
 
                       
                       monthlyBubbleTextStyle(
-                        firstText: "Cost: ",
-                        secondText: "$billCost SAR",
+                        firstText: "${S.of(context).costInMonthsBubble}",
+                        secondText: "$billCost ${S.of(context).saudiRyal}",
                         padding: 1,
                         fontSize: 18,
                         color: Colors.green,
                       ),
                       monthlyBubbleTextStyle(
-                        firstText: "$daysLeft Days left",
+                        firstText: "$daysLeft ${S.of(context).daysLeft}",
                         secondText: '',
                         fontSize: 15,
                         padding: 1,

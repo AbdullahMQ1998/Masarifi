@@ -1,0 +1,42 @@
+{
+  "welcomeText" : "مرحبًا",
+  "balanceToSpend" :"الميزانية المقترحة",
+  "saudiRyal": "ريال",
+  "monthlyBills":"الفواتير الشهرية",
+  "costInMonthsBubble": "التكلفة: ",
+  "daysLeft": "يوم متبقي" ,
+  "expense":"المصاريف",
+  "addExpense": "اضف مصروف",
+  "addMonthlyBill": "اضف فاتورة شهرية",
+  "expenseName": "اسم المصروف",
+  "expenseCost": "تكلفة المصروف",
+  "add": "اضافة",
+  "billName": "اسم الفاتورة",
+  "billCost": "تكلفة الفاتورة",
+  "billDate": "تاريخ دفع الفاتورة",
+  "editExpense": "تعديل المصروف",
+  "update": "تعديل",
+  "editMonthlyBill": "تعديل فاتورة شهرية",
+  "delete":"حذف",
+  "masarifiCategoryCount":"عدد المصاريف لكل تصنيف في تطبيق مصاريفي",
+  "mostCategory": "الأكثر عددًا",
+  "leastCategory": "الأقل عددًا",
+  "masaryfyAverageUsersCatefories": "معدل المصاريف حسب النوع لمستخدمي تطبيق مصاريفي مقارنة بك",
+  "avgExpense":"معدل المصاريف",
+  "yourExpense": "مصاريفك",
+  "mostAvgCategory": "الأكثر للمستخدمين",
+  "yourMostCategory": "الأكثر لك",
+  "masarifiUserDaily": "عدد المصاريف لكل يوم في تطبيق مصاريفي",
+  "dailyExpense": "المصاريف اليومية",
+  "lowestDay": "اقل يوم",
+  "bestDay": "اكثر يوم",
+  "masarifiMonthly": "عدد المصاريف لكل شهر في تطبيق مصاريفي",
+  "monthlyExpense": "المصاريف الشهرية",
+  "lowestMonth": "اقل شهر",
+  "bestMonth": "اكثر شهر"
+
+
+
+
+
+}

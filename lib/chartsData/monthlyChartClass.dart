@@ -47,7 +47,7 @@ int decemberCounter  = 0;
 Map<int , String> monthlyExpenseCount;
 Map<String , int> maxMonthlyExpenseCount;
 
-int percentMonthly = 0;
+int percentMonthly = 1;
 
 
 Timestamp expenseDate;

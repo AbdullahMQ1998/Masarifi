@@ -13,6 +13,7 @@ import 'package:flash_chat/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flash_chat/functions/AlertButtonFunction.dart';
+import 'package:flash_chat/generated/l10n.dart';
 
 class AddExpenseScreen extends StatefulWidget {
 
@@ -149,7 +150,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
               children: [
                 Text(
-                  'Add Expense',
+                  '${S.of(context).addExpense}',
                   style: TextStyle(
                       color: Color(0xff01937C),
                       fontSize: 30,
@@ -172,7 +173,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           });
                         },
                         decoration:
-                            kTextFieldDecoration.copyWith(hintText: 'Expense name'),
+                            kTextFieldDecoration.copyWith(hintText: '${S.of(context).expenseName}'),
                       ),
                     ),
                     Padding(
@@ -190,8 +191,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           });
                         },
                         decoration: kTextFieldDecoration.copyWith(
-                          hintText: 'Enter Expense cost',
-                          suffixText: 'SAR',
+                          hintText: '${S.of(context).expenseCost}',
+                          suffixText: '${S.of(context).saudiRyal}',
                           suffixStyle: TextStyle(),
 
                         ),
@@ -278,7 +279,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     }
                   },
                   child: Text(
-                    'Add',
+                    '${S.of(context).add}',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,

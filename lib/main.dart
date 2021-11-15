@@ -5,6 +5,7 @@ import 'package:flash_chat/screens/settings_screen.dart';
 import 'package:flash_chat/them/darkThem.dart';
 import 'package:flash_chat/them_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flash_chat/screens/login_screen.dart';
@@ -13,6 +14,9 @@ import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flash_chat/screens/register_user_info.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'Provider/language_change_provider.dart';
+import 'generated/l10n.dart';
 
 
 void main() => runApp(Masarifii());
@@ -26,6 +30,7 @@ class Masarifii extends StatefulWidget {
 
 class _MasarifiiState extends State<Masarifii> {
  DarkThemProvider themChangeProvider = DarkThemProvider();
+ LanguageChangeProvider languageChangeProvider = LanguageChangeProvider();
   void getCurrentAppThem() async {
     themChangeProvider.setDarkThem(await themChangeProvider.darkThemePreferences.getTheme());
   }
@@ -45,13 +50,24 @@ class _MasarifiiState extends State<Masarifii> {
         ChangeNotifierProvider(create: (_){
           return themChangeProvider;
         }
-        )
+        ),
+        ChangeNotifierProvider(create: (context){
+          return languageChangeProvider;
+        })
       ],
 
     child: Consumer<DarkThemProvider>(
 
       builder: (context, themData,child) {
         return MaterialApp(
+          locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocale,
+          localizationsDelegates: [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: S.delegate.supportedLocales,
 
           theme: Styles.themeData(themChangeProvider.getDarkTheme(), context),
           initialRoute: WelcomeScreen.id,

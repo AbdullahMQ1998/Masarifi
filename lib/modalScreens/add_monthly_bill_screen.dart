@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/functions/AlertButtonFunction.dart';
 import 'package:provider/provider.dart';
+import 'package:flash_chat/generated/l10n.dart';
 
 class AddMonthlyBillScreen extends StatefulWidget {
   final Function addMonthlyBill;
@@ -142,7 +143,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
             child: Column(
               children: [
                 Text(
-                  'Add Monthly Bill',
+                  '${S.of(context).monthlyBills}',
                   style: TextStyle(
                       color: Color(0xff01937C),
                       fontSize: 30,
@@ -164,7 +165,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                         },
                         maxLength: 10,
                         decoration:
-                            kTextFieldDecoration.copyWith(hintText: 'Bill name' , counter: Offstage()),
+                            kTextFieldDecoration.copyWith(hintText: '${S.of(context).billName}' , counter: Offstage()),
                       ),
                     ),
                     Padding(
@@ -182,8 +183,8 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                           });
                         },
                         decoration: kTextFieldDecoration.copyWith(
-                          hintText: 'Enter Bill cost',
-                          suffixText: 'SAR',
+                          hintText: '${S.of(context).billCost}',
+                          suffixText: '${S.of(context).saudiRyal}',
                           suffixStyle: TextStyle(), counter: Offstage()
                         ),
                       ),
@@ -235,7 +236,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                             color: Colors.grey,
                           ),
                           Center(
-                            child: Text(formattedDate == null? " Select Bill Date" : ' $formattedDate',
+                            child: Text(formattedDate == null? " ${S.of(context).billDate}" : ' $formattedDate',
                               style:
                               TextStyle(
                                 color: Colors.grey,
@@ -299,7 +300,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                     }
                   },
                   child: Text(
-                    'Add',
+                    '${S.of(context).add}',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,

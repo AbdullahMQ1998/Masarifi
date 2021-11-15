@@ -47,7 +47,7 @@ Timestamp expenseDate;
 Map<int , String> dailyExpenseCount;
 Map<String , int> maxDailyExpenseCount;
 
-int percentDaily = 0;
+int percentDaily = 1;
 
 
 void getOtherUsersDay(List<QueryDocumentSnapshot> otherUsersExpense) {

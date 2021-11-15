@@ -10,6 +10,7 @@ import 'package:flash_chat/chartsData/dailyChartClass.dart';
 import 'package:flash_chat/chartsData/monthlyChartClass.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flash_chat/them_data.dart';
+import 'package:flash_chat/generated/l10n.dart';
 
 
 
@@ -77,7 +78,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                       fontWeight: FontWeight.bold
                     )),
                     title: ChartTitle(
-                        text: 'Masaryfy Category Count',
+                        text: '${S.of(context).masarifiCategoryCount}',
                         textStyle: TextStyle(fontWeight: FontWeight.bold,
                         color: themChange.getDarkTheme() ? Colors.white :  Colors.black ,)),
                     series: <CircularSeries>[
@@ -115,7 +116,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                   padding: const EdgeInsets.all(15.0),
                                   child: Column(
                                     children: [
-                                      Text('Most Category',
+                                      Text('${S.of(context).mostCategory}',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
@@ -164,7 +165,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                   padding: const EdgeInsets.all(15.0),
                                   child: Column(
                                     children: [
-                                      Text('Least Category',
+                                      Text('${S.of(context).leastCategory}',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
@@ -224,7 +225,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                       fontWeight: FontWeight.bold
                     )),
                     title: ChartTitle(
-                        text: 'Masaryfy Average Users Categories Compare To You',
+                        text: '${S.of(context).masaryfyAverageUsersCatefories}',
                         textStyle: TextStyle(fontWeight: FontWeight.bold,
                             fontSize: 10, color:  themChange.getDarkTheme() ? Colors.white :  Colors.black)),
                     primaryXAxis: CategoryAxis(labelStyle: TextStyle(
@@ -238,7 +239,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                         dataSource: _avgcharData,
                         xValueMapper: (avgCategoryData data, _) => data.expenseName,
                         yValueMapper: (avgCategoryData data, _) => data.otherUserstotalAmount,
-                        name: 'Avg Expense',
+                        name: '${S.of(context).avgExpense}',
                         dataLabelSettings: DataLabelSettings(
                           showCumulativeValues: true, useSeriesColor: true,),
 
@@ -248,7 +249,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                         dataSource: _avgcharData,
                         xValueMapper: (avgCategoryData data, _) => data.expenseName,
                         yValueMapper: (avgCategoryData data, _) => data.myTotalAmount,
-                        name: 'Your Expense',
+                        name: '${S.of(context).yourExpense}',
                         dataLabelSettings: DataLabelSettings(
                           showCumulativeValues: true, useSeriesColor: true,
                         ),
@@ -281,7 +282,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 child: Column(
 
                                   children: [
-                                    Text('Most Average Category',
+                                    Text('${S.of(context).mostAvgCategory}',
                                       style: TextStyle(
                                           color:   Colors.white ,
                                           fontWeight: FontWeight.bold,
@@ -323,7 +324,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 padding: const EdgeInsets.all(15.0),
                                 child: Column(
                                   children: [
-                                    Text('Your Most Category',
+                                    Text('${S.of(context).yourMostCategory}',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
@@ -375,7 +376,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                     fontWeight: FontWeight.bold
                   )),
                   title: ChartTitle(
-                      text: 'Masaryfy Users Daily Expense Count',
+                      text: '${S.of(context).masarifiUserDaily}',
                       textStyle: TextStyle(fontWeight: FontWeight.bold,
                           fontSize: 10,color:  themChange.getDarkTheme() ? Colors.white :  Colors.black)),
                   primaryXAxis: CategoryAxis( labelStyle: TextStyle(
@@ -389,7 +390,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                       dataSource: _dayData,
                       xValueMapper: (avgDayData data, _) => data.dayName,
                       yValueMapper: (avgDayData data, _) => data.dayAmount,
-                      name: 'Daily Expense',
+                      name: '${S.of(context).dailyExpense}',
                       dataLabelSettings: DataLabelSettings(
                         showCumulativeValues: true, useSeriesColor: true,),
 
@@ -420,7 +421,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 child: Column(
 
                                   children: [
-                                    Text('Best Day of Purchase',
+                                    Text('${S.of(context).bestDay}',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
@@ -465,7 +466,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 padding: const EdgeInsets.all(15.0),
                                 child: Column(
                                   children: [
-                                    Text('Lowest Day of Purchase',
+                                    Text('${S.of(context).lowestDay}',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
@@ -522,7 +523,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                   )),
                   title: ChartTitle(
 
-                      text: 'Masaryfy Users Monthly Expense Count',
+                      text: '${S.of(context).masarifiMonthly}',
                       textStyle: TextStyle(fontWeight: FontWeight.bold,
                           fontSize: 10,color:  themChange.getDarkTheme() ? Colors.white :  Colors.black)),
                   primaryXAxis: CategoryAxis(labelStyle: TextStyle(
@@ -536,7 +537,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                       dataSource: _monthData,
                       xValueMapper: (avgMonthData data, _) => data.monthName,
                       yValueMapper: (avgMonthData data, _) => data.monthAmount,
-                      name: 'Monthly Expense',
+                      name: '${S.of(context).monthlyExpense}',
                       dataLabelSettings: DataLabelSettings(
                         showCumulativeValues: true, useSeriesColor: true,),
 
@@ -566,7 +567,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 child: Column(
 
                                   children: [
-                                    Text('Best Day of Purchase',
+                                    Text('${S.of(context).bestMonth}',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
@@ -611,7 +612,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 padding: const EdgeInsets.all(15.0),
                                 child: Column(
                                   children: [
-                                    Text('Lowest Day of Purchase',
+                                    Text('${S.of(context).lowestMonth}',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
