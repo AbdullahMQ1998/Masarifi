@@ -28,11 +28,6 @@ List<avgDayData> getDayChartData() {
 
 
 
-
-
-
-
-
 int saturdayCounter  = 0;
 int sundayCounter  = 0;
 int mondayCounter  = 0;
@@ -132,11 +127,9 @@ List<int> getMaxDailyExpenseCount(){
     }
 
   }
-
   sort.add(max);
   sort.add(secondBest);
   sort.add(lowest);
   percentDaily = total;
-
   return sort;
 }

@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:custom_switch/custom_switch.dart';
 import 'package:provider/provider.dart';
+import 'package:flash_chat/generated/l10n.dart';
 
 
 
@@ -33,7 +34,7 @@ final themChange = Provider.of<DarkThemProvider>(context);
 
 
       appBar: AppBar(
-        title: Text('Back'),
+
         backgroundColor: Color(0xff01937C),
       ),
       body: SafeArea(
@@ -82,7 +83,7 @@ final themChange = Provider.of<DarkThemProvider>(context);
                         onPressed: () {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfileScreen(widget.userInfo)));
                         },
-                        child: Text('Edit Profile',
+                        child: Text('${S.of(context).editProfile}',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 15
@@ -117,7 +118,7 @@ final themChange = Provider.of<DarkThemProvider>(context);
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Text(
-                  'PREFERENCES',
+                  '${S.of(context).preferences}',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -145,7 +146,7 @@ final themChange = Provider.of<DarkThemProvider>(context);
                             width: 10,
                           ),
                           Expanded(
-                            child: Text('Language',
+                            child: Text('${S.of(context).language}',
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold
@@ -175,7 +176,7 @@ final themChange = Provider.of<DarkThemProvider>(context);
                             width: 10,
                           ),
                           Expanded(
-                            child: Text('Dark Mode',
+                            child: Text('${S.of(context).darkMode}',
                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold
@@ -207,7 +208,7 @@ final themChange = Provider.of<DarkThemProvider>(context);
                           Icon(Icons.logout,
                           size: 30,
                           ),
-                          Text("  Sign out",
+                          Text("  ${S.of(context).signOut}",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,

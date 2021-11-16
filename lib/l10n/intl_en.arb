@@ -33,6 +33,45 @@
   "masarifiMonthly": "Masarifi Users Monthly Expense Count",
   "monthlyExpense": "Monthly Expense",
   "lowestMonth": "Lowest Month Of Purchase",
-  "bestMonth": "Best Month Of Purchase"
+  "bestMonth": "Best Month Of Purchase",
+  "needs": "Needs",
+  "wants": "Wants",
+  "saving": "Saving",
+  "needsDefinition":"Needs are expenses that you can’t avoid, payments for all the essentials that would be difficult to live without.",
+  "needsPercentage": "50% of your monthly income should cover your most necessary costs.",
+  "basedOn": "Based on your monthly income",
+  "yourBudgetNeeds": "your budget on needs is",
+  "yourBudgetWants": "your budget on wants is",
+  "wantsDefinition": "Wants are defined as non-essential expenses—things that you choose to spend your money on, although you could live without them if you had to.",
+  "wantsPercentage": "30% of your monthly income can be used to cover your wants",
+  "savingDefinition": "Consistently putting aside 20% of your pay each month can help you build a better, more durable savings plan.",
+  "savingPercentage": "the remaining 20% can be put towards achieving your savings goals",
+  "managedToSave": "If you manged to save",
+  "investWith": "every month and invest with 5% interest rate, you will ended up having",
+  "yearsBasedOnRetireDay": "years based on your retirement date",
+  "editProfile": "Edit Profile",
+  "preferences": "PREFERENCES",
+  "save": "Save",
+  "language": "Language",
+  "darkMode": "Dark Mode",
+  "signOut": "Sign Out",
+  "userName": "Username",
+  "email": "Email",
+  "monthlyIncome": "Monthly Income",
+  "gender":"Gender",
+  "deleteBill": "Delete Bill",
+  "deleteExpense": "Delete  Expense",
+  "wouldYouLikeDeleteMonthly": "Would you like to delete the current monthly bill?",
+  "wouldYouLikeDeleteExpense": "Would you like to delete the current expense?",
+  "confirm": "Confirm",
+  "cancel": "Cancel"
+
+
+
+
+
+
+
+  
 
 }

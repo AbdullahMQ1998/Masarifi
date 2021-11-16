@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flash_chat/generated/l10n.dart';
 
 
 class EditExpenseScreen extends StatefulWidget {
@@ -160,7 +161,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
 
               children: [
                 Text(
-                  'Edit Expense',
+                  '${S.of(context).editExpense}',
                   style: TextStyle(
                       color: Color(0xff01937C),
                       fontSize: 30,
@@ -369,7 +370,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                     },
 
                   child: Text(
-                    'Update',
+                    '${S.of(context).update}',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,

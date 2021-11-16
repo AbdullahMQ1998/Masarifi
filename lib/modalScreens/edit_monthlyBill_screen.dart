@@ -11,6 +11,7 @@ import 'package:flash_chat/functions/AlertButtonFunction.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io';
+import 'package:flash_chat/generated/l10n.dart';
 
 class EditMonthlyBillScreen extends StatefulWidget {
 
@@ -185,7 +186,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
 
               children: [
                 Text(
-                  'Edit Monthly Bill',
+                  '${S.of(context).editMonthlyBill}',
                   style: TextStyle(
                       color: Color(0xff01937C),
                       fontSize: 30,
@@ -387,10 +388,11 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
 
                     TextButton(
                       onPressed: () {
-
+                        Platform.isIOS ?
+                        showIOSDeleteMonthlyBillsAlert(context, widget.userInfo, widget.userMonthlyBillList, shouldDelete):
                         showAlertDialogForMonthlyBill(context, shouldDelete, widget.userInfo, widget.userMonthlyBillList);
                       },
-                      child: Text('Delete',
+                      child: Text('${S.of(context).delete}',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 15
@@ -453,7 +455,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text('Update',
+                        child: Text('${S.of(context).update}',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 20

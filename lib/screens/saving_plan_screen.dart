@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:finance/finance.dart';
 import 'package:mccounting_text/mccounting_text.dart';
+import 'package:flash_chat/generated/l10n.dart';
 
 
 class SavingPlanScreen extends StatefulWidget {
@@ -104,11 +104,9 @@ AnimationController animationController;
                           child: Container(
 
                             child: Padding(
-                              padding: const EdgeInsets.all(20.0),
+                              padding: const EdgeInsets.all(10.0),
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
-
                                   Center(
                                     child: new FadeTransition(
                                       opacity: animationController.drive(CurveTween(curve: Curves.easeIn)),
@@ -119,10 +117,10 @@ AnimationController animationController;
                                               height: 30,
                                             ),
 
-                                            Text('Needs',
+                                            Text('${S.of(context).needs}',
                                               style: TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: 25,
+                                                  fontSize: 20,
                                                   fontWeight: FontWeight.bold
                                               ),),
 
@@ -153,7 +151,7 @@ AnimationController animationController;
                                         duration: Duration(seconds: 1),
                                         curve: Curves.decelerate,
                                       ),
-                                      Text(' SAR',
+                                      Text(' ${S.of(context).saudiRyal}',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20
@@ -170,10 +168,10 @@ AnimationController animationController;
                                       child:  Column(
                                           children: [
 
-                                            Text('Wants',
+                                            Text('${S.of(context).wants}',
                                               style: TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: 25,
+                                                  fontSize: 20,
                                                   fontWeight: FontWeight.bold
                                               ),),
 
@@ -204,7 +202,7 @@ AnimationController animationController;
                                         duration: Duration(seconds: 1),
                                         curve: Curves.decelerate,
                                       ),
-                                      Text(' SAR',
+                                      Text(' ${S.of(context).saudiRyal}',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20
@@ -222,10 +220,10 @@ AnimationController animationController;
                                       child:  Column(
                                           children: [
 
-                                            Text('Saving',
+                                            Text('${S.of(context).saving}',
                                               style: TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: 25,
+                                                  fontSize: 20,
                                                   fontWeight: FontWeight.bold
                                               ),),
 
@@ -255,7 +253,7 @@ AnimationController animationController;
                                         duration: Duration(seconds: 1),
                                         curve: Curves.decelerate,
                                       ),
-                                      Text(' SAR',
+                                      Text(' ${S.of(context).saudiRyal}',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20
@@ -289,30 +287,30 @@ AnimationController animationController;
 
                               Container(
                                 child: PlanBubble(
-                                  'Needs',
-                                  'Needs are expenses that you can’t avoid, payments for all the essentials that would be difficult to live without.',
-                                    '50% of your monthly income should cover your most necessary costs.',
-                                    'Based on your monthly income ${widget.userInfo.get('monthlyIncome')} SAR, your budget on needs is ${widget.needs} SAR',
+                                  '${S.of(context).needs}',
+                                  '${S.of(context).needsDefinition}',
+                                    '${S.of(context).needsPercentage}',
+                                    '${S.of(context).basedOn} ${widget.userInfo.get('monthlyIncome')} ${S.of(context).saudiRyal}, ${S.of(context).yourBudgetNeeds} ${widget.needs} ${S.of(context).saudiRyal}',
                                     Color(0xffB983FF)
                                 ),
                                 width: 300,
                               ),
 
                               Container(
-                                child: PlanBubble('Wants',
-                                    'Wants are defined as non-essential expenses—things that you choose to spend your money on, although you could live without them if you had to.',
-                                    '30% of your monthly income can be used to cover your wants',
-                                    'Based on your monthly income ${widget.userInfo.get('monthlyIncome')} SAR, your budget on needs is ${widget.wants} SAR',
+                                child: PlanBubble('${S.of(context).wants}',
+                                    '${S.of(context).wantsDefinition}',
+                                    '${S.of(context).wantsPercentage}',
+                                    '${S.of(context).basedOn} ${widget.userInfo.get('monthlyIncome')} ${S.of(context).saudiRyal}, ${S.of(context).yourBudgetWants} ${widget.wants} ${S.of(context).saudiRyal}',
                                     Color(0xff94B3FD)),
                                 width: 350,
                               ),
 
                               Container(
                                 child: PlanBubble(
-                                    'Saving',
-                                    'Consistently putting aside 20% of your pay each month can help you build a better, more durable savings plan.',
-                                    'the remaining 20% can be put towards achieving your savings goals',
-                                    'If you manged to save ${widget.saving.toStringAsFixed(2)} every month and invest with 5% interest rate, you will ended up having ${Finance.fv(rate: rate, nper: yearsToRetire, pmt: - payments * 12 , pv:0 ).toStringAsFixed(2)} SAR in $yearsToRetire years based on your retirement date',
+                                    '${S.of(context).saving}',
+                                    '${S.of(context).savingDefinition}',
+                                    '${S.of(context).savingPercentage}',
+                                    '${S.of(context).managedToSave} ${widget.saving.toStringAsFixed(2)} ${S.of(context).investWith} ${Finance.fv(rate: rate, nper: yearsToRetire, pmt: - payments * 12 , pv:0 ).toStringAsFixed(2)} ${S.of(context).saudiRyal} in $yearsToRetire ${S.of(context).yearsBasedOnRetireDay}',
                                     Color(0xffC37B89),
                                 ),
                                 width: 350,

@@ -341,23 +341,26 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               width: 10,
             ),
-            FloatingActionButton(
+            Container(
+              height: 40,
+              child: FloatingActionButton(
 
-                backgroundColor:  Color(0xff01937C),
-                onPressed: () {
-                  showModalBottomSheet(
-                      barrierColor: themChange.getDarkTheme() ? Colors.transparent : null,
-                      context: context,
-                      builder: (BuildContext context) =>
-                          ChooseExpenseOrMonthlyScreen(
-                            (taskTitle) {
-                              Navigator.pop(context);
-                            },
-                            widget.loggedUser,
-                            userInfoList,
-                          ));
-                },
-                child: Icon(Icons.add))
+                  backgroundColor:  Color(0xff01937C),
+                  onPressed: () {
+                    showModalBottomSheet(
+                        barrierColor: themChange.getDarkTheme() ? Colors.transparent : null,
+                        context: context,
+                        builder: (BuildContext context) =>
+                            ChooseExpenseOrMonthlyScreen(
+                              (taskTitle) {
+                                Navigator.pop(context);
+                              },
+                              widget.loggedUser,
+                              userInfoList,
+                            ));
+                  },
+                  child: Icon(Icons.add)),
+            )
           ],
         ),
       ),

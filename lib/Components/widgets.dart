@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flash_chat/Provider/dark_them.dart';
 import 'package:flash_chat/modalScreens/edit_monthlyBill_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -322,6 +324,7 @@ class ExpensesBubble extends StatelessWidget {
                       ),
                       IconButton(onPressed: (){
 
+                        Platform.isIOS? showIOSDeleteExpenseAlert(context, userInfoList, userExpenseList, shouldDelete):
                        showAlertDialogForExpense(context, shouldDelete, userInfoList, userExpenseList);
 
                       }, icon: Icon(Icons.delete),

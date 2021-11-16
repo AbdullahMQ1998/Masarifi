@@ -384,6 +384,316 @@ class S {
       args: [],
     );
   }
+
+  /// `Needs`
+  String get needs {
+    return Intl.message(
+      'Needs',
+      name: 'needs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wants`
+  String get wants {
+    return Intl.message(
+      'Wants',
+      name: 'wants',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saving`
+  String get saving {
+    return Intl.message(
+      'Saving',
+      name: 'saving',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Needs are expenses that you can’t avoid, payments for all the essentials that would be difficult to live without.`
+  String get needsDefinition {
+    return Intl.message(
+      'Needs are expenses that you can’t avoid, payments for all the essentials that would be difficult to live without.',
+      name: 'needsDefinition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `50% of your monthly income should cover your most necessary costs.`
+  String get needsPercentage {
+    return Intl.message(
+      '50% of your monthly income should cover your most necessary costs.',
+      name: 'needsPercentage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Based on your monthly income`
+  String get basedOn {
+    return Intl.message(
+      'Based on your monthly income',
+      name: 'basedOn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `your budget on needs is`
+  String get yourBudgetNeeds {
+    return Intl.message(
+      'your budget on needs is',
+      name: 'yourBudgetNeeds',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `your budget on wants is`
+  String get yourBudgetWants {
+    return Intl.message(
+      'your budget on wants is',
+      name: 'yourBudgetWants',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wants are defined as non-essential expenses—things that you choose to spend your money on, although you could live without them if you had to.`
+  String get wantsDefinition {
+    return Intl.message(
+      'Wants are defined as non-essential expenses—things that you choose to spend your money on, although you could live without them if you had to.',
+      name: 'wantsDefinition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `30% of your monthly income can be used to cover your wants`
+  String get wantsPercentage {
+    return Intl.message(
+      '30% of your monthly income can be used to cover your wants',
+      name: 'wantsPercentage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Consistently putting aside 20% of your pay each month can help you build a better, more durable savings plan.`
+  String get savingDefinition {
+    return Intl.message(
+      'Consistently putting aside 20% of your pay each month can help you build a better, more durable savings plan.',
+      name: 'savingDefinition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `the remaining 20% can be put towards achieving your savings goals`
+  String get savingPercentage {
+    return Intl.message(
+      'the remaining 20% can be put towards achieving your savings goals',
+      name: 'savingPercentage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `If you manged to save`
+  String get managedToSave {
+    return Intl.message(
+      'If you manged to save',
+      name: 'managedToSave',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `every month and invest with 5% interest rate, you will ended up having`
+  String get investWith {
+    return Intl.message(
+      'every month and invest with 5% interest rate, you will ended up having',
+      name: 'investWith',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `years based on your retirement date`
+  String get yearsBasedOnRetireDay {
+    return Intl.message(
+      'years based on your retirement date',
+      name: 'yearsBasedOnRetireDay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Profile`
+  String get editProfile {
+    return Intl.message(
+      'Edit Profile',
+      name: 'editProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PREFERENCES`
+  String get preferences {
+    return Intl.message(
+      'PREFERENCES',
+      name: 'preferences',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message(
+      'Save',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language`
+  String get language {
+    return Intl.message(
+      'Language',
+      name: 'language',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dark Mode`
+  String get darkMode {
+    return Intl.message(
+      'Dark Mode',
+      name: 'darkMode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign Out`
+  String get signOut {
+    return Intl.message(
+      'Sign Out',
+      name: 'signOut',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username`
+  String get userName {
+    return Intl.message(
+      'Username',
+      name: 'userName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get email {
+    return Intl.message(
+      'Email',
+      name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Monthly Income`
+  String get monthlyIncome {
+    return Intl.message(
+      'Monthly Income',
+      name: 'monthlyIncome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gender`
+  String get gender {
+    return Intl.message(
+      'Gender',
+      name: 'gender',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Bill`
+  String get deleteBill {
+    return Intl.message(
+      'Delete Bill',
+      name: 'deleteBill',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete  Expense`
+  String get deleteExpense {
+    return Intl.message(
+      'Delete  Expense',
+      name: 'deleteExpense',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Would you like to delete the current monthly bill?`
+  String get wouldYouLikeDeleteMonthly {
+    return Intl.message(
+      'Would you like to delete the current monthly bill?',
+      name: 'wouldYouLikeDeleteMonthly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Would you like to delete the current expense?`
+  String get wouldYouLikeDeleteExpense {
+    return Intl.message(
+      'Would you like to delete the current expense?',
+      name: 'wouldYouLikeDeleteExpense',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm`
+  String get confirm {
+    return Intl.message(
+      'Confirm',
+      name: 'confirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

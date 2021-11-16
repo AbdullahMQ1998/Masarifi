@@ -3,6 +3,7 @@ import 'package:flash_chat/screens/settings_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
+import 'package:flash_chat/generated/l10n.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final QueryDocumentSnapshot userInfo;
@@ -57,7 +58,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       Expanded(child: SizedBox()),
                       Center(
                         child: Text(
-                          'Edit Profile',
+                          '${S.of(context).editProfile}',
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -99,7 +100,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                         },
                         child: Text(
-                          'SAVE',
+                          '${S.of(context).save}',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
@@ -141,7 +142,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: Text(
-                          'Username',
+                          '${S.of(context).userName}',
                           style: TextStyle(
                             color: Colors.grey,
                           ),
@@ -204,7 +205,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: Text(
-                          'Email',
+                          '${S.of(context).email}',
                           style: TextStyle(
                             color: Colors.grey,
                           ),
@@ -238,7 +239,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: Text(
-                          'Monthly Income',
+                          '${S.of(context).monthlyIncome}',
                           style: TextStyle(
                             color: Colors.grey,
                           ),
@@ -272,7 +273,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 },
                               ),
                             ):Text(
-                              monthlyIncome == null ? '${widget.userInfo.get('monthlyIncome')} SAR' : '$monthlyIncome SAR',
+                              monthlyIncome == null ? '${widget.userInfo.get('monthlyIncome')} ${S.of(context).saudiRyal}' : '$monthlyIncome ${S.of(context).saudiRyal}',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold),
                             ),
@@ -299,9 +300,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
 
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
+                        padding: const EdgeInsets.only(),
                         child: Text(
-                          'Gender',
+                          '${S.of(context).gender}',
                           style: TextStyle(
                             color: Colors.grey
                           ),

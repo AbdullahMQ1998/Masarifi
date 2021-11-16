@@ -3,6 +3,7 @@ import 'add_expense_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'add_monthly_bill_screen.dart';
+import 'package:flash_chat/generated/l10n.dart';
 
 
 class ChooseExpenseOrMonthlyScreen extends StatelessWidget {
@@ -38,13 +39,13 @@ class ChooseExpenseOrMonthlyScreen extends StatelessWidget {
                       }, loggedUser, userInfo));
             },
             child: Container(
-              height: 200,
+              height: 50,
               width: 200,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(30)),
-                color: Colors.red,
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                color: Color(0xff01937C),
               ),
-              child: Center(child: Text("Add Expense")),
+              child: Center(child: Text("${S.of(context).addExpense}")),
             ),
           ),
         ),
@@ -60,13 +61,13 @@ class ChooseExpenseOrMonthlyScreen extends StatelessWidget {
                       }, loggedUser, userInfo));
             },
             child: Container(
-              height: 200,
+              height: 50,
               width: 200,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(30)),
-                color: Colors.red,
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                color: Color(0xff01937C),
               ),
-              child: Center(child: Text("Add Monthly Bill")),
+              child: Center(child: Text("${S.of(context).addMonthlyBill}")),
             ),
           ),
         ),

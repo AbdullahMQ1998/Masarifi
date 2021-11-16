@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flash_chat/generated/l10n.dart';
 
 
 
@@ -25,6 +26,86 @@ import 'package:flutter/widgets.dart';
       ),
     );
   }
+
+
+showIOSDeleteMonthlyBillsAlert(BuildContext context,QueryDocumentSnapshot userInfo, QueryDocumentSnapshot userMonthlyBillList,bool shouldDelete){
+
+  showCupertinoDialog<void>(
+    context: context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title:  Text('${S.of(context).deleteBill}'),
+      content: Text("${S.of(context).wouldYouLikeDeleteMonthly}"),
+      actions: <CupertinoDialogAction>[
+        CupertinoDialogAction(
+          child: Text('${S.of(context).confirm}'),
+          onPressed: () {
+            double currentMonthlyBillCost = double.parse(userMonthlyBillList.get('billCost'));
+            double currentTotalBudget = double.parse(userInfo.get('userBudget'));
+            double currentTotalMonthlyBillCost = double.parse(userInfo.get('totalMonthlyBillCost'));
+            double updatedTotalBudget = currentTotalBudget + currentTotalMonthlyBillCost;
+            double updatedTotalMonthlyBillCost = currentTotalMonthlyBillCost - currentTotalMonthlyBillCost;
+
+            userInfo.reference.update({'userBudget': updatedTotalBudget.toString()});
+            userInfo.reference.update({'totalMonthlyBillCost': updatedTotalMonthlyBillCost.toString()});
+
+            userMonthlyBillList.reference.delete();
+
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+        ),
+
+        CupertinoDialogAction(
+          child: Text('${S.of(context).cancel}'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+
+      ],
+    ),
+  );
+}
+
+
+showIOSDeleteExpenseAlert(BuildContext context,QueryDocumentSnapshot userInfoList, QueryDocumentSnapshot userExpenseList,bool shouldDelete){
+
+  showCupertinoDialog<void>(
+    context: context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title:  Text('${S.of(context).deleteExpense}'),
+      content: Text("${S.of(context).wouldYouLikeDeleteExpense}"),
+      actions: <CupertinoDialogAction>[
+        CupertinoDialogAction(
+          child: Text('${S.of(context).confirm}'),
+          onPressed: () {
+
+            double currentExpenseCost = double.parse(userExpenseList.get('expenseCost'));
+            double currentTotalBudget = double.parse(userInfoList.get('userBudget'));
+            double currentTotalExpense = double.parse(userInfoList.get('totalExpense'));
+            double updatedTotalBudget = currentTotalBudget + currentExpenseCost;
+            double updatedTotalExpense = currentTotalExpense - currentExpenseCost;
+
+            userInfoList.reference.update({'userBudget': updatedTotalBudget.toString()});
+            userInfoList.reference.update({'totalExpense': updatedTotalExpense.toString()});
+
+            userExpenseList.reference.delete();
+
+            Navigator.pop(context);
+          },
+        ),
+
+        CupertinoDialogAction(
+          child: Text('${S.of(context).cancel}'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+
+      ],
+    ),
+  );
+}
 
 
 
@@ -123,7 +204,7 @@ showAlertDialogForExpense(BuildContext context , bool shouldDelete,QueryDocument
 
   // set up the buttons
   Widget cancelButton = TextButton(
-    child: Text("Cancel",
+    child: Text("${S.of(context).cancel}",
       style:TextStyle(
           color: Colors.grey
       )
@@ -133,7 +214,7 @@ showAlertDialogForExpense(BuildContext context , bool shouldDelete,QueryDocument
     },
   );
   Widget continueButton = TextButton(
-    child: Text("Yes",
+    child: Text("${S.of(context).confirm}",
       style: TextStyle(
           color: Colors.red
       ),),
@@ -158,8 +239,8 @@ showAlertDialogForExpense(BuildContext context , bool shouldDelete,QueryDocument
 
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    title: Text("Delete Expense"),
-    content: Text("Would you like to delete the current expense?"),
+    title: Text("${S.of(context).deleteExpense}"),
+    content: Text("${S.of(context).wouldYouLikeDeleteExpense}"),
     actions: [
       cancelButton,
       continueButton,
@@ -181,7 +262,7 @@ showAlertDialogForMonthlyBill(BuildContext context , bool shouldDelete,QueryDocu
 
   // set up the buttons
   Widget cancelButton = TextButton(
-    child: Text("Cancel",
+    child: Text("${S.of(context).cancel}",
       style:TextStyle(
           color: Colors.grey
       )
@@ -191,7 +272,7 @@ showAlertDialogForMonthlyBill(BuildContext context , bool shouldDelete,QueryDocu
     },
   );
   Widget continueButton = TextButton(
-    child: Text("Yes",
+    child: Text("${S.of(context).confirm}",
       style: TextStyle(
           color: Colors.red
       ),),
@@ -217,8 +298,8 @@ showAlertDialogForMonthlyBill(BuildContext context , bool shouldDelete,QueryDocu
 
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    title: Text("Delete Bill"),
-    content: Text("Would you like to delete the current monthly bill?"),
+    title: Text("${S.of(context).deleteBill}"),
+    content: Text("${S.of(context).wouldYouLikeDeleteMonthly}"),
     actions: [
       cancelButton,
       continueButton,
