@@ -75,6 +75,7 @@ class _SettingScreenState extends State<SettingScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff01937C),
+        title: Text("Settings"),
       ),
       body: SafeArea(
         child: Column(

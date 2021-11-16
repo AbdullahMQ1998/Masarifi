@@ -60,14 +60,6 @@ AnimationController animationController;
   }
 
   @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-
-
-  }
-
-  @override
   Widget build(BuildContext context) {
     retirementDate = widget.userInfo.get('expectedRetireDate');
     DateTime formattedRetireDate = DateTime.parse(
@@ -91,12 +83,21 @@ AnimationController animationController;
         animation: animationController,
         builder: (BuildContext context, Widget child) {
           return Scaffold(
-
+            appBar: AppBar(
+              backgroundColor: Color(0xff01937C),
+              title:Text('Saving Plan'),
+            ),
             body: SafeArea(
                 child: Column(
-
                     children: [
 
+                      Row(
+                        children: [
+
+                          
+
+                        ],
+                      ),
 
                       Expanded(
                         child: Padding(
@@ -107,32 +108,37 @@ AnimationController animationController;
                               padding: const EdgeInsets.all(10.0),
                               child: Column(
                                 children: [
-                                  Center(
-                                    child: new FadeTransition(
-                                      opacity: animationController.drive(CurveTween(curve: Curves.easeIn)),
-                                      child:  Column(
-                                          children: [
 
-                                            SizedBox(
-                                              height: 30,
-                                            ),
 
-                                            Text('${S.of(context).needs}',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold
-                                              ),),
+                                  Row(
+                                  children: [
 
-                                            Divider(
-                                              color: Colors.white,
-                                              thickness: 2,
-                                              indent: 120,
-                                              endIndent: 120,
-                                            ),
 
-                                          ]
-                                      ),
+
+                                  ],
+                                ),
+                                  new FadeTransition(
+                                    opacity: animationController.drive(CurveTween(curve: Curves.easeIn)),
+                                    child:  Column(
+                                        children: [
+
+
+
+                                          Text('${S.of(context).needs}',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold
+                                            ),),
+
+                                          Divider(
+                                            color: Colors.white,
+                                            thickness: 2,
+                                            indent: 120,
+                                            endIndent: 120,
+                                          ),
+
+                                        ]
                                     ),
                                   ),
 

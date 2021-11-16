@@ -66,8 +66,11 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
 
     return Scaffold(
-      appBar: AppBar(backgroundColor: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),),
-      backgroundColor: themChange.getDarkTheme() ? Color(0xff1F1D36) : Colors.grey.shade50 ,
+      appBar: AppBar(
+        backgroundColor: Color(0xff01937C),
+      title: Center(child: Text("Masarifi Data Analysis")),
+      ),
+
       body: SafeArea(
         child: ListView(
           children:[
@@ -152,7 +155,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                   ),
                                 ),
                                 decoration: BoxDecoration(
-                                    color: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),
+                                    color: Color(0xff01937C),
                                     borderRadius: BorderRadius.all(Radius.circular(30))
                                 ),
                               ),
@@ -201,7 +204,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                   ),
                                 ),
                                 decoration: BoxDecoration(
-                                    color: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),
+                                    color: Color(0xff01937C),
                                     borderRadius: BorderRadius.all(Radius.circular(30))
                                 ),
                               ),
@@ -314,7 +317,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),
+                                  color: Color(0xff01937C),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
@@ -357,7 +360,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),
+                                  color: Color(0xff01937C),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
@@ -459,7 +462,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),
+                                  color: Color(0xff01937C),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
@@ -504,7 +507,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),
+                                  color:  Color(0xff01937C),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
@@ -605,7 +608,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),
+                                  color:  Color(0xff01937C),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),
@@ -650,7 +653,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: themChange.getDarkTheme() ? Color(0xff864879) : Color(0xff01937C),
+                                  color:  Color(0xff01937C),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
                               ),
                             ),

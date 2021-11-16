@@ -92,200 +92,222 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
     return Scaffold(
-      body: Column(
-        children: [
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
 
-          StreamBuilder<QuerySnapshot>(
-              // Here in the stream we get the user info from the database based on his email, we will get all of his information
-              stream: FirebaseFirestore.instance
-                  .collection('User_Info')
-                  .where('email', isEqualTo: widget.loggedUser.email)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return CircularProgressIndicator(
-                    backgroundColor: Colors.blueAccent,
-                  );
-                }
+            StreamBuilder<QuerySnapshot>(
+                // Here in the stream we get the user info from the database based on his email, we will get all of his information
+                stream: FirebaseFirestore.instance
+                    .collection('User_Info')
+                    .where('email', isEqualTo: widget.loggedUser.email)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return CircularProgressIndicator(
+                      backgroundColor: Colors.blueAccent,
+                    );
+                  }
 
-                //userInfo holds all of the information required in the database,
-                //We can access any info in the userInfo by an index like usersInfo[0].get("The information you need").
-                final usersInfo = snapshot.data.docs;
-                userInfoList = usersInfo;
+                  //userInfo holds all of the information required in the database,
+                  //We can access any info in the userInfo by an index like usersInfo[0].get("The information you need").
+                  final usersInfo = snapshot.data.docs;
+                  userInfoList = usersInfo;
 
-                return Column(
-                  children: [
-                    StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection('User_Info')
-                          .where('email', isNotEqualTo: widget.loggedUser.email)
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return CircularProgressIndicator(
-                            backgroundColor: Colors.blueAccent,
-                          );
-                        }
-
-                        final otheruser = snapshot.data.docs;
-                        otherUserInfoList = otheruser;
-
-                        return SizedBox();
-                      },
-                    ),
-
-                    StreamBuilder<QuerySnapshot>(
+                  return Column(
+                    children: [
+                      StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
-                            .collection('expense')
-                            .where('email', isEqualTo: widget.loggedUser.email)
+                            .collection('User_Info')
+                            .where('email', isNotEqualTo: widget.loggedUser.email)
                             .snapshots(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
-                            return Text(
-                              'No Expense',
+                            return CircularProgressIndicator(
+                              backgroundColor: Colors.blueAccent,
                             );
                           }
-                          var expenses = snapshot.data.docs;
-                          expenseList = expenses;
+
+                          final otheruser = snapshot.data.docs;
+                          otherUserInfoList = otheruser;
 
                           return SizedBox();
-                        }),
-                    StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection('expense')
-                          .where('email', isNotEqualTo: widget.loggedUser.email)
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return CircularProgressIndicator(
-                            backgroundColor: Colors.blueAccent,
-                          );
-                        }
+                        },
+                      ),
 
-                        final otheruser = snapshot.data.docs;
-                        otherUserExpenseList = otheruser;
+                      StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('expense')
+                              .where('email', isEqualTo: widget.loggedUser.email)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return Text(
+                                'No Expense',
+                              );
+                            }
+                            var expenses = snapshot.data.docs;
+                            expenseList = expenses;
 
-                        return SizedBox();
-                      },
-                    ),
+                            return SizedBox();
+                          }),
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('expense')
+                            .where('email', isNotEqualTo: widget.loggedUser.email)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return CircularProgressIndicator(
+                              backgroundColor: Colors.blueAccent,
+                            );
+                          }
 
-                    Container(
-                      color: _topContainerColor(
-                          userInfoList[0].get('userBudget'),
-                          userInfoList[0].get('monthlyIncome')),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 20, top: 30),
-                            child: HomeScreenTextWidget(
-                              text: '${S.of(context).welcomeText} ${usersInfo[0].get('userName')} !',
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              padding: 15,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 15),
-                            child: HomeScreenTextWidget(
-                              text: "${S.of(context).balanceToSpend}",
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white70,
-                              padding: 5,
-                            ),
-                          ),
+                          final otheruser = snapshot.data.docs;
+                          otherUserExpenseList = otheruser;
 
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Row(
+                          return SizedBox();
+                        },
+                      ),
+
+                      Container(
+                        color: _topContainerColor(
+                            userInfoList[0].get('userBudget'),
+                            userInfoList[0].get('monthlyIncome')),
+                        child: Column(
+
+                          children: [
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                McCountingText(
-                                  begin: totalBudget,
-                                  end: double.parse(
-                                      usersInfo[0].get('userBudget')),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 30,
-                                  ),
-                                  duration: Duration(seconds: 1),
-                                  curve: Curves.decelerate,
-                                ),
-                                Text(
-                                  ' ${S.of(context).saudiRyal}',
-                                  style: TextStyle(
+                                Column(
+                                  children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 20, top: 30),
+                                    child: HomeScreenTextWidget(
+                                      text: '${S.of(context).welcomeText} ${usersInfo[0].get('userName')} !',
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.white),
+                                      color: Colors.white,
+                                      padding: 5,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 0),
+                                    child: HomeScreenTextWidget(
+                                      text: "${S.of(context).balanceToSpend}",
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white70,
+                                      padding: 0,
+                                    ),
+                                  ),
+
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 0),
+                                    child: Row(
+                                      children: [
+                                        McCountingText(
+                                          begin: totalBudget,
+                                          end: double.parse(
+                                              usersInfo[0].get('userBudget')),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 25,
+                                          ),
+                                          duration: Duration(seconds: 1),
+                                          curve: Curves.decelerate,
+                                        ),
+                                        Text(
+                                          ' ${S.of(context).saudiRyal}',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],),
+
+
+
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 50),
+                                  child: Image.asset("images/144.png"),
                                 ),
                               ],
                             ),
-                          ),
 
-                          SizedBox(
-                            height: 20,
-                          ),
 
-                          // Padding(
-                          //   padding: EdgeInsets.only(left: 15,bottom: 10),
-                          //   child: HomeScreenTextWidget(
-                          //     text: "${_getDaysLeftForSalary(userInfoList[0].get('salaryDate'))} Days left",
-                          //     color: Colors.white,
-                          //     fontWeight: FontWeight.bold,
-                          //     fontSize: 20,
-                          //     padding: 10,
-                          //   ),
-                          // )
-                        ],
+
+
+
+                            SizedBox(
+                              height: 5,
+                            ),
+
+                            // Padding(
+                            //   padding: EdgeInsets.only(left: 15,bottom: 10),
+                            //   child: HomeScreenTextWidget(
+                            //     text: "${_getDaysLeftForSalary(userInfoList[0].get('salaryDate'))} Days left",
+                            //     color: Colors.white,
+                            //     fontWeight: FontWeight.bold,
+                            //     fontSize: 20,
+                            //     padding: 10,
+                            //   ),
+                            // )
+                          ],
+                        ),
                       ),
-                    ),
-                    RowTextWithTotal(
-                      text: "${S.of(context).monthlyBills}",
-                      totalAmount: usersInfo[0].get('totalMonthlyBillCost'),
-                      userInfo: usersInfo[0],
-                    ),
+                      RowTextWithTotal(
+                        text: "${S.of(context).monthlyBills}",
+                        totalAmount: usersInfo[0].get('totalMonthlyBillCost'),
+                        userInfo: usersInfo[0],
+                      ),
 
-                    //MonthlyBill list in Components > ListviewWidgets file
-                    MonthlyBillsSVerticalListView(widget, usersInfo[0]),
+                      //MonthlyBill list in Components > ListviewWidgets file
+                      MonthlyBillsSVerticalListView(widget, usersInfo[0]),
 
-                    Divider(
-                      height: 10,
-                      thickness: 1,
-                      indent: 0,
-                      endIndent: 0,
-                    ),
+                      Divider(
+                        height: 10,
+                        thickness: 1,
+                        indent: 0,
+                        endIndent: 0,
+                      ),
 
-                    RowTextWithTotal(
-                      userInfo: usersInfo[0],
-                      text: "${S.of(context).expense} >",
-                      totalAmount: usersInfo[0].get('totalExpense'),
-                      onPress: () {
+                      RowTextWithTotal(
+                        userInfo: usersInfo[0],
+                        text: "${S.of(context).expense} >",
+                        totalAmount: usersInfo[0].get('totalExpense'),
+                        onPress: () {
 
-                        DateTime currentDate = DateTime.now();
-                        print(currentDate);
-                        DateTime beforeOneMonthDate = DateTime(currentDate.year,
-                            currentDate.month - 1, currentDate.day);
+                          DateTime currentDate = DateTime.now();
+                          print(currentDate);
+                          DateTime beforeOneMonthDate = DateTime(currentDate.year,
+                              currentDate.month - 1, currentDate.day);
 
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ExpenseScreen(
-                                      widget.loggedUser,
-                                      beforeOneMonthDate,
-                                      userInfoList[0],
-                                    )));
-                      },
-                    ),
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ExpenseScreen(
+                                        widget.loggedUser,
+                                        beforeOneMonthDate,
+                                        userInfoList[0],
+                                      )));
+                        },
+                      ),
 
-                    //ExpenseListView list in Components > ListViewWidgets file
+                      //ExpenseListView list in Components > ListViewWidgets file
 
-                    ExpenseListView(widget, userInfoList[0]),
-                  ],
-                );
-              }),
-        ],
+                      ExpenseListView(widget, userInfoList[0]),
+                    ],
+                  );
+                }),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         child: new Row(
