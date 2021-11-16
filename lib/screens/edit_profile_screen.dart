@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flash_chat/functions/AlertButtonFunction.dart';
 import 'package:flash_chat/screens/settings_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/generated/l10n.dart';
+import 'package:flutter/services.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final QueryDocumentSnapshot userInfo;
@@ -14,7 +18,6 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-
   bool editUsername = false;
   String userName;
 
@@ -25,14 +28,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   bool editGender2 = true;
   String gender;
 
-
   @override
   Widget build(BuildContext context) {
-
-
-    if(!editGender && editGender2)
-      gender = widget.userInfo.get('gender');
-
+    if (!editGender && editGender2) gender = widget.userInfo.get('gender');
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -69,35 +67,41 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       FlatButton(
                         minWidth: 0,
                         onPressed: () {
-
-                          if(userName == null || userName == "" || userName == " "){
+                          if (userName == null ||
+                              userName == "" ||
+                              userName == " ") {
                             userName = widget.userInfo.get('userName');
                           }
-                          widget.userInfo.reference.update({'userName': userName});
+                          widget.userInfo.reference
+                              .update({'userName': userName});
 
-
-                          if(monthlyIncome == null || monthlyIncome == "" || monthlyIncome == " "){
-                            monthlyIncome = widget.userInfo.get('monthlyIncome');
+                          if (monthlyIncome == null ||
+                              monthlyIncome == "" ||
+                              monthlyIncome == " ") {
+                            monthlyIncome =
+                                widget.userInfo.get('monthlyIncome');
                           }
-                          widget.userInfo.reference.update({'monthlyIncome': monthlyIncome});
+                          widget.userInfo.reference
+                              .update({'monthlyIncome': monthlyIncome});
 
-                          double totalExpense = double.parse(widget.userInfo.get('totalExpense'));
-                          double totalMonthlyBill = double.parse(widget.userInfo.get('totalMonthlyBillCost'));
+                          double totalExpense =
+                              double.parse(widget.userInfo.get('totalExpense'));
+                          double totalMonthlyBill = double.parse(
+                              widget.userInfo.get('totalMonthlyBillCost'));
 
-                          double totalBudget = (double.parse(monthlyIncome) * 0.80) - totalExpense - totalMonthlyBill;
-                          widget.userInfo.reference.update({'userBudget': totalBudget.toString() });
+                          double totalBudget =
+                              (double.parse(monthlyIncome) * 0.80) -
+                                  totalExpense -
+                                  totalMonthlyBill;
+                          widget.userInfo.reference
+                              .update({'userBudget': totalBudget.toString()});
 
-
-                          if(monthlyIncome == null){
+                          if (monthlyIncome == null) {
                             gender = widget.userInfo.get('gender');
                           }
                           widget.userInfo.reference.update({'gender': gender});
 
-
-
-                          
                           Navigator.pop(context);
-
                         },
                         child: Text(
                           '${S.of(context).save}',
@@ -111,7 +115,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 50),
+                  padding: const EdgeInsets.only(top: 10, bottom: 20),
                   child: Container(
                     width: 150,
                     height: 150,
@@ -127,8 +131,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ],
             ),
           ),
-
-
           Expanded(
             child: Container(
               // color: Colors.white,
@@ -149,51 +151,56 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                       ),
                       Padding(
-                          padding: const EdgeInsets.only(bottom: 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              editUsername? Expanded(
-                                child: TextField(
-                                  onSubmitted: (value){
-                                    setState(() {
-                                      editUsername = false;
-                                    });
-                                  },
-
-                                  maxLength: 25,
-                                  autofocus: true,
-                                  decoration: InputDecoration(
-                                    hintText: userName,
-                                    counter: Offstage(),
-                                    disabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                  ),
-                                  onChanged: (text) {
-                                    setState(() {
-                                      userName = text;
-                                    });
-                                  },
-                                ),
-                              ):Text(
-                                userName == null ? widget.userInfo.get('userName') : userName,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 15),
-                                child: Container(
-                                  height: 25,
-                                  child: IconButton(
-                                      onPressed: (){
+                        padding: const EdgeInsets.only(bottom: 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            editUsername
+                                ? Expanded(
+                                    child: TextField(
+                                      onSubmitted: (value) {
                                         setState(() {
-                                          editUsername = true;
+                                          editUsername = false;
                                         });
-                                  }, icon: Icon(Icons.edit)),
-                                ),
-                              )
-                            ],
-                          ),),
+                                      },
+                                      maxLength: 25,
+                                      autofocus: true,
+                                      decoration: InputDecoration(
+                                        hintText: userName,
+                                        counter: Offstage(),
+                                        disabledBorder: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                      ),
+                                      onChanged: (text) {
+                                        setState(() {
+                                          userName = text;
+                                        });
+                                      },
+                                    ),
+                                  )
+                                : Text(
+                                    userName == null
+                                        ? widget.userInfo.get('userName')
+                                        : userName,
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 15),
+                              child: Container(
+                                height: 25,
+                                child: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        editUsername = true;
+                                      });
+                                    },
+                                    icon: Icon(Icons.edit)),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 15),
                         child: Divider(
@@ -216,24 +223,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                           Padding(
-                             padding: const EdgeInsets.only(bottom: 10),
-                             child: Text(
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: Text(
                                 widget.userInfo.get('email'),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold),
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                           ),
-
+                            ),
                           ],
-                        ),),
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 15),
                         child: Divider(
                           thickness: 3,
                         ),
                       ),
-
 
                       // MonthlyIncome
                       Padding(
@@ -250,47 +255,64 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            editMonthlyIncome? Expanded(
-                              child: TextField(
-                                onSubmitted: (value){
-                                  setState(() {
-                                    editMonthlyIncome = false;
-                                  });
-                                },
-                                keyboardType: TextInputType.numberWithOptions(),
-                                maxLength: 6,
-                                autofocus: true,
-                                decoration: InputDecoration(
-                                  hintText: userName,
-                                  counter: Offstage(),
-                                  disabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                ),
-                                onChanged: (text) {
-                                  setState(() {
-                                    monthlyIncome = text;
-                                  });
-                                },
-                              ),
-                            ):Text(
-                              monthlyIncome == null ? '${widget.userInfo.get('monthlyIncome')} ${S.of(context).saudiRyal}' : '$monthlyIncome ${S.of(context).saudiRyal}',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold),
-                            ),
+                            editMonthlyIncome
+                                ? Expanded(
+                                    child: TextField(
+                                      onSubmitted: (value) {
+                                        setState(() {
+                                          if (double.parse(monthlyIncome) <= 999) {
+                                            Platform.isIOS? showIOSGeneralAlert(context, "${S.of(context).overThousnd}"):showGeneralErrorAlertDialog(
+                                                context,
+                                                '${S.of(context).error}',
+                                                '${S.of(context).overThousnd}');
+                                            monthlyIncome = null;
+                                          }
+                                          else
+                                            editMonthlyIncome = false;
+                                        });
+                                      },
+                                      keyboardType: TextInputType.numberWithOptions(signed: true),
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly,
+                                      ],
+                                      maxLength: 6,
+                                      autofocus: true,
+                                      decoration: InputDecoration(
+                                        hintText: userName,
+                                        counter: Offstage(),
+                                        disabledBorder: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                      ),
+                                      onChanged: (text) {
+                                        setState(() {
+                                          monthlyIncome = text;
+                                        });
+                                      },
+                                    ),
+                                  )
+                                : Text(
+                                    monthlyIncome == null
+                                        ? '${widget.userInfo.get('monthlyIncome')} ${S.of(context).saudiRyal}'
+                                        : '$monthlyIncome ${S.of(context).saudiRyal}',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 15),
                               child: Container(
                                 height: 25,
                                 child: IconButton(
-                                    onPressed: (){
+                                    onPressed: () {
                                       setState(() {
                                         editMonthlyIncome = true;
                                       });
-                                    }, icon: Icon(Icons.edit)),
+                                    },
+                                    icon: Icon(Icons.edit)),
                               ),
                             )
                           ],
-                        ),),
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 15),
                         child: Divider(
@@ -298,14 +320,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                       ),
 
-
                       Padding(
                         padding: const EdgeInsets.only(),
                         child: Text(
                           '${S.of(context).gender}',
-                          style: TextStyle(
-                            color: Colors.grey
-                          ),
+                          style: TextStyle(color: Colors.grey),
                         ),
                       ),
                       Padding(
@@ -313,65 +332,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            editGender? Expanded(
-                              child: DropdownButton(
-                          value: gender,
-                          icon: const Icon(Icons.arrow_downward),
-                          iconSize: 24,
-                          elevation: 10,
-                          style: const TextStyle(),
-                          underline: Container(
-                            height: 1,
-                            color: Color(0xff01937C),
-                          ),
-                          onChanged: (String newValue) {
-                            setState(() {
-                              editGender2 = false;
-                              editGender = false;
-                              gender = newValue;
-
-                            });
-                          },
-                          items: <String>[
-                            'Male',
-                            'Female',
-                          ]
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        )) :Text(
-                              editGender2 ? widget.userInfo.get('gender') : gender,
-                              style: TextStyle(
-
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 15),
-                              child: Container(
-                                height: 25,
-                                child: IconButton(
-                                    onPressed: (){
-                                      setState(() {
-                                        editGender = true;
-                                      });
-                                    }, icon: Icon(Icons.edit)),
-                              ),
-                            )
+                            Expanded(
+                                child: DropdownButton(
+                              value: gender,
+                              iconSize: 24,
+                              elevation: 10,
+                              style: const TextStyle(),
+                              onChanged: (String newValue) {
+                                setState(() {
+                                  editGender2 = false;
+                                  editGender = false;
+                                  gender = newValue;
+                                });
+                              },
+                              items: <String>[
+                                'Male',
+                                'Female',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ))
                           ],
-                        ),),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: Divider(
-                          thickness: 3,
                         ),
                       ),
-
-
-
-
                     ],
                   ),
                 ),

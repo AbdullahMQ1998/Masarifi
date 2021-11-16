@@ -53,22 +53,22 @@ void getOtherUsersDay(List<QueryDocumentSnapshot> otherUsersExpense) {
   for(int i = 0 ; i < otherUsersExpense.length ; i++){
     expenseDate = otherUsersExpense[i].get('expenseDate');
     currentDay = DateTime.parse(expenseDate.toDate().toString());
-    if(DateFormat('EEEE').format(currentDay) == 'Saturday'){
+    if(DateFormat('EEEE').format(currentDay) == 'Saturday' || DateFormat('EEEE').format(currentDay) == 'السبت'){
       saturdayCounter++;
     }
-    if(DateFormat('EEEE').format(currentDay) == 'Sunday'){
+    if(DateFormat('EEEE').format(currentDay) == 'Sunday' || DateFormat('EEEE').format(currentDay) == 'الأحد'){
       sundayCounter++;
     }
-    if(DateFormat('EEEE').format(currentDay) == 'Monday'){
+    if(DateFormat('EEEE').format(currentDay) == 'Monday' || DateFormat('EEEE').format(currentDay) == 'الاثنين'){
       mondayCounter++;
     }
-    if(DateFormat('EEEE').format(currentDay) == 'Tuesday'){
+    if(DateFormat('EEEE').format(currentDay) == 'Tuesday' || DateFormat('EEEE').format(currentDay) == 'الثلاثاء'){
       tuesdayCounter++;
-    } if(DateFormat('EEEE').format(currentDay) == 'Wednesday'){
+    } if(DateFormat('EEEE').format(currentDay) == 'Wednesday' || DateFormat('EEEE').format(currentDay) == 'الأربعاء'){
       wednesdayCounter++;
-    } if(DateFormat('EEEE').format(currentDay) == 'Thursday'){
+    } if(DateFormat('EEEE').format(currentDay) == 'Thursday' || DateFormat('EEEE').format(currentDay) == 'الخميس'){
       thursdayCounter++;
-    } if(DateFormat('EEEE').format(currentDay) == 'Friday'){
+    } if(DateFormat('EEEE').format(currentDay) == 'Friday' || DateFormat('EEEE').format(currentDay) == 'الجمعة'){
       fridayCounter++;
     }
 
@@ -127,6 +127,7 @@ List<int> getMaxDailyExpenseCount(){
     }
 
   }
+
   sort.add(max);
   sort.add(secondBest);
   sort.add(lowest);

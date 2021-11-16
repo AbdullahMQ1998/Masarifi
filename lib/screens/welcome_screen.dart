@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flash_chat/Components/Rounded_button.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'register_user_info.dart';
+import 'package:flash_chat/generated/l10n.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = "welcome_screen";
@@ -62,7 +62,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                     height: 60,
                   ),
                 ),
-                TypewriterAnimatedTextKit(text: [ 'Masaryfy'], textStyle: TextStyle(
+                TypewriterAnimatedTextKit(text: ['${S.of(context).masarifi}'], textStyle: TextStyle(
                   fontSize: 45.0,
                   fontWeight: FontWeight.w900,
                 ),
@@ -73,10 +73,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
             SizedBox(
               height: 48.0,
             ),
-            paddingButton(Color(0xff16C79A),'Log in' , () {
+            paddingButton(Color(0xff16C79A),'${S.of(context).logIn}' , () {
               Navigator.pushNamed(context, LoginScreen.id);
             }),
-            paddingButton(Color(0xff01937C), 'Register', (){
+            paddingButton(Color(0xff01937C), '${S.of(context).register}', (){
               Navigator.pushNamed(context, RegistrationScreen.id);
             }),
 

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash_chat/Provider/dark_them.dart';
-import 'package:flash_chat/models/dark_them_prefrence.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +9,7 @@ import 'package:flash_chat/chartsData/dailyChartClass.dart';
 import 'package:flash_chat/chartsData/monthlyChartClass.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flash_chat/them_data.dart';
+import 'package:flash_chat/Provider/language_change_provider.dart';
 import 'package:flash_chat/generated/l10n.dart';
 
 
@@ -29,7 +29,6 @@ class AnalysisScreen extends StatefulWidget {
 }
 
 class _AnalysisScreenState extends State<AnalysisScreen> {
-
 
 
   List<CategoryData> _charData;
@@ -59,6 +58,9 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+
+    final langChange = Provider.of<LanguageChangeProvider>(context);
     final themChange = Provider.of<DarkThemProvider>(context);
 
 
@@ -435,7 +437,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                       lineWidth: 10.0,
                                       animation: true,
                                       percent: ((getMaxDailyExpenseCount()[0]/percentDaily)),
-                                      center: new Text(
+                                      center: Text(
                                         "${((getMaxDailyExpenseCount()[0]/percentDaily) * 100).toInt()}%",
                                         style:
                                         new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,color: Colors.white),
@@ -443,7 +445,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
 
                                       footer: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: new Text(
+                                        child: Text(
                                           "${dailyExpenseCount[getMaxDailyExpenseCount()[0]]}",
                                           style:
                                           new TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0,color: Colors.white),
@@ -625,9 +627,9 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                       radius: 80.0,
                                       lineWidth: 10.0,
                                       animation: true,
-                                      percent: ((getMaxMonthlyExpenseCount()[2]/percentDaily)),
+                                      percent: ((getMaxMonthlyExpenseCount()[2]/percentMonthly)),
                                       center: new Text(
-                                        "${((getMaxMonthlyExpenseCount()[2]/percentDaily) * 100).toInt()}%",
+                                        "${((getMaxMonthlyExpenseCount()[2]/percentMonthly) * 100).toInt()}%",
                                         style:
                                         new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,color: Colors.white),
                                       ),

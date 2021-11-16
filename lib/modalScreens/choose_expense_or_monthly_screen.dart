@@ -25,7 +25,7 @@ class ChooseExpenseOrMonthlyScreen extends StatelessWidget {
     topLeft: Radius.circular(20),
     )),
     child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
       children: [
         Expanded(
           child: FlatButton(
@@ -40,12 +40,17 @@ class ChooseExpenseOrMonthlyScreen extends StatelessWidget {
             },
             child: Container(
               height: 50,
-              width: 200,
+
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 color: Color(0xff01937C),
               ),
-              child: Center(child: Text("${S.of(context).addExpense}")),
+              child: Center(child: Text("${S.of(context).addExpense}",
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Colors.white
+              ),)),
             ),
           ),
         ),
@@ -62,12 +67,17 @@ class ChooseExpenseOrMonthlyScreen extends StatelessWidget {
             },
             child: Container(
               height: 50,
-              width: 200,
+
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 color: Color(0xff01937C),
               ),
-              child: Center(child: Text("${S.of(context).addMonthlyBill}")),
+              child: Center(child: Text("${S.of(context).addMonthlyBill}",
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white
+                ),)),
             ),
           ),
         ),

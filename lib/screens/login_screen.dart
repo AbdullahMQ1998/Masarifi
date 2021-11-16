@@ -12,6 +12,7 @@ import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'home_screen.dart';
+import 'package:flash_chat/generated/l10n.dart';
 class LoginScreen extends StatefulWidget {
   static const String id = "login_screen";
   @override
@@ -99,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   },
 
-                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your Email' ,
+                decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).enterYourMail}' ,
 
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide( width: 1.0),
@@ -120,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   });
                 },
 
-                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your password',
+                decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).enterYourPass}',
 
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide( width: 1.0),
@@ -140,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       builder: (BuildContext context) => ResetPassword()
                          );
 
-                }, child: Text('Forgot Password?')),
+                }, child: Text('${S.of(context).forgotPassword}')),
               ],),
               
              
@@ -152,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
 
-              paddingButton(Color(0xff01937C), 'Log in', () async{
+              paddingButton(Color(0xff01937C), '${S.of(context).logIn}', () async{
 
 
                 setState(() {
@@ -198,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Don\'t have an account?',
+                  Text('${S.of(context).dontHaveAccount}',
                     style: TextStyle(
                         fontWeight: FontWeight.bold
                     ),),
@@ -209,7 +210,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             builder: (BuildContext context) => RegistrationScreen()));
 
 
-                  }, child: Text('Sign Up',
+                  }, child: Text('${S.of(context).signUp}',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color(0xff01937C),

@@ -9,6 +9,7 @@ import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'register_user_info.dart';
+import 'package:flash_chat/generated/l10n.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = "registration_screen";
@@ -51,7 +52,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 onChanged: (value){
                   email = value;
                 },
-                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your Email' ,
+                decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).enterYourMail}' ,
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide( width: 1.0),
                     borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -67,7 +68,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 onChanged: (value){
                   password = value;
                 },
-                decoration: kTextFieldDecoration.copyWith(hintText: 'Enter your Password' ,
+                decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).enterYourPass}' ,
 
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide( width: 1.0),
@@ -77,7 +78,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               SizedBox(
                 height: 24.0,
               ),
-              paddingButton( Color(0xff01937C), 'Register', () async {
+              paddingButton( Color(0xff01937C), '${S.of(context).register}', () async {
                 setState(() {
                   showSpinner = true;
                 });
@@ -107,7 +108,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Already have an account?',
+                  Text('${S.of(context).alreadyHaveAccount}',
                     style: TextStyle(
                         fontWeight: FontWeight.bold
                     ),),
@@ -115,7 +116,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                     Navigator.push( (context), MaterialPageRoute(
                             builder: (BuildContext context) => LoginScreen()));
-                  }, child: Text('Login here',
+                  }, child: Text('${S.of(context).loginHere}',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Color(0xff01937C),

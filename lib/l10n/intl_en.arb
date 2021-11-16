@@ -64,7 +64,31 @@
   "wouldYouLikeDeleteMonthly": "Would you like to delete the current monthly bill?",
   "wouldYouLikeDeleteExpense": "Would you like to delete the current expense?",
   "confirm": "Confirm",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "masarifi": "Masarifi",
+  "logIn": "Log In",
+  "register" : "Register",
+  "enterYourMail": "Enter Your Email",
+  "enterYourPass": "Enter Your Passowrd",
+  "forgotPassword": "Forgot Password?",
+  "signUp": "Sign Up",
+  "dontHaveAccount": "Don't have an account?",
+  "loginHere": "Login here",
+  "alreadyHaveAccount": "Already have an account?",
+  "letsGetStarted": "Let's Get Started!",
+  "createAnAccounttoMas": "Create an account to Masarifi to get all the features",
+  "expectedRetireDay": "Expected Retirement Date",
+  "creatAnAccountButton":"Create an account",
+  "retirementDate": "RetirementDate",
+  "retirementDateAnswer": "We need the retirement date to calculate the amount of years left to retire and use it to give the best advices to you",
+  "filter": "Filter",
+  "to": "to",
+  "expenseType": "Expense Type",
+  "search": "Search",
+  "error" : "Error",
+  "overThousnd" : "Please enter amount over 999 for the monthly income"
+
+
 
 
 

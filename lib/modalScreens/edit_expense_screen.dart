@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,15 +8,14 @@ import 'package:flash_chat/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flash_chat/generated/l10n.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditExpenseScreen extends StatefulWidget {
-
   final Function addExpense;
   final QueryDocumentSnapshot userExpenseList;
   final QueryDocumentSnapshot userInfo;
 
-  EditExpenseScreen(this.addExpense,this.userExpenseList,this.userInfo);
+  EditExpenseScreen(this.addExpense, this.userExpenseList, this.userInfo);
 
   @override
   _EditExpenseScreenState createState() => _EditExpenseScreenState();
@@ -31,6 +29,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
   double updatedTotalBudget;
   double updatedExpenseTotal;
 
+  SharedPreferences preferences;
 
   String dropdownValue;
   bool editDropDownMenu = false;
@@ -46,35 +45,37 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
     if (expenseName != null &&
         expenseName != '' &&
         expenseCost != null &&
-        expenseCost != '')
-    {
+        expenseCost != '') {
       return true;
     } else {
       return false;
     }
   }
 
-
   int picker;
   bool pickerChanged = false;
 
+  @override
+  void initState() {
+    getCurrenLanguage();
+    super.initState();
+  }
 
-  void showCupertionPicker(){
-
-    showCupertinoModalPopup(context: context,
+  void showCupertionPicker() {
+    showCupertinoModalPopup(
+        context: context,
         builder: (BuildContext context) {
           return Container(
             height: 200,
             child: CupertinoPicker(
-
-                backgroundColor: CupertinoColors.white
-                ,itemExtent: 32, onSelectedItemChanged: (value){
-              setState(() {
-                picker = value;
-                pickerChanged = true;
-              });
-
-            },
+                backgroundColor: CupertinoColors.white,
+                itemExtent: 32,
+                onSelectedItemChanged: (value) {
+                  setState(() {
+                    picker = value;
+                    pickerChanged = true;
+                  });
+                },
                 children: [
                   Text('Restaurants'),
                   Text('Shopping'),
@@ -88,62 +89,125 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                   Text('Entertainment'),
                   Text('Education'),
                   Text('Other')
-                ]
-            ),
-          );});
+                ]),
+          );
+        });
+  }
+
+  void showArabicCupertionPicker() {
+    showCupertinoModalPopup(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            height: 200,
+            child: CupertinoPicker(
+                backgroundColor: CupertinoColors.white,
+                itemExtent: 32,
+                onSelectedItemChanged: (value) {
+                  setState(() {
+                    picker = value;
+                    pickerChanged = true;
+                  });
+                },
+                children: [
+                  Text('مطاعم'),
+                  Text('تسوق'),
+                  Text('بنزين'),
+                  Text('قهوة'),
+                  Text('مالية'),
+                  Text('بقالة'),
+                  Text('أثاث'),
+                  Text('صحة'),
+                  Text('تسوق إلكتروني'),
+                  Text('ترفيه'),
+                  Text('تعليم'),
+                  Text('اخرى')
+                ]),
+          );
+        });
+  }
+
+  String currentLang = "ar";
+
+  void getCurrenLanguage() async {
+    preferences = await SharedPreferences.getInstance();
+    setState(() {
+      currentLang = preferences.getString('language');
+    });
 
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
-
-
-
-
-
-    Map<String,int> expenseCategoryInt = {
-      'Restaurants':0,
-      'Shopping':1,
-      'Gas':2,
-      'Coffee':3,
-      'Finance':4,
-      'Grocery':5,
-      'Furniture':6,
-      'Health':7,
-      'Online-Shopping':8,
-      'Entertainment':9,
-      'Education':10,
-      'Other':11
+    Map<String, String> arabicCategory = {
+      'Restaurants': 'مطاعم',
+      'Shopping': "تسوق",
+      'Gas': "بنزين",
+      'Coffee': "قهوة",
+      'Finance': "مالية",
+      'Grocery': "بقالة",
+      'Furniture': "أثاث",
+      'Health': "صحة",
+      'Online-Shopping': "تسوق إلكتروني",
+      'Entertainment': "ترفيه",
+      'Education': "تعليم",
+      'Other': "أخرى"
     };
 
-    Map<int,String> expenseCategoryString = {
-      0 : 'Restaurants',
-      1 : 'Shopping',
+    Map<String, String> arabicToEnglish = {
+      'مطاعم': 'Restaurants',
+      "تسوق": 'Shopping',
+      "بنزين": 'Gas',
+      "قهوة": 'Coffee',
+      "مالية": 'Finance',
+      "بقالة": 'Grocery',
+      "أثاث": 'Furniture',
+      "صحة": 'Health',
+      "تسوق إلكتروني": 'Online-Shopping',
+      "ترفيه": 'Entertainment',
+      "تعليم": 'Education',
+      "أخرى": 'Other',
+    };
+
+    Map<String, int> expenseCategoryInt = {
+      'Restaurants': 0,
+      'Shopping': 1,
+      'Gas': 2,
+      'Coffee': 3,
+      'Finance': 4,
+      'Grocery': 5,
+      'Furniture': 6,
+      'Health': 7,
+      'Online-Shopping': 8,
+      'Entertainment': 9,
+      'Education': 10,
+      'Other': 11
+    };
+
+    Map<int, String> expenseCategoryString = {
+      0: 'Restaurants',
+      1: 'Shopping',
       2: 'Gas',
       3: 'Coffee',
       4: 'Finance',
       5: 'Grocery',
       6: 'Furniture',
-      7:'Health',
-      8:'Online-Shopping',
-      9:'Entertainment',
-      10:'Education',
-      11:'Other'
-
+      7: 'Health',
+      8: 'Online-Shopping',
+      9: 'Entertainment',
+      10: 'Education',
+      11: 'Other'
     };
 
-
-    if(pickerChanged == false)
-    picker = expenseCategoryInt[widget.userExpenseList.get('expenseIcon')];
-
+    if (pickerChanged == false)
+      picker = expenseCategoryInt[widget.userExpenseList.get('expenseIcon')];
 
     final themChange = Provider.of<DarkThemProvider>(context);
 
-    if(editDropDownMenu == false && counter == 0)
-    dropdownValue = widget.userExpenseList.get('expenseIcon');
+    if (editDropDownMenu == false && counter == 0)
+      dropdownValue = currentLang == 'ar'
+          ? arabicCategory[widget.userExpenseList.get('expenseIcon')]
+          : widget.userExpenseList.get('expenseIcon');
 
     return Scaffold(
       backgroundColor: themChange.getDarkTheme() ? Colors.grey.shade800 : null,
@@ -152,13 +216,11 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
           child: Container(
             padding: EdgeInsets.all(30),
             decoration: BoxDecoration(
-
                 borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(20),
-                  topLeft: Radius.circular(20),
-                )),
+              topRight: Radius.circular(20),
+              topLeft: Radius.circular(20),
+            )),
             child: Column(
-
               children: [
                 Text(
                   '${S.of(context).editExpense}',
@@ -174,201 +236,263 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                   child: Column(children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: expenseNameEnabled? TextField(
-                        onSubmitted: (value){
-                          setState(() {
-
-                            expenseNameEnabled = false;
-                            expenseNameEnabled2 = false;
-                            if(expenseName == null){
-                              expenseName = widget.userExpenseList.get('expenseName');
-                            }
-
-                          });
-
-                        },
-                        maxLength: 10,
-                        textAlign: TextAlign.center,
-                        autofocus: true,
-                        onChanged: (text) {
-                          setState(() {
-                            expenseName = text;
-                          });
-                        },
-                        decoration:
-                        kTextFieldDecoration.copyWith(hintText: widget.userExpenseList.get('expenseName')),
-                      ) : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children:[
-                          Text(expenseNameEnabled2? widget.userExpenseList.get('expenseName'): expenseName,
-                            style: TextStyle(
-                                fontSize: 30
-                            ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          IconButton(
-                            onPressed: (){
+                      child: expenseNameEnabled
+                          ? TextField(
+                              onSubmitted: (value) {
                                 setState(() {
-                                  expenseNameEnabled = true;
-                                });
-                            },
-                            icon: Icon(Icons.edit),
-                          )
-                        ]
-                      ),
-          ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: expenseCostEnabled? TextField(
-                        onSubmitted: (value){
-                          setState(() {
-                            double oldCost = double.parse(widget.userExpenseList.get('expenseCost'));
-                            double updatedCost = double.parse(expenseCost);
-                            double differenceBetweenCosts = updatedCost - oldCost;
-
-                            double currentUserBudget = double.parse(widget.userInfo.get('userBudget'));
-                            double updatedMonthlyIncome = currentUserBudget - differenceBetweenCosts;
-                            updatedTotalBudget = updatedMonthlyIncome;
-
-
-                            double currentTotalExpense = double.parse(widget.userInfo.get('totalExpense'));
-                            double updatedTotalExpense = currentTotalExpense + differenceBetweenCosts;
-                            updatedExpenseTotal = updatedTotalExpense;
-
-
-
-
-                            expenseCostEnabled = false;
-                            expenseCostEnabled2 = false;
-                            if(expenseCost == null){
-                              expenseCost = widget.userExpenseList.get('expenseCost');
-                            }
-
-                          });
-
-                        },
-                        maxLength: 6,
-                        textAlign: TextAlign.center,
-                        autofocus: true,
-                        keyboardType: TextInputType.numberWithOptions(signed: true),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        onChanged: (text) {
-                          setState(() {
-                            expenseCost = text;
-                          });
-                        },
-                        decoration:
-                        kTextFieldDecoration.copyWith(hintText: widget.userExpenseList.get('expenseCost')),
-                      ) : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children:[
-                            Text(expenseCostEnabled2? widget.userExpenseList.get('expenseCost'): expenseCost,
-                              style: TextStyle(
-                                  fontSize: 30
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            IconButton(
-                              onPressed: (){
-                                setState(() {
-                                  expenseCostEnabled = true;
+                                  expenseNameEnabled = false;
+                                  expenseNameEnabled2 = false;
+                                  if (expenseName == null) {
+                                    expenseName = widget.userExpenseList
+                                        .get('expenseName');
+                                  }
                                 });
                               },
-                              icon: Icon(Icons.edit),
+                              maxLength: 10,
+                              textAlign: TextAlign.center,
+                              autofocus: true,
+                              onChanged: (text) {
+                                setState(() {
+                                  expenseName = text;
+                                });
+                              },
+                              decoration: kTextFieldDecoration.copyWith(
+                                  hintText: widget.userExpenseList
+                                      .get('expenseName')),
                             )
-                          ]
-                      ),
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                  Text(
+                                    expenseNameEnabled2
+                                        ? widget.userExpenseList
+                                            .get('expenseName')
+                                        : expenseName,
+                                    style: TextStyle(fontSize: 30),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        expenseNameEnabled = true;
+                                      });
+                                    },
+                                    icon: Icon(Icons.edit),
+                                  )
+                                ]),
                     ),
-                    Platform.isIOS? Container(
-                      child: FlatButton(onPressed: (){
-                        showCupertionPicker();
-                      }, child: Text('${expenseCategoryString[picker]}')),
-                    ) :DropdownButton(
-                      value: dropdownValue,
-                      icon: const Icon(Icons.arrow_downward),
-                      iconSize: 24,
-                      elevation: 10,
-                      style: const TextStyle(color: Colors.grey),
-                      underline: Container(
-                        height: 1,
-                        color: Color(0xff01937C),
-                      ),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          dropdownValue = newValue;
-                          counter++;
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: expenseCostEnabled
+                          ? TextField(
+                              onSubmitted: (value) {
+                                setState(() {
+                                  double oldCost = double.parse(widget
+                                      .userExpenseList
+                                      .get('expenseCost'));
+                                  double updatedCost =
+                                      double.parse(expenseCost);
+                                  double differenceBetweenCosts =
+                                      updatedCost - oldCost;
 
-                        });
-                      },
-                      items: <String>[
-                        'Restaurants',
-                        'Shopping',
-                        'Gas',
-                        'Coffee',
-                        'Finance',
-                        'Grocery',
-                        'Furniture',
-                        'Health',
-                        'Online-Shopping',
-                        'Entertainment',
-                        'Education',
-                        'Other'
-                      ]
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                                  double currentUserBudget = double.parse(
+                                      widget.userInfo.get('userBudget'));
+                                  double updatedMonthlyIncome =
+                                      currentUserBudget -
+                                          differenceBetweenCosts;
+                                  updatedTotalBudget = updatedMonthlyIncome;
+
+                                  double currentTotalExpense = double.parse(
+                                      widget.userInfo.get('totalExpense'));
+                                  double updatedTotalExpense =
+                                      currentTotalExpense +
+                                          differenceBetweenCosts;
+                                  updatedExpenseTotal = updatedTotalExpense;
+
+                                  expenseCostEnabled = false;
+                                  expenseCostEnabled2 = false;
+                                  if (expenseCost == null) {
+                                    expenseCost = widget.userExpenseList
+                                        .get('expenseCost');
+                                  }
+                                });
+                              },
+                              maxLength: 6,
+                              textAlign: TextAlign.center,
+                              autofocus: true,
+                              keyboardType:
+                                  TextInputType.numberWithOptions(signed: true),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              onChanged: (text) {
+                                setState(() {
+                                  expenseCost = text;
+                                });
+                              },
+                              decoration: kTextFieldDecoration.copyWith(
+                                  hintText: widget.userExpenseList
+                                      .get('expenseCost')),
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                  Text(
+                                    expenseCostEnabled2
+                                        ? widget.userExpenseList
+                                            .get('expenseCost')
+                                        : expenseCost,
+                                    style: TextStyle(fontSize: 30),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        expenseCostEnabled = true;
+                                      });
+                                    },
+                                    icon: Icon(Icons.edit),
+                                  )
+                                ]),
                     ),
-
+                    Platform.isIOS
+                        ? Container(
+                            child: FlatButton(
+                                onPressed: () {
+                                  currentLang == 'ar'? showArabicCupertionPicker() :
+                                  showCupertionPicker();
+                                },
+                                child:
+                                    Text('${expenseCategoryString[picker]}')),
+                          )
+                        : currentLang == 'ar'
+                            ? DropdownButton(
+                                value: dropdownValue,
+                                icon: const Icon(Icons.arrow_downward),
+                                iconSize: 24,
+                                elevation: 10,
+                                style: const TextStyle(color: Colors.grey),
+                                underline: Container(
+                                  height: 1,
+                                  color: Color(0xff01937C),
+                                ),
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                    dropdownValue = newValue;
+                                    counter++;
+                                  });
+                                },
+                                items: <String>[
+                                  'مطاعم',
+                                  "تسوق",
+                                  "بنزين",
+                                  "قهوة",
+                                  "مالية",
+                                  "بقالة",
+                                  "أثاث",
+                                      "صحة",
+                                  "تسوق إلكتروني",
+                                  "ترفيه",
+                                  "تعليم",
+                                  "أخرى",
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              )
+                            : DropdownButton(
+                                value: dropdownValue,
+                                icon: const Icon(Icons.arrow_downward),
+                                iconSize: 24,
+                                elevation: 10,
+                                style: const TextStyle(color: Colors.grey),
+                                underline: Container(
+                                  height: 1,
+                                  color: Color(0xff01937C),
+                                ),
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                    dropdownValue = newValue;
+                                    counter++;
+                                  });
+                                },
+                                items: <String>[
+                                  'Restaurants',
+                                  'Shopping',
+                                  'Gas',
+                                  'Coffee',
+                                  'Finance',
+                                  'Grocery',
+                                  'Furniture',
+                                  'Health',
+                                  'Online-Shopping',
+                                  'Entertainment',
+                                  'Education',
+                                  'Other'
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
                   ]),
                 ),
                 FlatButton(
                   onPressed: () {
-
-                    if(expenseName == null){
+                    if (expenseName == null) {
                       expenseName = widget.userExpenseList.get('expenseName');
                     }
-                    widget.userExpenseList.reference.update({'expenseName': expenseName});
+                    widget.userExpenseList.reference
+                        .update({'expenseName': expenseName});
 
-                    if(updatedTotalBudget == null){
-                      updatedTotalBudget = double.parse(widget.userInfo.get('userBudget'));
+                    if (updatedTotalBudget == null) {
+                      updatedTotalBudget =
+                          double.parse(widget.userInfo.get('userBudget'));
                     }
-                    widget.userInfo.reference.update({'userBudget' : updatedTotalBudget.toString()});
+                    widget.userInfo.reference
+                        .update({'userBudget': updatedTotalBudget.toString()});
 
-                    if(updatedExpenseTotal == null){
-                      updatedExpenseTotal = double.parse(widget.userInfo.get('totalExpense'));
+                    if (updatedExpenseTotal == null) {
+                      updatedExpenseTotal =
+                          double.parse(widget.userInfo.get('totalExpense'));
                     }
-                    widget.userInfo.reference.update({'totalExpense' : updatedExpenseTotal.toString()});
+                    widget.userInfo.reference.update(
+                        {'totalExpense': updatedExpenseTotal.toString()});
 
-                    if(expenseCost == null){
+                    if (expenseCost == null) {
                       expenseCost = widget.userExpenseList.get('expenseCost');
                     }
-                    widget.userExpenseList.reference.update({'expenseCost': expenseCost});
+                    widget.userExpenseList.reference
+                        .update({'expenseCost': expenseCost});
 
-
-                    if(Platform.isIOS){
-                      widget.userExpenseList.reference.update({'expenseIcon': expenseCategoryString[picker]});
+                    if (Platform.isIOS) {
+                      widget.userExpenseList.reference.update(
+                          {'expenseIcon': expenseCategoryString[picker]});
                     }
 
-                    if(Platform.isAndroid){
-                    if(dropdownValue == null){
-                      dropdownValue = widget.userExpenseList.get('expenseIcon');
+                    if (Platform.isAndroid) {
+                      if (dropdownValue == null) {
+                        dropdownValue =
+                            widget.userExpenseList.get('expenseIcon');
+                      }
+                      if(currentLang == 'ar')
+                        widget.userExpenseList.reference
+                            .update({'expenseIcon': arabicToEnglish[dropdownValue]});
+                      else{
+                      widget.userExpenseList.reference
+                          .update({'expenseIcon': dropdownValue});
+                      }
                     }
-                    widget.userExpenseList.reference.update({'expenseIcon': dropdownValue});
-                    }
 
-
-                        Navigator.pop(context);
-                    },
-
+                    Navigator.pop(context);
+                  },
                   child: Text(
                     '${S.of(context).update}',
                     style: TextStyle(

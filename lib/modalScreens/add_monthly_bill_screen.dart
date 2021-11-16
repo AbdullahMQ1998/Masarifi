@@ -11,6 +11,7 @@ import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/functions/AlertButtonFunction.dart';
 import 'package:provider/provider.dart';
 import 'package:flash_chat/generated/l10n.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddMonthlyBillScreen extends StatefulWidget {
   final Function addMonthlyBill;
@@ -36,7 +37,8 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
   double currentTotalMonthlyBill;
   double currentTotalBudget;
   final _fireStore = FirebaseFirestore.instance;
-  String dropdownValue = 'Phone';
+  String dropdownValue;
+  SharedPreferences preferences;
 
   bool checkNullorSpace() {
     if (monthlyBillName != null &&
@@ -74,10 +76,45 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
 
   int picker = 0;
 
+  bool dropDownChanged = false;
+  String currentLang = "ar";
+
+  void getCurrentLanguage() async {
+    preferences = await SharedPreferences.getInstance();
+    setState(() {
+      currentLang = preferences.getString('language');
+    });
+
+  }
+
+
+  @override
+  void initState() {
+    getCurrentLanguage();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
 
+
+    Map<String, String> arabicCategory = {
+      'Rent': "إيجار",
+      'Water': "فاتورة المياة",
+      'Internet': "فاتورة الانترنت",
+      'Phone': "فاتورة الجوال",
+      'Electric': "فاتورة الكهرباء",
+      'Installment': "قسط",
+    };
+
+    Map<String, String> arabicToEnglish = {
+      "إيجار": 'Rent',
+      "فاتورة المياة": 'Water',
+      "فاتورة الانترنت": 'Internet',
+      "فاتورة الجوال": 'Phone',
+      "فاتورة الكهرباء": 'Electric',
+      "قسط": 'Installment',
+    };
 
     void showCupertionPicker(){
 
@@ -107,6 +144,34 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
 
     }
 
+    void showArabicCupertionPicker(){
+
+      showCupertinoModalPopup(context: context,
+          builder: (BuildContext context) {
+            return Container(
+              height: 200,
+              child: CupertinoPicker(
+
+                  backgroundColor: CupertinoColors.white
+                  ,itemExtent: 32, onSelectedItemChanged: (value){
+                setState(() {
+                  picker = value;
+                });
+
+              },
+                  children: [
+                    Text('إيجار'),
+                    Text('فاتورة مياه'),
+                    Text('فاتورة الأنترنت'),
+                    Text('فاتورة الجوال'),
+                    Text('فاتورة الكهرب'),
+                    Text('قسط'),
+                  ]
+              ),
+            );});
+
+    }
+
 
     Map<String,int> monthlyBillCategoryInt = {
       'Rent': 0,
@@ -125,6 +190,9 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
       4: 'Electric',
       5: 'Installment'
     };
+
+    if(dropDownChanged == false)
+      dropdownValue = currentLang == "ar" ? "فاتورة الجوال" :'Phone';
 
 
     final themChange = Provider.of<DarkThemProvider>(context);
@@ -191,9 +259,10 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                     ),
                     Platform.isIOS? Container(
                       child: FlatButton(onPressed: (){
+                        currentLang == 'ar'? showArabicCupertionPicker():
                         showCupertionPicker();
                       }, child: Text('${monthlyBillCategoryString[picker]}')),
-                    ) :DropdownButton(
+                    ) : currentLang == 'ar'?  DropdownButton(
                       value: dropdownValue,
                       icon: const Icon(Icons.arrow_downward),
                       iconSize: 24,
@@ -206,6 +275,37 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                       onChanged: (String newValue) {
                         setState(() {
                           dropdownValue = newValue;
+                          dropDownChanged = true;
+                        });
+                      },
+                      items: <String>[
+                        "إيجار",
+                        "فاتورة المياة",
+                        "فاتورة الانترنت",
+                        "فاتورة الجوال",
+                        "فاتورة الكهرباء",
+                        "قسط",
+                      ]
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ) : DropdownButton(
+                      value: dropdownValue,
+                      icon: const Icon(Icons.arrow_downward),
+                      iconSize: 24,
+                      elevation: 10,
+                      style: const TextStyle(color: Colors.grey),
+                      underline: Container(
+                        height: 1,
+                        color: Color(0xff01937C),
+                      ),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          dropdownValue = newValue;
+                          dropDownChanged = true;
                         });
                       },
                       items: <String>[
@@ -287,7 +387,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                         'billDate': selectedDate,
                         'billName': monthlyBillName,
                         'bill_ID': monthlyBill_Id,
-                        'billIcon': Platform.isIOS? monthlyBillCategoryString[picker] :dropdownValue,
+                        'billIcon': Platform.isIOS? monthlyBillCategoryString[picker] : currentLang == "ar" ? arabicToEnglish[dropdownValue] : dropdownValue,
                       });
                       Navigator.pop(context);
                       Navigator.pop(context);

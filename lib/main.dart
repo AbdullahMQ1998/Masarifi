@@ -14,6 +14,7 @@ import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flash_chat/screens/register_user_info.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Provider/language_change_provider.dart';
 import 'generated/l10n.dart';
@@ -31,13 +32,22 @@ class Masarifii extends StatefulWidget {
 class _MasarifiiState extends State<Masarifii> {
  DarkThemProvider themChangeProvider = DarkThemProvider();
  LanguageChangeProvider languageChangeProvider = LanguageChangeProvider();
+ SharedPreferences preferences;
   void getCurrentAppThem() async {
     themChangeProvider.setDarkThem(await themChangeProvider.darkThemePreferences.getTheme());
   }
+  void getCurrentLanguage() async {
+    preferences = await SharedPreferences.getInstance();
+    languageChangeProvider.changeLocale(preferences.getString('language'));
+  }
+
+
+
 
   @override
   void initState() {
     getCurrentAppThem();
+    getCurrentLanguage();
     super.initState();
   }
   @override
@@ -67,7 +77,9 @@ class _MasarifiiState extends State<Masarifii> {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: S.delegate.supportedLocales,
+          supportedLocales: [
+           Locale('en'), Locale('ar')
+          ],
 
           theme: Styles.themeData(themChangeProvider.getDarkTheme(), context),
           initialRoute: WelcomeScreen.id,

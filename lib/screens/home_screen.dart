@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
-
+  SharedPreferences preferences;
   final _fireStore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   List<QueryDocumentSnapshot> userInfoList;
@@ -262,8 +262,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       text: "${S.of(context).expense} >",
                       totalAmount: usersInfo[0].get('totalExpense'),
                       onPress: () {
-                        context.read<LanguageChangeProvider>().changeLocale('ar');
+
                         DateTime currentDate = DateTime.now();
+                        print(currentDate);
                         DateTime beforeOneMonthDate = DateTime(currentDate.year,
                             currentDate.month - 1, currentDate.day);
 

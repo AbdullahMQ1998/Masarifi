@@ -694,6 +694,226 @@ class S {
       args: [],
     );
   }
+
+  /// `Masarifi`
+  String get masarifi {
+    return Intl.message(
+      'Masarifi',
+      name: 'masarifi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log In`
+  String get logIn {
+    return Intl.message(
+      'Log In',
+      name: 'logIn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register`
+  String get register {
+    return Intl.message(
+      'Register',
+      name: 'register',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter Your Email`
+  String get enterYourMail {
+    return Intl.message(
+      'Enter Your Email',
+      name: 'enterYourMail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter Your Passowrd`
+  String get enterYourPass {
+    return Intl.message(
+      'Enter Your Passowrd',
+      name: 'enterYourPass',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot Password?`
+  String get forgotPassword {
+    return Intl.message(
+      'Forgot Password?',
+      name: 'forgotPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign Up`
+  String get signUp {
+    return Intl.message(
+      'Sign Up',
+      name: 'signUp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Don't have an account?`
+  String get dontHaveAccount {
+    return Intl.message(
+      'Don\'t have an account?',
+      name: 'dontHaveAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login here`
+  String get loginHere {
+    return Intl.message(
+      'Login here',
+      name: 'loginHere',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already have an account?`
+  String get alreadyHaveAccount {
+    return Intl.message(
+      'Already have an account?',
+      name: 'alreadyHaveAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Let's Get Started!`
+  String get letsGetStarted {
+    return Intl.message(
+      'Let\'s Get Started!',
+      name: 'letsGetStarted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create an account to Masarifi to get all the features`
+  String get createAnAccounttoMas {
+    return Intl.message(
+      'Create an account to Masarifi to get all the features',
+      name: 'createAnAccounttoMas',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expected Retirement Date`
+  String get expectedRetireDay {
+    return Intl.message(
+      'Expected Retirement Date',
+      name: 'expectedRetireDay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create an account`
+  String get creatAnAccountButton {
+    return Intl.message(
+      'Create an account',
+      name: 'creatAnAccountButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `RetirementDate`
+  String get retirementDate {
+    return Intl.message(
+      'RetirementDate',
+      name: 'retirementDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We need the retirement date to calculate the amount of years left to retire and use it to give the best advices to you`
+  String get retirementDateAnswer {
+    return Intl.message(
+      'We need the retirement date to calculate the amount of years left to retire and use it to give the best advices to you',
+      name: 'retirementDateAnswer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filter`
+  String get filter {
+    return Intl.message(
+      'Filter',
+      name: 'filter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `to`
+  String get to {
+    return Intl.message(
+      'to',
+      name: 'to',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expense Type`
+  String get expenseType {
+    return Intl.message(
+      'Expense Type',
+      name: 'expenseType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search`
+  String get search {
+    return Intl.message(
+      'Search',
+      name: 'search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error`
+  String get error {
+    return Intl.message(
+      'Error',
+      name: 'error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter amount over 999 for the monthly income`
+  String get overThousnd {
+    return Intl.message(
+      'Please enter amount over 999 for the monthly income',
+      name: 'overThousnd',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

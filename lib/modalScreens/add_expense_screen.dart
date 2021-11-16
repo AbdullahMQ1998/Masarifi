@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:flash_chat/functions/AlertButtonFunction.dart';
 import 'package:flash_chat/generated/l10n.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddExpenseScreen extends StatefulWidget {
 
@@ -38,7 +39,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   double currentTotalExpense;
   double currentTotalBudget;
   final _fireStore = FirebaseFirestore.instance;
-  String dropdownValue = 'Restaurants';
+  SharedPreferences preferences;
+
+
+
 
   bool checkNullorSpace() {
     if (expenseName != null &&
@@ -58,6 +62,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
   int picker = 0;
 
+
+  String dropdownValue;
 
 
   void showCupertionPicker(){
@@ -95,9 +101,97 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   }
 
 
+  void showArabicCupertionPicker() {
+    showCupertinoModalPopup(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            height: 200,
+            child: CupertinoPicker(
+                backgroundColor: CupertinoColors.white,
+                itemExtent: 32,
+                onSelectedItemChanged: (value) {
+                  setState(() {
+                    picker = value;
+                  });
+                },
+                children: [
+                  Text('مطاعم'),
+                  Text('تسوق'),
+                  Text('بنزين'),
+                  Text('قهوة'),
+                  Text('مالية'),
+                  Text('بقالة'),
+                  Text('أثاث'),
+                  Text('صحة'),
+                  Text('تسوق إلكتروني'),
+                  Text('ترفيه'),
+                  Text('تعليم'),
+                  Text('اخرى')
+                ]),
+          );
+        });
+  }
+
+
+ bool dropDownChanged = false;
+  String currentLang = "ar";
+
+  void getCurrenLanguage() async {
+    preferences = await SharedPreferences.getInstance();
+    setState(() {
+      currentLang = preferences.getString('language');
+    });
+
+  }
+
+
+
+
+  @override
+  void initState() {
+   getCurrenLanguage();
+    super.initState();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
+
+    if(dropDownChanged == false)
+    dropdownValue = currentLang == "ar" ? "مطاعم" :'Restaurants';
+
+    Map<String, String> arabicCategory = {
+      'Restaurants': 'مطاعم',
+      'Shopping': "تسوق",
+      'Gas': "بنزين",
+      'Coffee': "قهوة",
+      'Finance': "مالية",
+      'Grocery': "بقالة",
+      'Furniture': "أثاث",
+      'Health': "صحة",
+      'Online-Shopping': "تسوق إلكتروني",
+      'Entertainment': "ترفيه",
+      'Education': "تعليم",
+      'Other': "أخرى"
+    };
+
+    Map<String, String> arabicToEnglish = {
+      'مطاعم': 'Restaurants',
+      "تسوق": 'Shopping',
+      "بنزين": 'Gas',
+      "قهوة": 'Coffee',
+      "مالية": 'Finance',
+      "بقالة": 'Grocery',
+      "أثاث": 'Furniture',
+      "صحة": 'Health',
+      "تسوق إلكتروني": 'Online-Shopping',
+      "ترفيه": 'Entertainment',
+      "تعليم": 'Education',
+      "أخرى": 'Other',
+    };
+
 
     Map<String,int> expenseCategoryInt = {
       'Restaurants':0,
@@ -200,9 +294,46 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     ),
                     Platform.isIOS? Container(
                       child: FlatButton(onPressed: (){
+                        currentLang == "ar" ? showArabicCupertionPicker() :
                         showCupertionPicker();
                       }, child: Text('${expenseCategoryString[picker]}')),
-                    ): DropdownButton(
+                    ): currentLang == "ar" ? DropdownButton(
+                      value: dropdownValue,
+                      icon: const Icon(Icons.arrow_downward),
+                      iconSize: 24,
+                      elevation: 10,
+                      style: const TextStyle(color: Colors.grey),
+                      underline: Container(
+                        height: 1,
+                        color: Color(0xff01937C),
+                      ),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          dropdownValue = newValue;
+                          dropDownChanged = true;
+                        });
+                      },
+                      items: <String>[
+                        'مطاعم',
+                        "تسوق",
+                        "بنزين",
+                        "قهوة",
+                        "مالية",
+                        "بقالة",
+                        "أثاث",
+                        "صحة",
+                        "تسوق إلكتروني",
+                        "ترفيه",
+                        "تعليم",
+                        "أخرى",
+                      ]
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ) : DropdownButton(
                 value: dropdownValue,
                 icon: const Icon(Icons.arrow_downward),
                 iconSize: 24,
@@ -215,6 +346,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                 onChanged: (String newValue) {
                   setState(() {
                     dropdownValue = newValue;
+                    dropDownChanged = true;
                   });
                 },
                 items: <String>[
@@ -269,7 +401,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                         'expenseName': expenseName,
                         'expenseTime': formattedTime,
                         'expenseID': expenseID,
-                        'expenseIcon': Platform.isIOS? expenseCategoryString[picker] :dropdownValue,
+                        'expenseIcon': Platform.isIOS? expenseCategoryString[picker] : currentLang == "ar" ? arabicToEnglish[dropdownValue] :dropdownValue,
                       });
 
                       Navigator.pop(context);

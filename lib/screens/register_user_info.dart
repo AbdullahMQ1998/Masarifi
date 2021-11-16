@@ -1,16 +1,14 @@
 import 'package:flash_chat/Components/Rounded_button.dart';
 import 'package:flash_chat/functions/AlertButtonFunction.dart';
-import 'package:flash_chat/screens/login_screen.dart';
-import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'home_screen.dart';
 import 'package:flutter_dropdown/flutter_dropdown.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flash_chat/generated/l10n.dart';
 
 class RegisterUserInfo extends StatefulWidget {
   static const String id = 'register_user_info';
@@ -114,13 +112,13 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                   height: 40,
                 ),
 
-                Text('Let\'s Get Started!',
+                Text('${S.of(context).letsGetStarted}',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),),
 
-                Text('Create an account to Masaryfy to get all the features',
+                Text('${S.of(context).createAnAccounttoMas}',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -134,7 +132,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                   onChanged: (value) {
                      userName = value;
                   },
-                  decoration: kTextFieldDecoration.copyWith(hintText: 'User name',
+                  decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).userName}',
                       enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white, width: 1.0),
                   borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -169,7 +167,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                     });
 
                   },
-                  decoration: kTextFieldDecoration.copyWith(hintText: 'Monthly income',
+                  decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).monthlyIncome}',
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white, width: 1.0),
                       borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -204,7 +202,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                   onChanged: (value) {
                       occupation = value;
                       setState(() {
-                        if(occupation == 'Retired'){
+                        if(occupation == 'Retired' || occupation == 'Unemployed'){
                           isEmployee = false;
                         }
                         else{
@@ -223,7 +221,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                   visible: isEmployee,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('Expected Retirement Date',
+                    child: Text('${S.of(context).expectedRetireDay}',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold
@@ -267,7 +265,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                       ),
 
                       IconButton(onPressed: () {
-                        showGeneralErrorAlertDialog(context,'Retirement Date','We need the retirement date to calculate the amount of years left to retire and use it to give the best advices to you');
+                        showGeneralErrorAlertDialog(context,'${S.of(context).retirementDate}','${S.of(context).retirementDateAnswer}');
                       }, icon: Icon(Icons.info_outline))
 
 
@@ -279,7 +277,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                 Expanded(child: SizedBox()),
 
 
-                paddingButton(Color(0xff01937C), "Create an account", (){
+                paddingButton(Color(0xff01937C), "${S.of(context).creatAnAccountButton}", (){
                 // we move the loggedUser to the homeScreen so we can retrieve data from it.
                 if(checkNullorSpace()) {
                   userBudget = double.parse(monthlyIncome) * 0.80;

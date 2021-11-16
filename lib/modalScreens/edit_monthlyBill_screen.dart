@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,14 +11,14 @@ import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io';
 import 'package:flash_chat/generated/l10n.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditMonthlyBillScreen extends StatefulWidget {
-
   final Function addBill;
   final QueryDocumentSnapshot userMonthlyBillList;
   final QueryDocumentSnapshot userInfo;
 
-  EditMonthlyBillScreen(this.addBill,this.userMonthlyBillList,this.userInfo);
+  EditMonthlyBillScreen(this.addBill, this.userMonthlyBillList, this.userInfo);
 
   @override
   _EditMonthlyBillScreenState createState() => _EditMonthlyBillScreenState();
@@ -49,105 +48,148 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
   DateTime dateToday = DateTime.now();
   String formattedDate;
 
+  SharedPreferences preferences;
 
 
   String updatedTotalMonthlyBillCost;
   String updateMonthlyIncome;
   String updatedBillIcon;
 
-
   bool pickerChanged = false;
-
-
-
-
 
   bool checkNullorSpace() {
     if (billName != null &&
         billName != '' &&
         billCost != null &&
-        billCost != '')
-    {
+        billCost != '') {
       return true;
     } else {
       return false;
     }
   }
 
+  String currentLang = "ar";
+
+  void getCurrentLanguage() async {
+    preferences = await SharedPreferences.getInstance();
+    setState(() {
+      currentLang = preferences.getString('language');
+    });
+
+  }
+
+  @override
+  void initState() {
+    getCurrentLanguage();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
 
-
-
-    Map<String,int> monthlyBillCategoryInt = {
-      'Rent': 0,
-      'Water':1,
-      'Internet':2,
-      'Phone':3,
-      'Electric':4,
-      'Installment':5,
+    Map<String, String> arabicCategory = {
+      'Rent': "إيجار",
+      'Water': "فاتورة المياة",
+      'Internet': "فاتورة الانترنت",
+      'Phone': "فاتورة الجوال",
+      'Electric': "فاتورة الكهرباء",
+      'Installment': "قسط",
     };
 
-    Map<int,String> monthlyBillCategoryString = {
-      0 : 'Rent',
-      1 : 'Water',
+    Map<String, String> arabicToEnglish = {
+      "إيجار": 'Rent',
+      "فاتورة المياة": 'Water',
+      "فاتورة الانترنت": 'Internet',
+      "فاتورة الجوال": 'Phone',
+      "فاتورة الكهرباء": 'Electric',
+      "قسط": 'Installment',
+    };
+
+    Map<String, int> monthlyBillCategoryInt = {
+      'Rent': 0,
+      'Water': 1,
+      'Internet': 2,
+      'Phone': 3,
+      'Electric': 4,
+      'Installment': 5,
+    };
+
+    Map<int, String> monthlyBillCategoryString = {
+      0: 'Rent',
+      1: 'Water',
       2: 'Internet',
       3: 'Phone',
       4: 'Electric',
       5: 'Installment'
     };
 
-
-    if(pickerChanged == false){
-      picker = monthlyBillCategoryInt[widget.userMonthlyBillList.get('billIcon')];
+    if (pickerChanged == false) {
+      picker =
+          monthlyBillCategoryInt[widget.userMonthlyBillList.get('billIcon')];
     }
 
     final themChange = Provider.of<DarkThemProvider>(context);
 
-
-    
-
-
     bool shouldDelete = false;
     bool isEnabled = false;
-
-
 
     Timestamp currentBillDate = widget.userMonthlyBillList.get('billDate');
     DateTime billDate = DateTime.parse(currentBillDate.toDate().toString());
     String billDateForrmated = DateFormat('yyyy-MM-dd').format(billDate);
 
-
-    void showCupertionPicker(){
-
-      showCupertinoModalPopup(context: context,
+    void showCupertionPicker() {
+      showCupertinoModalPopup(
+          context: context,
           builder: (BuildContext context) {
-        return Container(
-          height: 200,
-          child: CupertinoPicker(
-
-            backgroundColor: CupertinoColors.white
-              ,itemExtent: 32, onSelectedItemChanged: (value){
-              setState(() {
-                picker = value;
-                pickerChanged = true;
-              });
-
-      },
-              children: [
-          Text('Rent'),
-          Text('Water'),
-          Text('Internet'),
-          Text('Phone'),
-          Text('Electric'),
-          Text('Installment'),
-      ]
-      ),
-        );});
-
+            return Container(
+              height: 200,
+              child: CupertinoPicker(
+                  backgroundColor: CupertinoColors.white,
+                  itemExtent: 32,
+                  onSelectedItemChanged: (value) {
+                    setState(() {
+                      picker = value;
+                      pickerChanged = true;
+                    });
+                  },
+                  children: [
+                    Text('Rent'),
+                    Text('Water'),
+                    Text('Internet'),
+                    Text('Phone'),
+                    Text('Electric'),
+                    Text('Installment'),
+                  ]),
+            );
+          });
     }
 
-
+    void showArabicCupertionPicker() {
+      showCupertinoModalPopup(
+          context: context,
+          builder: (BuildContext context) {
+            return Container(
+              height: 200,
+              child: CupertinoPicker(
+                  backgroundColor: CupertinoColors.white,
+                  itemExtent: 32,
+                  onSelectedItemChanged: (value) {
+                    setState(() {
+                      picker = value;
+                      pickerChanged = true;
+                    });
+                  },
+                  children: [
+                    Text('إيجار'),
+                    Text('فاتورة المياه'),
+                    Text('فاتورة الأنترنت'),
+                    Text('فاتورة الجوال'),
+                    Text('فاتورة الكهرب'),
+                    Text('قسط'),
+                  ]),
+            );
+          });
+    }
 
     _selectDate(BuildContext context) async {
       final DateTime picked = await showDatePicker(
@@ -161,14 +203,11 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
           selectedDate = picked;
           formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
           dateChanged = true;
-
         });
     }
 
-
-
-    if(billIconEnabled == false){
-    dropdownValue = widget.userMonthlyBillList.get('billIcon');
+    if (billIconEnabled == false) {
+      dropdownValue = currentLang == 'ar' ? arabicCategory[widget.userMonthlyBillList.get('billIcon')] : widget.userMonthlyBillList.get('billIcon');
     }
     return Scaffold(
       backgroundColor: themChange.getDarkTheme() ? Colors.grey.shade800 : null,
@@ -177,13 +216,11 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
           child: Container(
             padding: EdgeInsets.all(30),
             decoration: BoxDecoration(
-
                 borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(20),
-                  topLeft: Radius.circular(20),
-                )),
+              topRight: Radius.circular(20),
+              topLeft: Radius.circular(20),
+            )),
             child: Column(
-
               children: [
                 Text(
                   '${S.of(context).editMonthlyBill}',
@@ -199,285 +236,334 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                   child: Column(children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: billNameEnabled? TextField(
-                        onSubmitted: (value){
-                          setState(() {
-
-                            billNameEnabled = false;
-                            billNameEnabled2 = false;
-                            if(billName == null){
-                              billName = widget.userMonthlyBillList.get('billName');
-                            }
-
-                          });
-
-                        },
-                        maxLength: 10,
-                        textAlign: TextAlign.center,
-                        autofocus: true,
-                        onChanged: (text) {
-                          setState(() {
-                            billName = text;
-                          });
-                        },
-                        decoration:
-                        kTextFieldDecoration.copyWith(hintText: widget.userMonthlyBillList.get('billName'),counter: Offstage()),
-                      ) : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children:[
-                            Text(billNameEnabled2? widget.userMonthlyBillList.get('billName'): billName,
-                              style: TextStyle(
-                                  fontSize: 30
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            IconButton(
-                              onPressed: (){
+                      child: billNameEnabled
+                          ? TextField(
+                              onSubmitted: (value) {
                                 setState(() {
-                                  billNameEnabled = true;
+                                  billNameEnabled = false;
+                                  billNameEnabled2 = false;
+                                  if (billName == null) {
+                                    billName = widget.userMonthlyBillList
+                                        .get('billName');
+                                  }
                                 });
                               },
-                              icon: Icon(Icons.edit),
+                              maxLength: 10,
+                              textAlign: TextAlign.center,
+                              autofocus: true,
+                              onChanged: (text) {
+                                setState(() {
+                                  billName = text;
+                                });
+                              },
+                              decoration: kTextFieldDecoration.copyWith(
+                                  hintText: widget.userMonthlyBillList
+                                      .get('billName'),
+                                  counter: Offstage()),
                             )
-                          ]
-                      ),
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                  Text(
+                                    billNameEnabled2
+                                        ? widget.userMonthlyBillList
+                                            .get('billName')
+                                        : billName,
+                                    style: TextStyle(fontSize: 30),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        billNameEnabled = true;
+                                      });
+                                    },
+                                    icon: Icon(Icons.edit),
+                                  )
+                                ]),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: billCostEnabled? TextField(
-                        onSubmitted: (value){
-                          setState(() {
-                            double oldCost = double.parse(widget.userMonthlyBillList.get('billCost'));
-                            double updatedCost = double.parse(billCost);
-                            double differenceBetweenCosts = updatedCost - oldCost;
-
-                            double currentTotalBudget = double.parse(widget.userInfo.get('userBudget'));
-                            double updatedTotalBudget = currentTotalBudget - differenceBetweenCosts;
-                            updateMonthlyIncome = updatedTotalBudget.toString();
-
-
-
-
-                            double currentTotalMonthlyBill = double.parse(widget.userInfo.get('totalMonthlyBillCost'));
-                            double updatedTotalMonthlyBill = currentTotalMonthlyBill + differenceBetweenCosts;
-                            updatedTotalMonthlyBillCost = updatedTotalMonthlyBill.toString();
-
-
-
-
-                            billCostEnabled = false;
-                            billCostEnabled2 = false;
-                            if(billCost == null){
-                              billCost = widget.userMonthlyBillList.get('billCost');
-                            }
-
-                          });
-
-                        },
-                        maxLength: 6,
-                        textAlign: TextAlign.center,
-                        autofocus: true,
-                        keyboardType: TextInputType.numberWithOptions(signed: true),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        onChanged: (text) {
-                          setState(() {
-                            billCost = text;
-                          });
-                        },
-                        decoration:
-                        kTextFieldDecoration.copyWith(hintText: widget.userMonthlyBillList.get('billCost') , counter: Offstage()),
-                      ) : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children:[
-                            Text(billCostEnabled2? widget.userMonthlyBillList.get('billCost'): billCost,
-                              style: TextStyle(
-                                  fontSize: 30
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            IconButton(
-                              onPressed: (){
+                      child: billCostEnabled
+                          ? TextField(
+                              onSubmitted: (value) {
                                 setState(() {
-                                  billCostEnabled = true;
+                                  double oldCost = double.parse(widget
+                                      .userMonthlyBillList
+                                      .get('billCost'));
+                                  double updatedCost = double.parse(billCost);
+                                  double differenceBetweenCosts =
+                                      updatedCost - oldCost;
+
+                                  double currentTotalBudget = double.parse(
+                                      widget.userInfo.get('userBudget'));
+                                  double updatedTotalBudget =
+                                      currentTotalBudget -
+                                          differenceBetweenCosts;
+                                  updateMonthlyIncome =
+                                      updatedTotalBudget.toString();
+
+                                  double currentTotalMonthlyBill = double.parse(
+                                      widget.userInfo
+                                          .get('totalMonthlyBillCost'));
+                                  double updatedTotalMonthlyBill =
+                                      currentTotalMonthlyBill +
+                                          differenceBetweenCosts;
+                                  updatedTotalMonthlyBillCost =
+                                      updatedTotalMonthlyBill.toString();
+
+                                  billCostEnabled = false;
+                                  billCostEnabled2 = false;
+                                  if (billCost == null) {
+                                    billCost = widget.userMonthlyBillList
+                                        .get('billCost');
+                                  }
                                 });
                               },
-                              icon: Icon(Icons.edit),
+                              maxLength: 6,
+                              textAlign: TextAlign.center,
+                              autofocus: true,
+                              keyboardType:
+                                  TextInputType.numberWithOptions(signed: true),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              onChanged: (text) {
+                                setState(() {
+                                  billCost = text;
+                                });
+                              },
+                              decoration: kTextFieldDecoration.copyWith(
+                                  hintText: widget.userMonthlyBillList
+                                      .get('billCost'),
+                                  counter: Offstage()),
                             )
-                          ]
-                      ),
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                  Text(
+                                    billCostEnabled2
+                                        ? widget.userMonthlyBillList
+                                            .get('billCost')
+                                        : billCost,
+                                    style: TextStyle(fontSize: 30),
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        billCostEnabled = true;
+                                      });
+                                    },
+                                    icon: Icon(Icons.edit),
+                                  )
+                                ]),
                     ),
-                    Platform.isIOS? Container(
-                      child: FlatButton(onPressed: (){
-                       showCupertionPicker();
-                      }, child: Text('${monthlyBillCategoryString[picker]}')),
-                    ) :DropdownButton(
-                    value: dropdownValue,
-                    icon: const Icon(Icons.arrow_downward),
-                    iconSize: 24,
-                    elevation: 10,
-                    style: const TextStyle(color: Colors.grey),
-                    underline: Container(
-                      height: 1,
-                      color: Color(0xff01937C),
-                    ),
-                    onChanged: (String newValue) {
-                      setState(() {
-                        dropdownValue = newValue;
-                        billIconEnabled = true;
-                      });
-                    },
-                    items: <String>[
-                      'Rent',
-                      'Water',
-                      'Internet',
-                      'Phone',
-                      'Electric',
-                      'Installment',
-                    ]
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
+                    Platform.isIOS
+                        ? Container(
+                            child: FlatButton(
+                                onPressed: () {
+                                  currentLang == 'ar'? showArabicCupertionPicker():
+                                  showCupertionPicker();
+                                },
+                                child: Text(
+                                    '${monthlyBillCategoryString[picker]}')),
+                          )
+                        : currentLang == 'ar' ?  DropdownButton(
+                      value: dropdownValue,
+                      icon: const Icon(Icons.arrow_downward),
+                      iconSize: 24,
+                      elevation: 10,
+                      style: const TextStyle(color: Colors.grey),
+                      underline: Container(
+                        height: 1,
+                        color: Color(0xff01937C),
                       ),
-
+                      onChanged: (String newValue) {
+                        setState(() {
+                          dropdownValue = newValue;
+                          billIconEnabled = true;
+                        });
+                      },
+                      items: <String>[
+                        "إيجار",
+                        "فاتورة المياة",
+                        "فاتورة الانترنت",
+                        "فاتورة الجوال",
+                        "فاتورة الكهرباء",
+                        "قسط",
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ) : DropdownButton(
+                            value: dropdownValue,
+                            icon: const Icon(Icons.arrow_downward),
+                            iconSize: 24,
+                            elevation: 10,
+                            style: const TextStyle(color: Colors.grey),
+                            underline: Container(
+                              height: 1,
+                              color: Color(0xff01937C),
+                            ),
+                            onChanged: (String newValue) {
+                              setState(() {
+                                dropdownValue = newValue;
+                                billIconEnabled = true;
+                              });
+                            },
+                            items: <String>[
+                              'Rent',
+                              'Water',
+                              'Internet',
+                              'Phone',
+                              'Electric',
+                              'Installment',
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
                   ]),
                 ),
-
                 Container(
                   width: 150,
                   child: TextButton(
                     onPressed: () => _selectDate(context),
-                    child: Row(
-                        children:[
-                          Icon(Icons.calendar_today_rounded,
-                            color: Colors.grey,
-                          ),
-                          Text(formattedDate == null?  ' $billDateForrmated' : ' $formattedDate',
-                            style:
-                            TextStyle( color: Colors.grey,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ]
-                    ),
+                    child: Row(children: [
+                      Icon(
+                        Icons.calendar_today_rounded,
+                        color: Colors.grey,
+                      ),
+                      Text(
+                        formattedDate == null
+                            ? ' $billDateForrmated'
+                            : ' $formattedDate',
+                        style: TextStyle(
+                            color: Colors.grey, fontWeight: FontWeight.bold),
+                      ),
+                    ]),
                     style: ButtonStyle(
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: Colors.grey)
-                            )
-                        )
-                    ),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    side: BorderSide(color: Colors.grey)))),
                   ),
                 ),
-
                 SizedBox(
                   height: 10,
                 ),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children:[
-
-                    TextButton(
-                      onPressed: () {
-                        Platform.isIOS ?
-                        showIOSDeleteMonthlyBillsAlert(context, widget.userInfo, widget.userMonthlyBillList, shouldDelete):
-                        showAlertDialogForMonthlyBill(context, shouldDelete, widget.userInfo, widget.userMonthlyBillList);
-                      },
-                      child: Text('${S.of(context).delete}',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15
-                        ),),
-
-                      style: ButtonStyle(
-
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.red
-                          ),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0),
-                              )
-                          )
-                      ),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  TextButton(
+                    onPressed: () {
+                      Platform.isIOS
+                          ? showIOSDeleteMonthlyBillsAlert(
+                              context,
+                              widget.userInfo,
+                              widget.userMonthlyBillList,
+                              shouldDelete)
+                          : showAlertDialogForMonthlyBill(context, shouldDelete,
+                              widget.userInfo, widget.userMonthlyBillList);
+                    },
+                    child: Text(
+                      '${S.of(context).delete}',
+                      style: TextStyle(color: Colors.white, fontSize: 15),
                     ),
-
-                    SizedBox(
-                      width: 10,
-                    ),
-
-                    TextButton(
-                      onPressed: () {
-                        if(billName == null ){
-                          billName = widget.userMonthlyBillList.get('billName');
-                        }
-                        if(billCost == null){
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.red),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ))),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if (billName == null) {
+                        billName = widget.userMonthlyBillList.get('billName');
+                      }
+                      if (billCost == null) {
                         billCost = widget.userMonthlyBillList.get('billCost');
-                        }
-                        if(updateMonthlyIncome == null){
+                      }
+                      if (updateMonthlyIncome == null) {
                         updateMonthlyIncome = widget.userInfo.get('userBudget');
-                        }
-                        if(updatedTotalMonthlyBillCost == null){
-                        updatedTotalMonthlyBillCost = widget.userInfo.get('totalMonthlyBillCost');
-                        }
+                      }
+                      if (updatedTotalMonthlyBillCost == null) {
+                        updatedTotalMonthlyBillCost =
+                            widget.userInfo.get('totalMonthlyBillCost');
+                      }
 
-                        if(Platform.isIOS){
-                          widget.userMonthlyBillList.reference.update({'billIcon': monthlyBillCategoryString[picker]});
+                      if (Platform.isIOS) {
+                        widget.userMonthlyBillList.reference.update(
+                            {'billIcon': monthlyBillCategoryString[picker]});
+                      }
+                      if (Platform.isAndroid) {
+                        if (dropdownValue == null) {
+                          if(currentLang == 'ar')
+                            dropdownValue = arabicToEnglish[widget.userMonthlyBillList.get('billIcon')];
+                          else
+                          dropdownValue =
+                              widget.userMonthlyBillList.get('billIcon');
                         }
-                        if(Platform.isAndroid){
-                        if(dropdownValue == null){
-                          dropdownValue = widget.userMonthlyBillList.get('billIcon');
+                      }
+
+                      if (dateChanged) {
+                        widget.userMonthlyBillList.reference
+                            .update({'billDate': selectedDate});
+                      }
+
+                      widget.userMonthlyBillList.reference
+                          .update({'billName': billName});
+                      widget.userMonthlyBillList.reference
+                          .update({'billCost': billCost});
+                      widget.userInfo.reference
+                          .update({'userBudget': updateMonthlyIncome});
+                      widget.userInfo.reference.update({
+                        'totalMonthlyBillCost': updatedTotalMonthlyBillCost
+                      });
+
+                      if (Platform.isAndroid){
+                        if(currentLang == 'ar'){
+                          widget.userMonthlyBillList.reference
+                              .update({'billIcon': arabicToEnglish[dropdownValue]});
                         }
-                        }
+                        else
+                        widget.userMonthlyBillList.reference
+                            .update({'billIcon': dropdownValue});
+                      }
 
-                        if(dateChanged){
-                          widget.userMonthlyBillList.reference.update({'billDate': selectedDate});
-                        }
-
-                        widget.userMonthlyBillList.reference.update({'billName': billName});
-                        widget.userMonthlyBillList.reference.update({'billCost': billCost});
-                        widget.userInfo.reference.update({'userBudget' : updateMonthlyIncome});
-                        widget.userInfo.reference.update({'totalMonthlyBillCost' : updatedTotalMonthlyBillCost});
-
-                        if(Platform.isAndroid)
-                        widget.userMonthlyBillList.reference.update({'billIcon': dropdownValue});
-
-                        Navigator.pop(context);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('${S.of(context).update}',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20
-                          ),),
-                      ),
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Color(0xff01937C)
-                          ),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30.0),
-                              )
-                          )
+                      Navigator.pop(context);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        '${S.of(context).update}',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
-
-
-                  ]
-                ),
-
-
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Color(0xff01937C)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ))),
+                  ),
+                ]),
               ],
             ),
           ),

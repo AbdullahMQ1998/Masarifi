@@ -5,6 +5,8 @@ import 'package:flash_chat/functions/sort_function.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flash_chat/generated/l10n.dart';
+
 
 
 
@@ -125,7 +127,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                          children: [
                            Icon(Icons.sort,
                            size: 30,),
-                           Text(' Filter',
+                           Text(' ${S.of(context).filter}',
                            style: TextStyle(
                              fontSize: 25
                            ),),
@@ -164,7 +166,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                ),
 
 
-                             Text("to",
+                             Text("${S.of(context).to}",
                              style: TextStyle(
                                fontSize: 25,
                                fontWeight: FontWeight.bold
@@ -211,7 +213,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                    color: Colors.grey,
                                  ),
                                  Expanded(
-                                   child: Text('Expense type',
+                                   child: Text('${S.of(context).expenseType}',
                                      style:
                                      TextStyle(
                                          // color: Colors.black45,
@@ -305,7 +307,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                    ),
                                    
                                  ),
-                                 Text('Search',
+                                 Text('${S.of(context).search}',
                                    style: TextStyle(
                                      color: Colors.white,
                                      fontWeight: FontWeight.bold,
