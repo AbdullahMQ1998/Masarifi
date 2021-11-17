@@ -18,12 +18,16 @@
   "update": "تعديل",
   "editMonthlyBill": "تعديل فاتورة شهرية",
   "delete":"حذف",
+  "dataAnalysisPageTitle": "تحليل البيانات في مصاريفي",
   "masarifiCategoryCount":"عدد المصاريف لكل تصنيف في تطبيق مصاريفي",
   "mostCategory": "الأكثر عددًا",
   "leastCategory": "الأقل عددًا",
+  "categoryChart": "عدد المصاريف",
   "masaryfyAverageUsersCatefories": "معدل المصاريف حسب النوع لمستخدمي تطبيق مصاريفي مقارنة بك",
   "avgExpense":"معدل المصاريف",
   "yourExpense": "مصاريفك",
+  "perUser": "للمستخدم",
+  "total": "المجموع:",
   "mostAvgCategory": "الأكثر للمستخدمين",
   "yourMostCategory": "الأكثر لك",
   "masarifiUserDaily": "عدد المصاريف لكل يوم في تطبيق مصاريفي",
@@ -34,6 +38,7 @@
   "monthlyExpense": "المصاريف الشهرية",
   "lowestMonth": "اقل شهر",
   "bestMonth": "اكثر شهر",
+  "savingPlan" : "خطة الادخار",
   "needs": "مصاريف اساسية",
   "wants": "مصاريف تكميلية",
   "saving": "ادخار واسثتمار",
@@ -60,7 +65,7 @@
   "monthlyIncome": "الدخل الشهري",
   "gender":"الجنس",
   "deleteBill": "حذف الفاتورة",
-  "deleteExpense": "Delete  Expense",
+  "deleteExpense": "حذف المصروف",
   "wouldYouLikeDeleteMonthly": "هل تريد حذف الفاتورة الحالية؟",
   "wouldYouLikeDeleteExpense": "هل تريد حذف المصروف الحالي؟",
   "confirm": "نعم",
@@ -86,6 +91,7 @@
   "expenseType": "نوع المصروف",
   "search": "ابحث",
   "error" : "خطأ",
-  "overThousnd" : "الرجاء ادخال دخل شهري اكبر من 1000 ريال"
+  "overThousnd" : "الرجاء ادخال دخل شهري اكبر من 1000 ريال",
+  "settings": "الأعدادات"
 
 }

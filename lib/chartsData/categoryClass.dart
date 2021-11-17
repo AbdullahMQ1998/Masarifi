@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:collection';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
+
+
+SharedPreferences preferences;
+
+String currentLang;
+
+
 
 int resturantCounter;
 int shoppingCounter;
@@ -20,6 +29,8 @@ var userSortedCounter;
 var othersSortedCounter;
 
 Map<String , int> userExpenseCounter;
+Map<int , String> maxUserExpense;
+Map<int , String> arabicMaxUserExpense;
 double maxUser = 0;
 
 
@@ -54,9 +65,11 @@ int userEducationCounter;
 
 Map<String , int> maxOtherExpenserList;
 Map<int , String> othersExpensescounters;
+Map<int , String> arabicOthersExpensescounters;
 
 Map<String , double> avgOthersExpensescounters;
 Map<double , String> avgOthersExpensescountersString;
+Map<double , String> arabicAvgOthersExpensescountersString;
 double maxOther = 0;
 
 
@@ -71,10 +84,31 @@ class CategoryData {
   final int gdp;
   final Color color;
   CategoryData(this.continent, this.gdp, this.color);
+
 }
 
 
-List<CategoryData> getChartData() {
+
+List<CategoryData> getChartData(String currentLang) {
+
+
+  if(currentLang == 'ar'){
+    final List<CategoryData> arabicChartData = [
+      CategoryData('مطاعم', resturantCounter, Colors.red),
+      CategoryData('بنزين', gasCounter, Colors.blue),
+      CategoryData('تسوق', shoppingCounter, Colors.yellow),
+      CategoryData('قهوة', coffeCounter, Colors.green),
+      CategoryData('مالية', financeCounter, Colors.pink),
+      CategoryData('بقالة', groceryCounter, Colors.brown),
+      CategoryData('أثاث', furnitureCounter, Colors.deepOrange),
+      CategoryData('صحة', healthCounter, Colors.indigo),
+      CategoryData('ترفيه', entertainmentCounter, Colors.cyan),
+      CategoryData('تسوق إلكتروني', onlineShoppingCounter, Colors.redAccent),
+      CategoryData('تعليم', educationCounter, Colors.greenAccent),
+    ];
+    return arabicChartData;
+  }
+
   final List<CategoryData> chartData = [
     CategoryData('Restaurants', resturantCounter, Colors.red),
     CategoryData('Gas', gasCounter, Colors.blue),
@@ -92,18 +126,26 @@ List<CategoryData> getChartData() {
 }
 
 
+List<avgCategoryData> getAvgChartData(String currentLang) {
 
 
-//this class is for the second chart
-class avgCategoryData {
-  final String expenseName;
-  final double otherUserstotalAmount;
-  final int myTotalAmount;
-  avgCategoryData(this.expenseName, this.otherUserstotalAmount,this.myTotalAmount,);
-}
+  if(currentLang == 'ar'){
+    final List<avgCategoryData> arabicChartData = [
+      avgCategoryData('مطاعم', avgRestaurant, userResturantCounter),
+      avgCategoryData('بنزين',avgGas, userGasCounter),
+      avgCategoryData('تسوق',avgShopping,userShoppingCounter),
+      avgCategoryData('قهوة', avgCoffee, userCoffeCounter),
+      avgCategoryData('مالية', avgFinance,userFinanceCounter),
+      avgCategoryData('بقالة',avgGrocery,userGroceryCounter),
+      avgCategoryData('أثاث', avgFurniture,userFurnitureCounter),
+      avgCategoryData('صحة', avgHealth,userHealthCounter),
+      avgCategoryData('ترفيه', avgEntertainment,userEntertainmentCounter),
+      avgCategoryData('تسوق إلكتروني',avgOnlineShopping,userOnlineShoppingCounter),
+      avgCategoryData('تعليم', avgEducation,userEducationCounter),
+    ];
+    return arabicChartData;
+  }
 
-
-List<avgCategoryData> getAvgChartData() {
   final List<avgCategoryData> chartData = [
     avgCategoryData('Restaurants', avgRestaurant, userResturantCounter),
     avgCategoryData('Gas', avgGas, userGasCounter),
@@ -119,6 +161,18 @@ List<avgCategoryData> getAvgChartData() {
   ];
   return chartData;
 }
+
+
+
+//this class is for the second chart
+class avgCategoryData {
+  final String expenseName;
+  final double otherUserstotalAmount;
+  final int myTotalAmount;
+  avgCategoryData(this.expenseName, this.otherUserstotalAmount,this.myTotalAmount,);
+}
+
+
 
 
 
@@ -224,6 +278,21 @@ void getCatagoryInfo(List<QueryDocumentSnapshot> otherUsersExpense , List<QueryD
     educationCounter: 'Education',
   };
 
+  arabicOthersExpensescounters = {
+
+    resturantCounter :'مطاعم',
+    shoppingCounter : 'تسوق',
+    gasCounter:'بنزين',
+    coffeCounter:'قهوة',
+    financeCounter : 'مالية',
+    groceryCounter :'بقالة',
+    furnitureCounter: 'أثاث',
+    healthCounter :'صحة' ,
+    onlineShoppingCounter :'تسوق إلكتروني',
+    entertainmentCounter: 'ترفيه',
+    educationCounter: 'تعليم',
+  };
+
 
   avgRestaurant = resturantCounter / otherUsersInfo.length;
   avgGas = gasCounter / otherUsersInfo.length;
@@ -263,6 +332,21 @@ void getCatagoryInfo(List<QueryDocumentSnapshot> otherUsersExpense , List<QueryD
    avgOnlineShopping: 'Online-Shopping',
     avgEntertainment :'Entertainment',
     avgEntertainment :'Education'
+  };
+
+
+  arabicAvgOthersExpensescountersString = {
+    avgRestaurant:"مطاعم",
+    avgShopping : 'تسوق',
+    avgGas : 'بنزين',
+    avgCoffee:'قهوة',
+    avgFinance :'مالية',
+    avgGrocery: 'بقالة',
+    avgFurniture:'أثاث',
+    avgHealth  :'صحة',
+    avgOnlineShopping: 'تسوق إلكتروني',
+    avgEntertainment :'ترفيه',
+    avgEntertainment :'تعليم'
   };
 
 
@@ -387,6 +471,35 @@ void getUserCategoryInfo(List<QueryDocumentSnapshot> userExpenseList ){
     'Entertainment': userEntertainmentCounter,
     'Education': userEducationCounter
   };
+
+  maxUserExpense = {
+    userResturantCounter:'Restaurants' ,
+    userShoppingCounter:'Shopping' ,
+    userGasCounter: 'Gas',
+ userCoffeCounter: 'Coffee',
+   userFinanceCounter:'Finance',
+   userGroceryCounter: 'Grocery',
+  userFurnitureCounter: 'Furniture',
+    userHealthCounter: 'Health' ,
+    userOnlineShoppingCounter: 'Online-Shopping',
+   userEntertainmentCounter:'Entertainment',
+   userEducationCounter : 'Education',
+  };
+
+  arabicMaxUserExpense = {
+    userResturantCounter:'مطاعم' ,
+    userShoppingCounter:'تسوق' ,
+    userGasCounter: 'بنزين',
+    userCoffeCounter: 'قهوة',
+    userFinanceCounter:'مالية',
+    userGroceryCounter: 'بقالة',
+    userFurnitureCounter: 'أثاث',
+    userHealthCounter: 'صحة' ,
+    userOnlineShoppingCounter: 'تسوق إلكتروني',
+    userEntertainmentCounter:'ترفيه',
+    userEducationCounter : 'تعليم',
+  };
+
 
 
   var sortedKeys = userExpenseCounter.keys.toList(growable:false)

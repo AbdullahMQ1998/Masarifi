@@ -13,7 +13,28 @@ class avgMonthData {
 }
 
 
-List<avgMonthData> getMonthChartData() {
+List<avgMonthData> getMonthChartData(String currentLang) {
+
+  if(currentLang == 'ar'){
+
+    final List<avgMonthData> arabicChartData = [
+      avgMonthData('يناير',januaryCounter),
+      avgMonthData('فبراير',februaryCounter),
+      avgMonthData('مارس',marchCounter),
+      avgMonthData('أبريل',aprilCounter),
+      avgMonthData('ماي',mayCounter),
+      avgMonthData('يونيو',juneCounter),
+      avgMonthData('يوليو',julyCounter),
+      avgMonthData('أغسطس',augustCounter),
+      avgMonthData('سبتمبر',septemberCounter),
+      avgMonthData('أكتوبر',octoberCounter),
+      avgMonthData('نوفمبر',novemberCounter),
+      avgMonthData('ديسمبر',decemberCounter),
+    ];
+    return arabicChartData;
+
+  }
+
   final List<avgMonthData> chartData = [
     avgMonthData('January',januaryCounter),
     avgMonthData('February',februaryCounter),
@@ -47,6 +68,7 @@ int decemberCounter  = 0;
 
 
 Map<int , String> monthlyExpenseCount;
+Map<int , String> arabicMonthlyExpenseCount;
 Map<String , int> maxMonthlyExpenseCount;
 
 int percentMonthly = 1;
@@ -149,6 +171,21 @@ void getOtherUsersMonth(List<QueryDocumentSnapshot> otherUsersExpense) {
     octoberCounter:'October',
     novemberCounter :'November',
     decemberCounter : 'December',
+  };
+
+  arabicMonthlyExpenseCount = {
+    januaryCounter :'يناير',
+    februaryCounter : 'فبراير',
+    marchCounter:'مارس',
+    aprilCounter :'أبريل',
+    mayCounter : 'ماي',
+    juneCounter :'يونيو',
+    julyCounter: 'يوليو',
+    augustCounter :'أغسطس',
+    septemberCounter : 'سبتمبر',
+    octoberCounter:'أكتوبر',
+    novemberCounter :'نوفمبر',
+    decemberCounter : 'ديسمبر',
   };
 
 }

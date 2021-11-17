@@ -105,7 +105,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide( width: 1.0),
                     borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),),
+                  ),
+                fillColor: Colors.grey.shade800,
+                filled: true),
 
               ),
               SizedBox(
@@ -126,7 +128,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide( width: 1.0),
                     borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),),
+                  ),
+                    fillColor: Colors.grey.shade800,
+                    filled: true),
+
               ),
               
               Row(children: [

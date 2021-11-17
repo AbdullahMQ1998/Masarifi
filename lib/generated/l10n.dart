@@ -225,10 +225,30 @@ class S {
     );
   }
 
-  /// `Masarifi Category Count`
+  /// `Masarifi Data Analysis`
+  String get dataAnalysisPageTitle {
+    return Intl.message(
+      'Masarifi Data Analysis',
+      name: 'dataAnalysisPageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expenses Total`
+  String get categoryChart {
+    return Intl.message(
+      'Expenses Total',
+      name: 'categoryChart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Of Expense Per Category Between Masarifi Users`
   String get masarifiCategoryCount {
     return Intl.message(
-      'Masarifi Category Count',
+      'Total Of Expense Per Category Between Masarifi Users',
       name: 'masarifiCategoryCount',
       desc: '',
       args: [],
@@ -245,20 +265,20 @@ class S {
     );
   }
 
-  /// `Lease Category`
+  /// `Least Category`
   String get leastCategory {
     return Intl.message(
-      'Lease Category',
+      'Least Category',
       name: 'leastCategory',
       desc: '',
       args: [],
     );
   }
 
-  /// `Masarifi Average Users Categories Compare To You`
+  /// `Average Expense Per Category Between Users Compare To You`
   String get masaryfyAverageUsersCatefories {
     return Intl.message(
-      'Masarifi Average Users Categories Compare To You',
+      'Average Expense Per Category Between Users Compare To You',
       name: 'masaryfyAverageUsersCatefories',
       desc: '',
       args: [],
@@ -290,6 +310,26 @@ class S {
     return Intl.message(
       'Most Average Category',
       name: 'mostAvgCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Per User`
+  String get perUser {
+    return Intl.message(
+      'Per User',
+      name: 'perUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total:`
+  String get total {
+    return Intl.message(
+      'Total:',
+      name: 'total',
       desc: '',
       args: [],
     );
@@ -380,6 +420,16 @@ class S {
     return Intl.message(
       'Best Month Of Purchase',
       name: 'bestMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saving Plan`
+  String get savingPlan {
+    return Intl.message(
+      'Saving Plan',
+      name: 'savingPlan',
       desc: '',
       args: [],
     );
@@ -910,6 +960,16 @@ class S {
     return Intl.message(
       'Please enter amount over 999 for the monthly income',
       name: 'overThousnd',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings`
+  String get settings {
+    return Intl.message(
+      'Settings',
+      name: 'settings',
       desc: '',
       args: [],
     );

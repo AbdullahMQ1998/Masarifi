@@ -18,13 +18,17 @@
   "update": "Update",
   "editMonthlyBill": "Edit Monthly Bill",
   "delete":"Delete",
-  "masarifiCategoryCount":"Masarifi Category Count",
+  "dataAnalysisPageTitle": "Masarifi Data Analysis",
+  "categoryChart": "Expenses Total",
+  "masarifiCategoryCount":"Total Of Expense Per Category Between Masarifi Users",
   "mostCategory": "Most Category",
-  "leastCategory": "Lease Category",
-  "masaryfyAverageUsersCatefories": "Masarifi Average Users Categories Compare To You",
+  "leastCategory": "Least Category",
+  "masaryfyAverageUsersCatefories": "Average Expense Per Category Between Users Compare To You",
   "avgExpense":"Avg Expense",
   "yourExpense": "Your Expense",
   "mostAvgCategory": "Most Average Category",
+  "perUser": "Per User",
+  "total": "Total:",
   "yourMostCategory": "Your Most Category",
   "masarifiUserDaily": "Masarifi Users Daily Expense Count",
   "dailyExpense": "Daily Expense",
@@ -34,6 +38,7 @@
   "monthlyExpense": "Monthly Expense",
   "lowestMonth": "Lowest Month Of Purchase",
   "bestMonth": "Best Month Of Purchase",
+  "savingPlan" : "Saving Plan",
   "needs": "Needs",
   "wants": "Wants",
   "saving": "Saving",
@@ -86,7 +91,8 @@
   "expenseType": "Expense Type",
   "search": "Search",
   "error" : "Error",
-  "overThousnd" : "Please enter amount over 999 for the monthly income"
+  "overThousnd" : "Please enter amount over 999 for the monthly income",
+  "settings": "Settings"
 
 
 

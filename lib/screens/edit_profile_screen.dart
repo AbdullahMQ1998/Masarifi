@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flash_chat/chartsData/categoryClass.dart';
 import 'package:flash_chat/functions/AlertButtonFunction.dart';
 import 'package:flash_chat/screens/settings_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/generated/l10n.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final QueryDocumentSnapshot userInfo;
@@ -27,13 +29,127 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   bool editGender = false;
   bool editGender2 = true;
   String gender;
+  SharedPreferences preferences;
+
+
+
+  String currentLang = "ar";
+
+  void getCurrenLanguage() async {
+    preferences = await SharedPreferences.getInstance();
+    setState(() {
+      currentLang = preferences.getString('language');
+    });
+  }
+
+
+  Map<String,String> genderTransaltorEArb = {
+
+    'Male' : 'ذكر',
+    'Female' : 'انثى'
+
+  };
+
+  Map<String,String> genderTransaltorENG = {
+
+     'ذكر' :'Male' ,
+  'انثى'  :'Female' ,
+
+  };
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getCurrenLanguage();
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (!editGender && editGender2) gender = widget.userInfo.get('gender');
+    if (!editGender && editGender2) {
+      gender = widget.userInfo.get('gender');
+      if(currentLang == "ar"){
+        gender =  genderTransaltorEArb[widget.userInfo.get('gender')];
+      }
+    }
+
+
+
 
     return Scaffold(
+
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor:Color(0xFF01937C) ,
+       flexibleSpace: SafeArea(
+         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+           children: [
+
+             Expanded(child: SizedBox()),
+             Text(
+               '${S.of(context).editProfile}',
+               style: TextStyle(
+                   fontSize: 20,
+                   fontWeight: FontWeight.bold,
+                   color: Colors.white),
+             ),
+
+             Expanded(
+               child: FlatButton(
+                 minWidth: 0,
+                 onPressed: () {
+                   if (userName == null ||
+                       userName == "" ||
+                       userName == " ") {
+                     userName = widget.userInfo.get('userName');
+                   }
+                   widget.userInfo.reference
+                       .update({'userName': userName});
+
+                   if (monthlyIncome == null ||
+                       monthlyIncome == "" ||
+                       monthlyIncome == " ") {
+                     monthlyIncome =
+                         widget.userInfo.get('monthlyIncome');
+                   }
+                   widget.userInfo.reference
+                       .update({'monthlyIncome': monthlyIncome});
+
+                   double totalExpense =
+                   double.parse(widget.userInfo.get('totalExpense'));
+                   double totalMonthlyBill = double.parse(
+                       widget.userInfo.get('totalMonthlyBillCost'));
+
+                   double totalBudget =
+                       (double.parse(monthlyIncome) * 0.80) -
+                           totalExpense -
+                           totalMonthlyBill;
+                   widget.userInfo.reference
+                       .update({'userBudget': totalBudget.toString()});
+
+                   if (monthlyIncome == null) {
+                     gender = widget.userInfo.get('gender');
+                   }
+                   widget.userInfo.reference.update({'gender': currentLang == "ar"? genderTransaltorENG[gender] : gender});
+
+                   Navigator.pop(context);
+                 },
+                 child: Text(
+                   '${S.of(context).save}',
+                   style: TextStyle(
+                       fontWeight: FontWeight.bold,
+                       fontSize: 15,
+                       color: Colors.white),
+                 ),
+               ),
+             )
+
+           ],
+          ),
+       ),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -44,73 +160,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                        icon: Icon(Icons.arrow_back_outlined),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        color: Colors.white,
-                      ),
-                      Expanded(child: SizedBox()),
-                      Center(
-                        child: Text(
-                          '${S.of(context).editProfile}',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                      ),
-                      Expanded(child: SizedBox()),
-                      FlatButton(
-                        minWidth: 0,
-                        onPressed: () {
-                          if (userName == null ||
-                              userName == "" ||
-                              userName == " ") {
-                            userName = widget.userInfo.get('userName');
-                          }
-                          widget.userInfo.reference
-                              .update({'userName': userName});
 
-                          if (monthlyIncome == null ||
-                              monthlyIncome == "" ||
-                              monthlyIncome == " ") {
-                            monthlyIncome =
-                                widget.userInfo.get('monthlyIncome');
-                          }
-                          widget.userInfo.reference
-                              .update({'monthlyIncome': monthlyIncome});
-
-                          double totalExpense =
-                              double.parse(widget.userInfo.get('totalExpense'));
-                          double totalMonthlyBill = double.parse(
-                              widget.userInfo.get('totalMonthlyBillCost'));
-
-                          double totalBudget =
-                              (double.parse(monthlyIncome) * 0.80) -
-                                  totalExpense -
-                                  totalMonthlyBill;
-                          widget.userInfo.reference
-                              .update({'userBudget': totalBudget.toString()});
-
-                          if (monthlyIncome == null) {
-                            gender = widget.userInfo.get('gender');
-                          }
-                          widget.userInfo.reference.update({'gender': gender});
-
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          '${S.of(context).save}',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              color: Colors.white),
-                        ),
-                      )
                     ],
                   ),
                 ),
@@ -333,7 +384,28 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
-                                child: DropdownButton(
+                                child: currentLang == 'ar' ? DropdownButton(
+                                  value: gender,
+                                  iconSize: 24,
+                                  elevation: 10,
+                                  style: const TextStyle(),
+                                  onChanged: (String newValue) {
+                                    setState(() {
+                                      editGender2 = false;
+                                      editGender = false;
+                                      gender = newValue;
+                                    });
+                                  },
+                                  items: <String>[
+                                    'ذكر',
+                                    'انثى',
+                                  ].map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                ) : DropdownButton(
                               value: gender,
                               iconSize: 24,
                               elevation: 10,

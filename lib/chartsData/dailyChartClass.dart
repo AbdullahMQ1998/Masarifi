@@ -9,7 +9,21 @@ class avgDayData {
   avgDayData(this.dayName,this.dayAmount);
 }
 
-List<avgDayData> getDayChartData() {
+List<avgDayData> getDayChartData(String currentLang) {
+
+  if(currentLang == 'ar'){
+    final List<avgDayData> arabicChartData = [
+  avgDayData('الأحد',sundayCounter),
+  avgDayData('الإثنين', mondayCounter),
+  avgDayData('الثلاثاء', tuesdayCounter),
+  avgDayData('الأربعاء', wednesdayCounter),
+  avgDayData('الخميس', thursdayCounter),
+  avgDayData('الجمعة', fridayCounter),
+  avgDayData('السبت', saturdayCounter),
+  ];
+  return arabicChartData;
+  }
+
   final List<avgDayData> chartData = [
     avgDayData('Sunday',sundayCounter),
     avgDayData('Monday', mondayCounter),
@@ -40,6 +54,7 @@ Timestamp expenseDate;
 
 
 Map<int , String> dailyExpenseCount;
+Map<int , String> arabicDailyExpenseCount;
 Map<String , int> maxDailyExpenseCount;
 
 int percentDaily = 1;
@@ -93,6 +108,16 @@ void getOtherUsersDay(List<QueryDocumentSnapshot> otherUsersExpense) {
     thursdayCounter : 'Thursday',
     fridayCounter :'Friday',
     saturdayCounter: 'Saturday',
+  };
+
+  arabicDailyExpenseCount = {
+    sundayCounter :'الأحد',
+    mondayCounter : 'الإثنين',
+    tuesdayCounter:'الثلاثاء',
+    wednesdayCounter :'الأربعاء',
+    thursdayCounter : 'الخميس',
+    fridayCounter :'الجمعة',
+    saturdayCounter: 'السبت',
   };
 
 }

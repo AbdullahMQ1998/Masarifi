@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'home_screen.dart';
 import 'package:flutter_dropdown/flutter_dropdown.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,6 +34,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
 
   final _fireStore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+  SharedPreferences preferences;
 
   User loggedUser;
 
@@ -80,6 +82,28 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
 
 
 
+  String currentLang = "ar";
+
+  void getCurrenLanguage() async {
+    preferences = await SharedPreferences.getInstance();
+    setState(() {
+      currentLang = preferences.getString('language');
+    });
+  }
+
+
+  Map<String,String> genderTranslator ={
+    "ذكر" : "Male",
+    "انثى" : "Female"
+  };
+
+
+
+  Map<String,String> occupationTranslator ={
+    "موظف" : "Employed",
+    "غير موظف" : "Unemployed",
+    "متقاعد" : "Retired"
+  };
 
   @override
 
@@ -137,6 +161,8 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                       borderSide: BorderSide(color: Colors.white, width: 1.0),
                   borderRadius: BorderRadius.all(Radius.circular(32.0)),
                 ),
+                      fillColor: Colors.grey.shade800,
+                      filled: true
                   ),
                 ),
 
@@ -161,7 +187,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
 
                     setState(() {
                       if(double.parse(monthlyIncome)  <= 999){
-                        showGeneralErrorAlertDialog(context, 'Error', 'Please enter amount over 999 for the monthly income');
+                        showGeneralErrorAlertDialog(context, '${S.of(context).error}', '${S.of(context).overThousnd}');
                         monthlyIncome = null;
                       }
                     });
@@ -171,7 +197,9 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white, width: 1.0),
                       borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                    ),),
+                    ),
+                      fillColor: Colors.grey.shade800,
+                      filled: true),
                 ),
                 SizedBox(
                   height: 20,
@@ -179,6 +207,17 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
 
 
 
+                currentLang == "ar" ? DropDown<String>(
+                  items: ["ذكر", "انثى"],
+                  hint: Text("ذكر"),
+                  icon: Icon(
+                    Icons.expand_more,
+                    color:  Color(0xff01937C),
+                  ),
+                  onChanged: (value) {
+                    gender = genderTranslator[value];
+                  },
+                ):
                 DropDown<String>(
                   items: ["Male", "Female"],
                   hint: Text("Male"),
@@ -191,6 +230,25 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                       gender = value;
                   },
                 ),
+                currentLang == "ar"? DropDown<String>(
+                  items: ["موظف", "غير موظف", "متقاعد"],
+                  hint: Text("موظف"),
+                  icon: Icon(
+                    Icons.expand_more,
+                    color:  Color(0xff01937C),
+                  ),
+                  onChanged: (value) {
+                    occupation = occupationTranslator[value];
+                    setState(() {
+                      if(occupationTranslator[value] == 'Retired' || occupationTranslator[value] == 'Unemployed'){
+                        isEmployee = false;
+                      }
+                      else{
+                        isEmployee = true;
+                      }
+                    });
+                  },
+                ) :
                 DropDown<String>(
                   items: ["Employed", "Unemployed", "Retired"],
                   hint: Text("Employed"),
@@ -297,10 +355,10 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                   _fireStore.collection('User_Info').add({
                     'userName':userName,
                     'email': loggedUser.email,
-                    'gender':gender,
+                    'gender':gender?? "Male",
                     'monthlyIncome':monthlyIncome,
                     'expectedRetireDate':selectedDate,
-                    'occupation':occupation,
+                    'occupation':occupation ?? "Employed",
                     'totalExpense':"0",
                     'totalMonthlyBillCost':"0",
                     'userBudget': userBudget.toString(),
