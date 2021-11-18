@@ -32,10 +32,6 @@ dependencies:
   rxdart: ^0.27.2
   timezone: ^0.8.0
   flutter_native_timezone: ^2.0.0
-  syncfusion_flutter_xlsio: ^19.3.54-beta
-  path_provider: ^2.0.1
-  open_file: ^3.2.1
-
 
   flutter_localizations:
     sdk: flutter

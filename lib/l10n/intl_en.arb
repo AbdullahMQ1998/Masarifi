@@ -10,7 +10,6 @@
   "addMonthlyBill": "Add Monthly Bill",
   "expenseName": "Expense Name",
   "expenseCost": "Expense Cost",
-  "expenseDate": "Expense Date",
   "add": "Add",
   "billName": "Bill Name",
   "billCost": "Bill Cost",
@@ -94,10 +93,7 @@
   "error" : "Error",
   "overThousnd" : "Please enter amount over 999 for the monthly income",
   "settings": "Settings",
-  "notifications": "Don't forget to add your expenses 👀",
-  "exportExcel": "Export Excel File",
-  "excelAlert": "Excel reader is mandatory inorder to export Excel file",
-  "createExcel": "Create Excel File"
+  "notifications": "Don't forget to add your expenses 👀"
 
 
 

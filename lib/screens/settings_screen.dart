@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/Provider/dark_them.dart';
 import 'package:flash_chat/Provider/language_change_provider.dart';
-import 'package:flash_chat/functions/AlertButtonFunction.dart';
-import 'package:flash_chat/modalScreens/export_excel.dart';
 import 'package:flash_chat/screens/edit_profile_screen.dart';
 import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,12 +11,10 @@ import 'package:provider/provider.dart';
 import 'package:flash_chat/generated/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class SettingScreen extends StatefulWidget {
   static const String id = 'settings_screen';
   final QueryDocumentSnapshot userInfo;
-  final List<QueryDocumentSnapshot> userExpense;
-  SettingScreen(this.userInfo,this.userExpense);
+  SettingScreen(this.userInfo);
 
 
 
@@ -245,39 +241,6 @@ class _SettingScreenState extends State<SettingScreen> {
                     ),
                     Divider(),
 
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.file_copy_outlined,
-                            size: 30,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: Text(
-                              '${S.of(context).exportExcel}',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-
-                          IconButton(onPressed: (){
-
-                            showIOSGeneralAlert(context, "${S.of(context).excelAlert}");
-                            showModalBottomSheet(context: context, builder: (BuildContext context) =>
-                            ExportExcel(widget.userExpense)
-                            );
-
-
-                          }, icon: Icon(Icons.chevron_right))
-
-                        ],
-                      ),
-                    ),
-                    Divider(),
                     FlatButton(
                       onPressed: () {
                         _auth.signOut();
