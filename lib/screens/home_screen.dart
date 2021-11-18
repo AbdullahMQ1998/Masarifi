@@ -1,8 +1,6 @@
 import 'package:flash_chat/Components/widgets.dart';
 import 'package:flash_chat/Provider/dark_them.dart';
-import 'package:flash_chat/Provider/language_change_provider.dart';
 import 'package:flash_chat/generated/l10n.dart';
-import 'package:flash_chat/models/dark_them_prefrence.dart';
 import 'package:flash_chat/screens/analysis_screen.dart';
 import 'package:flash_chat/screens/expense_screen.dart';
 import 'package:flash_chat/screens/saving_plan_screen.dart';
@@ -381,7 +379,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SettingScreen(userInfoList[0])));
+                        builder: (context) => SettingScreen(userInfoList[0],expenseList)));
               },
             ),
             SizedBox(
