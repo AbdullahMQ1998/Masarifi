@@ -92,7 +92,9 @@
   "search": "Search",
   "error" : "Error",
   "overThousnd" : "Please enter amount over 999 for the monthly income",
-  "settings": "Settings"
+  "settings": "Settings",
+  "notifications": "Don't forget to add your expenses 👀"
+
 
 
 

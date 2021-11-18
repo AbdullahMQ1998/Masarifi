@@ -23,13 +23,7 @@ class _NotificationCenterState extends State<NotificationCenter> {
       if (picked_s != null && picked_s != selectedTime )
         setState(() {
           selectedTime = picked_s;
-          NotificationApi.showScheduledNotification(
-            title: 'Masarifi',
-            body: "Hey, fk off you bloody idiot",
-            payload: "Masarifi",
-            hours: selectedTime.hour,
-            min: selectedTime.minute
-          );
+
         }
 
 

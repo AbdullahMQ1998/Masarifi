@@ -123,6 +123,15 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
       5: 'Installment'
     };
 
+    Map<int, String> arabicMonthlyBillCategoryString = {
+      0: 'إيجار',
+      1: 'فاتورة المياة',
+      2: 'فاتورة الأنترنت',
+      3: 'فاتورة الجوال',
+      4: 'فاتورة الكهرب',
+      5: 'قسط'
+    };
+
     if (pickerChanged == false) {
       picker =
           monthlyBillCategoryInt[widget.userMonthlyBillList.get('billIcon')];
@@ -370,7 +379,8 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                                   currentLang == 'ar'? showArabicCupertionPicker():
                                   showCupertionPicker();
                                 },
-                                child: Text(
+                                child: currentLang == 'ar' ? Text(
+                                    '${arabicMonthlyBillCategoryString[picker]}') : Text(
                                     '${monthlyBillCategoryString[picker]}')),
                           )
                         : currentLang == 'ar' ?  DropdownButton(

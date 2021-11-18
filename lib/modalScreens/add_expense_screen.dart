@@ -224,7 +224,20 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
     };
 
-
+    Map<int, String> arabicExpenseCategoryString = {
+      0: 'مطاعم',
+      1: 'تسوق',
+      2: 'بنزين',
+      3: 'قهوة',
+      4: 'مالية',
+      5: 'بقالة',
+      6: 'أثاث',
+      7: 'صحة',
+      8: 'تسوق إلكتروني',
+      9: 'ترفيه',
+      10: 'تعليم',
+      11: 'أخرى'
+    };
 
 
     final themChange = Provider.of<DarkThemProvider>(context);
@@ -296,7 +309,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       child: FlatButton(onPressed: (){
                         currentLang == "ar" ? showArabicCupertionPicker() :
                         showCupertionPicker();
-                      }, child: Text('${expenseCategoryString[picker]}')),
+                      }, child: currentLang == 'ar' ? Text('${arabicExpenseCategoryString[picker]}') : Text('${expenseCategoryString[picker]}')),
                     ): currentLang == "ar" ? DropdownButton(
                       value: dropdownValue,
                       icon: const Icon(Icons.arrow_downward),

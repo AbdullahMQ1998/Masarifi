@@ -49,6 +49,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void updateNotification(){
+    NotificationApi.showScheduledNotification(
+        title: 'Masarifi',
+        body: "${S.of(context).notifications}",
+        payload: "Masarifi",
+        hours: 19,
+        min: 00
+    );
+  }
 
 
 
@@ -89,6 +104,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     double totalBudget = 0;
 
+
+
+    updateNotification();
 
 
 
@@ -190,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     padding: EdgeInsets.only(bottom: 20, top: 30),
                                     child: HomeScreenTextWidget(
                                       text: '${S.of(context).welcomeText} ${usersInfo[0].get('userName')} !',
-                                      fontSize: 25,
+                                      fontSize: 22,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                       padding: 5,
@@ -218,7 +236,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 25,
+                                            fontSize: 20,
                                           ),
                                           duration: Duration(seconds: 1),
                                           curve: Curves.decelerate,

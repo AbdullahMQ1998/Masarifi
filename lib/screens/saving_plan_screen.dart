@@ -147,7 +147,7 @@ void getCurrenLanguage() async {
                                           end: widget.needs,
                                           style: TextStyle(
                                             color: CupertinoColors.white,
-                                            fontSize: currentLang == "ar" ? 15 :  20,
+                                            fontSize: currentLang == "ar" ? 15 :  17,
                                           ),
                                           duration: Duration(seconds: 1),
                                           curve: Curves.decelerate,
@@ -155,7 +155,7 @@ void getCurrenLanguage() async {
                                         Text(' ${S.of(context).saudiRyal}',
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: currentLang == "ar" ? 15 : 20
+                                              fontSize: currentLang == "ar" ? 15 : 17
                                           ),),
                                       ],
                                     ),
@@ -167,7 +167,7 @@ void getCurrenLanguage() async {
                           ),
 
                           Padding(
-                            padding: const EdgeInsets.only(top: 20 , left:  8),
+                            padding: const EdgeInsets.only(top: 20 , left:  5),
                             child: Container(
                               decoration: BoxDecoration(
                                   color: Color(0xff01937C),
@@ -185,7 +185,7 @@ void getCurrenLanguage() async {
                                             Text('${S.of(context).wants}',
                                               style: TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: currentLang == "ar" ? 15 : 20,
+                                                  fontSize: currentLang == "ar" ? 15 : 17,
                                                   fontWeight: FontWeight.bold
                                               ),),
 
@@ -203,7 +203,7 @@ void getCurrenLanguage() async {
                                           end: widget.wants,
                                           style: TextStyle(
                                             color: CupertinoColors.white,
-                                            fontSize: currentLang == "ar" ? 15 : 20,
+                                            fontSize: currentLang == "ar" ? 15 : 17,
                                           ),
                                           duration: Duration(seconds: 1),
                                           curve: Curves.decelerate,
@@ -211,7 +211,7 @@ void getCurrenLanguage() async {
                                         Text(' ${S.of(context).saudiRyal}',
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: currentLang == "ar" ? 15 : 20
+                                              fontSize: currentLang == "ar" ? 15 : 17
                                           ),),
                                       ],
                                     ),
@@ -223,7 +223,7 @@ void getCurrenLanguage() async {
                           ),
 
                           Padding(
-                            padding: const EdgeInsets.only(left: 8.0 , top: 20),
+                            padding: const EdgeInsets.only(left: 5.0 , top: 20),
                             child: Container(
                               decoration: BoxDecoration(
                                   color: Color(0xff01937C),
@@ -241,7 +241,7 @@ void getCurrenLanguage() async {
                                             Text('${S.of(context).saving}',
                                               style: TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: currentLang == "ar" ? 15 : 20,
+                                                  fontSize: currentLang == "ar" ? 15 : 17,
                                                   fontWeight: FontWeight.bold
                                               ),),
 
@@ -261,7 +261,7 @@ void getCurrenLanguage() async {
                                           end: widget.saving,
                                           style: TextStyle(
                                             color: CupertinoColors.white,
-                                            fontSize: currentLang == "ar" ? 15 : 20,
+                                            fontSize: currentLang == "ar" ? 15 : 17,
                                           ),
                                           duration: Duration(seconds: 1),
                                           curve: Curves.decelerate,
@@ -269,7 +269,7 @@ void getCurrenLanguage() async {
                                         Text(' ${S.of(context).saudiRyal}',
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: currentLang == "ar" ? 15 : 20
+                                              fontSize: currentLang == "ar" ? 15 : 17
                                           ),),
                                       ],
                                     ),

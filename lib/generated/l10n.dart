@@ -974,6 +974,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Don't forget to add your expenses 👀`
+  String get notifications {
+    return Intl.message(
+      'Don\'t forget to add your expenses 👀',
+      name: 'notifications',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

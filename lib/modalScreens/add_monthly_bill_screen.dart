@@ -191,6 +191,15 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
       5: 'Installment'
     };
 
+    Map<int, String> arabicMonthlyBillCategoryString = {
+      0: 'إيجار',
+      1: 'فاتورة المياة',
+      2: 'فاتورة الأنترنت',
+      3: 'فاتورة الجوال',
+      4: 'فاتورة الكهرب',
+      5: 'قسط'
+    };
+
     if(dropDownChanged == false)
       dropdownValue = currentLang == "ar" ? "فاتورة الجوال" :'Phone';
 
@@ -261,7 +270,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                       child: FlatButton(onPressed: (){
                         currentLang == 'ar'? showArabicCupertionPicker():
                         showCupertionPicker();
-                      }, child: Text('${monthlyBillCategoryString[picker]}')),
+                      }, child: currentLang == 'ar'? Text('${arabicMonthlyBillCategoryString[picker]}') :  Text('${monthlyBillCategoryString[picker]}')),
                     ) : currentLang == 'ar'?  DropdownButton(
                       value: dropdownValue,
                       icon: const Icon(Icons.arrow_downward),

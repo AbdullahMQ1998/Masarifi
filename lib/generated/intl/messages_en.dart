@@ -84,6 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "needs" : MessageLookupByLibrary.simpleMessage("Needs"),
     "needsDefinition" : MessageLookupByLibrary.simpleMessage("Needs are expenses that you can’t avoid, payments for all the essentials that would be difficult to live without."),
     "needsPercentage" : MessageLookupByLibrary.simpleMessage("50% of your monthly income should cover your most necessary costs."),
+    "notifications" : MessageLookupByLibrary.simpleMessage("Don\'t forget to add your expenses 👀"),
     "overThousnd" : MessageLookupByLibrary.simpleMessage("Please enter amount over 999 for the monthly income"),
     "perUser" : MessageLookupByLibrary.simpleMessage("Per User"),
     "preferences" : MessageLookupByLibrary.simpleMessage("PREFERENCES"),
