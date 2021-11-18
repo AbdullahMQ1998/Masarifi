@@ -20,9 +20,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flash_chat/notification/notificationAPI.dart';
 import 'Provider/language_change_provider.dart';
 import 'generated/l10n.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 
-void main() => runApp(Masarifii());
+void main() async{
+  tz.initializeTimeZones();
+  runApp(Masarifii());
+}
 
 class Masarifii extends StatefulWidget {
 
@@ -52,21 +57,20 @@ class _MasarifiiState extends State<Masarifii> {
     getCurrentAppThem();
     getCurrentLanguage();
 
-    NotificationApi.init();
+    NotificationApi.init(initScheduled: true);
     listenNotifications();
     super.initState();
   }
 
   StreamSubscription<String> listenNotifications(){
-    return NotificationApi.onNotifications.stream.listen((onClickedNotification) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(
-         loggedUser
-      )));
-
-    });
+    return NotificationApi.onNotifications.stream.listen((onClickedNotification));
   }
 
-
+void onClickedNotification(String t){
+  Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(
+      loggedUser
+  )));
+}
 
 
   @override
