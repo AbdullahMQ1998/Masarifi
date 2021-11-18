@@ -16,7 +16,7 @@ import '../modalScreens/choose_expense_or_monthly_screen.dart';
 import 'package:flash_chat/Components/ListViewWidgets.dart';
 import 'package:mccounting_text/mccounting_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flash_chat/notification/notificationAPI.dart';
 
 
 
@@ -359,6 +359,11 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               icon: Icon(Icons.settings),
               onPressed: () {
+                NotificationApi.showNotification(
+                  title: 'Masarifi',
+                  body: "Hey, fk off you bloody idiot",
+                  payload: "Masarifi",
+                );
                 Navigator.push(
                     context,
                     MaterialPageRoute(

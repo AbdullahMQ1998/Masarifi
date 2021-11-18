@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flash_chat/generated/l10n.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -42,7 +43,10 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
   String currentDate;
   String currentDate2;
   String todayDate;
-  String dropdownValue = 'All';
+  String dropdownValue;
+  bool dropDownChanged = false;
+
+  SharedPreferences preferences;
 
 
   _selectDate(BuildContext context) async {
@@ -88,13 +92,69 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
   }
 
 
+  String currentLang = "ar";
+
+  void getCurrenLanguage() async {
+    preferences = await SharedPreferences.getInstance();
+    setState(() {
+      currentLang = preferences.getString('language');
+    });
+  }
 
 
+
+  Map<String, String> arabicCategory = {
+    'All' : 'الكل',
+    'Restaurants': 'مطاعم',
+    'Shopping': "تسوق",
+    'Gas': "بنزين",
+    'Coffee': "قهوة",
+    'Finance': "مالية",
+    'Grocery': "بقالة",
+    'Furniture': "أثاث",
+    'Health': "صحة",
+    'Online-Shopping': "تسوق إلكتروني",
+    'Entertainment': "ترفيه",
+    'Education': "تعليم",
+    'Other': "أخرى"
+  };
+
+  Map<String, String> arabicToEnglish = {
+    'الكل' : 'All',
+    'مطاعم': 'Restaurants',
+    "تسوق": 'Shopping',
+    "بنزين": 'Gas',
+    "قهوة": 'Coffee',
+    "مالية": 'Finance',
+    "بقالة": 'Grocery',
+    "أثاث": 'Furniture',
+    "صحة": 'Health',
+    "تسوق إلكتروني": 'Online-Shopping',
+    "ترفيه": 'Entertainment',
+    "تعليم": 'Education',
+    "أخرى": 'Other',
+  };
+
+@override
+  void initState() {
+    getCurrenLanguage();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
 
 
+    if(dropDownChanged == false || dropdownValue == null){
+
+      if(currentLang == 'ar'){
+        dropdownValue = 'الكل';
+      }
+      else{
+        dropdownValue = 'All';
+      }
+
+    }
 
     beforeOneMonthDate = DateFormat('yyyy-MM-dd').format(widget.date);
     todayDate = DateFormat('yyyy-MM-dd').format(pastDate);
@@ -224,7 +284,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                    ),
                                  ),
 
-                                 DropdownButton(
+                                 currentLang == 'ar' ? DropdownButton(
                                    value: dropdownValue,
                                    icon: const Icon(Icons.arrow_downward),
                                    iconSize: 20,
@@ -234,6 +294,45 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                    onChanged: (newValue) {
                                      setState(() {
                                        dropdownValue = newValue;
+                                       dropDownChanged = true;
+                                     });
+                                   },
+                                   items: <String>[
+                                     'الكل',
+                                     'مطاعم',
+                                     "تسوق",
+                                     "بنزين",
+                                     "قهوة",
+                                     "مالية",
+                                     "بقالة",
+                                     "أثاث",
+                                     "صحة",
+                                     "تسوق إلكتروني",
+                                     "ترفيه",
+                                     "تعليم",
+                                     "أخرى"
+                                   ]
+                                       .map<DropdownMenuItem<String>>((String value) {
+                                     return DropdownMenuItem<String>(
+                                       value: value,
+                                       child: Text(value,
+                                         style: TextStyle(
+                                             fontSize: 20,
+                                             color: Color(0xff50c878)
+                                         ),),
+                                     );
+                                   }).toList(),
+                                 ) : DropdownButton(
+                                   value: dropdownValue,
+                                   icon: const Icon(Icons.arrow_downward),
+                                   iconSize: 20,
+                                   elevation: 10,
+                                   style: const TextStyle(),
+                                   underline: SizedBox(),
+                                   onChanged: (newValue) {
+                                     setState(() {
+                                       dropdownValue = newValue;
+                                       dropDownChanged = true;
                                      });
                                    },
                                    items: <String>[
@@ -288,7 +387,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                              selectedDate = widget.date;
                              }
                              picker = 1;
-                             if(dropdownValue != 'All'){
+                             if(dropdownValue != 'All' && arabicToEnglish[dropdownValue] != "All"){
                                picker = 2;
                              }
                            });
@@ -370,7 +469,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                      return sortByDate(expenses,selectedDate,selectedDate2,widget.userInfo);
                     }
                     if(pick == 2){
-                      return sortByDateAndType(expenses, selectedDate, selectedDate2, dropdownValue,widget.userInfo);
+                      return sortByDateAndType(expenses, selectedDate, selectedDate2, currentLang== 'ar'? arabicToEnglish[dropdownValue]:dropdownValue,widget.userInfo);
                     }
                     else
                     return normalView(expenses,widget.userInfo);

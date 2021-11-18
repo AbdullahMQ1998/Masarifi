@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash_chat/Provider/dark_them.dart';
 import 'package:flash_chat/screens/home_screen.dart';
@@ -15,7 +17,7 @@ import 'package:flash_chat/screens/register_user_info.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flash_chat/notification/notificationAPI.dart';
 import 'Provider/language_change_provider.dart';
 import 'generated/l10n.dart';
 
@@ -43,13 +45,30 @@ class _MasarifiiState extends State<Masarifii> {
 
 
 
+  User loggedUser;
 
   @override
   void initState() {
     getCurrentAppThem();
     getCurrentLanguage();
+
+    NotificationApi.init();
+    listenNotifications();
     super.initState();
   }
+
+  StreamSubscription<String> listenNotifications(){
+    return NotificationApi.onNotifications.stream.listen((onClickedNotification) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(
+         loggedUser
+      )));
+
+    });
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     User loggedUser;
