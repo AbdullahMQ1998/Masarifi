@@ -113,7 +113,7 @@ void onClickedNotification(String t){
             ChatScreen.id: (context) => ChatScreen(),
             RegisterUserInfo.id: (context) => RegisterUserInfo(),
             HomeScreen.id: (context) => HomeScreen(loggedUser),
-            SettingScreen.id: (context) => SettingScreen(userInfo)
+
 
           },
         );

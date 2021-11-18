@@ -145,6 +145,16 @@ class S {
     );
   }
 
+  /// `Expense Date`
+  String get expenseDate {
+    return Intl.message(
+      'Expense Date',
+      name: 'expenseDate',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Add`
   String get add {
     return Intl.message(
@@ -980,6 +990,36 @@ class S {
     return Intl.message(
       'Don\'t forget to add your expenses 👀',
       name: 'notifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Export Excel File`
+  String get exportExcel {
+    return Intl.message(
+      'Export Excel File',
+      name: 'exportExcel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Excel reader is mandatory inorder to export Excel file`
+  String get excelAlert {
+    return Intl.message(
+      'Excel reader is mandatory inorder to export Excel file',
+      name: 'excelAlert',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Excel File`
+  String get createExcel {
+    return Intl.message(
+      'Create Excel File',
+      name: 'createExcel',
       desc: '',
       args: [],
     );
