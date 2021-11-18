@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "excelAlert" : MessageLookupByLibrary.simpleMessage("يرجى التأكد من وجود قارئ اكسل لتصدير الملف"),
     "expectedRetireDay" : MessageLookupByLibrary.simpleMessage("التاريخ المتوقع للتقاعد"),
     "expense" : MessageLookupByLibrary.simpleMessage("المصاريف"),
+    "expenseCategory" : MessageLookupByLibrary.simpleMessage("نوع المصروف"),
     "expenseCost" : MessageLookupByLibrary.simpleMessage("تكلفة المصروف"),
     "expenseDate" : MessageLookupByLibrary.simpleMessage("تاريخ المصروف"),
     "expenseName" : MessageLookupByLibrary.simpleMessage("اسم المصروف"),

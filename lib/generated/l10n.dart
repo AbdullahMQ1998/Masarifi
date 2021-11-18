@@ -145,6 +145,16 @@ class S {
     );
   }
 
+  /// `Expense Category`
+  String get expenseCategory {
+    return Intl.message(
+      'Expense Category',
+      name: 'expenseCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Expense Date`
   String get expenseDate {
     return Intl.message(

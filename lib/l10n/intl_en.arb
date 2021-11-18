@@ -10,6 +10,7 @@
   "addMonthlyBill": "Add Monthly Bill",
   "expenseName": "Expense Name",
   "expenseCost": "Expense Cost",
+  "expenseCategory" : "Expense Category",
   "expenseDate": "Expense Date",
   "add": "Add",
   "billName": "Bill Name",

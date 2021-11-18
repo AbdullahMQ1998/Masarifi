@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "excelAlert" : MessageLookupByLibrary.simpleMessage("Excel reader is mandatory inorder to export Excel file"),
     "expectedRetireDay" : MessageLookupByLibrary.simpleMessage("Expected Retirement Date"),
     "expense" : MessageLookupByLibrary.simpleMessage("Expenses"),
+    "expenseCategory" : MessageLookupByLibrary.simpleMessage("Expense Category"),
     "expenseCost" : MessageLookupByLibrary.simpleMessage("Expense Cost"),
     "expenseDate" : MessageLookupByLibrary.simpleMessage("Expense Date"),
     "expenseName" : MessageLookupByLibrary.simpleMessage("Expense Name"),

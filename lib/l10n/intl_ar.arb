@@ -10,6 +10,7 @@
   "addMonthlyBill": "أضف فاتورة شهرية",
   "expenseName": "اسم المصروف",
   "expenseCost": "تكلفة المصروف",
+  "expenseCategory" : "نوع المصروف",
   "expenseDate": "تاريخ المصروف",
   "add": "اضافة",
   "billName": "اسم الفاتورة",
