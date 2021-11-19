@@ -46,6 +46,39 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
+  Future<void> _authenticateWithBiometrics() async {
+    bool authenticated = false;
+    try {
+      setState(() {
+        _isAuthenticating = true;
+        _authorized = 'Authenticating';
+      });
+      authenticated = await auth.authenticate(
+          localizedReason:
+          'Scan your fingerprint (or face or whatever) to authenticate',
+          useErrorDialogs: true,
+          stickyAuth: true,
+          biometricOnly: true);
+      setState(() {
+        _isAuthenticating = false;
+        _authorized = 'Authenticating';
+      });
+    } on PlatformException catch (e) {
+      print(e);
+      setState(() {
+        _isAuthenticating = false;
+        _authorized = "Error - ${e.message}";
+      });
+      return;
+    }
+    if (!mounted) return;
+
+    final String message = authenticated ? 'Authorized' : 'Not Authorized';
+    setState(() {
+      _authorized = message;
+    });
+  }
+
 
   Future<void> _checkBiometrics() async {
     bool canCheckBiometrics;
@@ -260,7 +293,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
               paddingButton(Color(0xff01937C), 'Face ID', () async{
-                _authenticate();
+                _authenticateWithBiometrics();
         }
 
     ),
