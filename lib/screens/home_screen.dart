@@ -1,3 +1,5 @@
+
+
 import 'package:flash_chat/Components/widgets.dart';
 import 'package:flash_chat/Provider/dark_them.dart';
 import 'package:flash_chat/generated/l10n.dart';
@@ -44,14 +46,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<QueryDocumentSnapshot> otherUserExpenseList;
   List<QueryDocumentSnapshot> otherUserInfoList;
+  String isFirstDay = "false";
+
+
+
 
 
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
   }
+
+
 
   void updateNotification(){
     NotificationApi.showScheduledNotification(
@@ -63,10 +71,38 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void lastDayOftheMonth()  {
+    DateTime currentDay = DateTime.now();
+    final firstDayOfMonth = DateTime(currentDay.year, currentDay.month, 1);
+    DateTime secondDayOftheMonth= DateTime(currentDay.year,currentDay.month+1 ,2);
+    double userBudget = double.parse(userInfoList[0].get('monthlyIncome')) * 0.80;
 
+
+    if(currentDay.day >= secondDayOftheMonth.day){
+      userInfoList[0].reference.update({'lastDayBool': true});
+    }
+
+    if(currentDay.day == firstDayOfMonth.day && userInfoList[0].get('lastDayBool') == true){
+      double zero = 0;
+      userInfoList[0].reference.update({'totalExpense': zero.toString() });
+      double monthlyExpense =  userBudget - double.parse(userInfoList[0].get('totalMonthlyBillCost'));
+      userInfoList[0].reference.update({'userBudget': monthlyExpense.toString()});
+      userInfoList[0].reference.update({'lastDayBool': false});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    DateTime currentDay = DateTime.now();
+    DateTime firstDayOftheMonth= DateTime(currentDay.year,currentDay.month+1 ,1);
+
+
+
+
+
+
+
 
 
     final themChange = Provider.of<DarkThemProvider>(context);
@@ -110,6 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -132,6 +169,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   //We can access any info in the userInfo by an index like usersInfo[0].get("The information you need").
                   final usersInfo = snapshot.data.docs;
                   userInfoList = usersInfo;
+
+                  lastDayOftheMonth();
+
 
                   return Column(
                     children: [

@@ -460,6 +460,10 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                 ),
                 FlatButton(
                   onPressed: () {
+
+                    Timestamp expenseMonthy = widget.userExpenseList.get('expenseDate');
+                    DateTime currentMonth = DateTime.now();
+
                     if (expenseName == null) {
                       expenseName = widget.userExpenseList.get('expenseName');
                     }
@@ -470,15 +474,26 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                       updatedTotalBudget =
                           double.parse(widget.userInfo.get('userBudget'));
                     }
-                    widget.userInfo.reference
-                        .update({'userBudget': updatedTotalBudget.toString()});
+
+                    if(expenseMonthy.toDate().month == currentMonth.month){
+                      widget.userInfo.reference
+                          .update({'userBudget': updatedTotalBudget.toString()});
+                    }
+
 
                     if (updatedExpenseTotal == null) {
                       updatedExpenseTotal =
                           double.parse(widget.userInfo.get('totalExpense'));
                     }
-                    widget.userInfo.reference.update(
-                        {'totalExpense': updatedExpenseTotal.toString()});
+
+
+
+
+                    if(expenseMonthy.toDate().month == currentMonth.month){
+                      widget.userInfo.reference.update(
+                          {'totalExpense': updatedExpenseTotal.toString()});
+                    }
+
 
                     if (expenseCost == null) {
                       expenseCost = widget.userExpenseList.get('expenseCost');

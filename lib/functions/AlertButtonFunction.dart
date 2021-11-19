@@ -39,6 +39,8 @@ showIOSDeleteMonthlyBillsAlert(BuildContext context,QueryDocumentSnapshot userIn
         CupertinoDialogAction(
           child: Text('${S.of(context).confirm}'),
           onPressed: () {
+
+
             double currentMonthlyBillCost = double.parse(userMonthlyBillList.get('billCost'));
             double currentTotalBudget = double.parse(userInfo.get('userBudget'));
             double currentTotalMonthlyBillCost = double.parse(userInfo.get('totalMonthlyBillCost'));
@@ -80,14 +82,27 @@ showIOSDeleteExpenseAlert(BuildContext context,QueryDocumentSnapshot userInfoLis
           child: Text('${S.of(context).confirm}'),
           onPressed: () {
 
+
+            Timestamp expenseMonthy = userExpenseList.get('expenseDate');
+            DateTime currentMonth = DateTime.now();
+
+
+
+            if(expenseMonthy.toDate().month == currentMonth.month){
+              print(expenseMonthy.toDate().month);
+              print(currentMonth.month);
+            }
+
             double currentExpenseCost = double.parse(userExpenseList.get('expenseCost'));
             double currentTotalBudget = double.parse(userInfoList.get('userBudget'));
             double currentTotalExpense = double.parse(userInfoList.get('totalExpense'));
             double updatedTotalBudget = currentTotalBudget + currentExpenseCost;
             double updatedTotalExpense = currentTotalExpense - currentExpenseCost;
 
-            userInfoList.reference.update({'userBudget': updatedTotalBudget.toString()});
-            userInfoList.reference.update({'totalExpense': updatedTotalExpense.toString()});
+            if(expenseMonthy.toDate().month == currentMonth.month){
+              userInfoList.reference.update({'userBudget': updatedTotalBudget.toString()});
+              userInfoList.reference.update({'totalExpense': updatedTotalExpense.toString()});
+            }
 
             userExpenseList.reference.delete();
 
@@ -221,6 +236,11 @@ showAlertDialogForExpense(BuildContext context , bool shouldDelete,QueryDocument
     onPressed:  () {
 
       //Here we Delete the current Expense
+      Timestamp expenseMonthy = userExpenseList.get('expenseDate');
+      DateTime currentMonth = DateTime.now();
+
+
+
 
       double currentExpenseCost = double.parse(userExpenseList.get('expenseCost'));
       double currentTotalBudget = double.parse(userInfoList.get('userBudget'));
@@ -228,8 +248,12 @@ showAlertDialogForExpense(BuildContext context , bool shouldDelete,QueryDocument
       double updatedTotalBudget = currentTotalBudget + currentExpenseCost;
       double updatedTotalExpense = currentTotalExpense - currentExpenseCost;
 
-      userInfoList.reference.update({'userBudget': updatedTotalBudget.toString()});
-      userInfoList.reference.update({'totalExpense': updatedTotalExpense.toString()});
+      if(expenseMonthy.toDate().month == currentMonth.month){
+        userInfoList.reference.update({'userBudget': updatedTotalBudget.toString()});
+        userInfoList.reference.update({'totalExpense': updatedTotalExpense.toString()});
+      }
+
+
 
       userExpenseList.reference.delete();
 
