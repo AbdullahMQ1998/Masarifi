@@ -3,14 +3,16 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash_chat/Components/Rounded_button.dart';
 import 'package:flash_chat/functions/AlertButtonFunction.dart';
-import 'package:flash_chat/local_auth/LocalAuthApi.dart';
+
 import 'package:flash_chat/modalScreens/reset_password.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
-
+import 'package:flutter/services.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'home_screen.dart';
 import 'package:flash_chat/generated/l10n.dart';
@@ -29,15 +31,64 @@ class _LoginScreenState extends State<LoginScreen> {
   bool showSpinner = false;
 
 
+
+  final LocalAuthentication auth = LocalAuthentication();
+  bool _canCheckBiometrics;
+
+  List<BiometricType> _availableBiometrics;
+  String _authorized = 'Not Authorized';
+  bool _isAuthenticating = false;
+
+
   @override
   void initState() {
-
 
     super.initState();
   }
 
 
+  Future<void> _checkBiometrics() async {
+    bool canCheckBiometrics;
+    try {
+      canCheckBiometrics = await auth.canCheckBiometrics;
+    } on PlatformException catch (e) {
+      canCheckBiometrics = false;
+      print(e);
+    }
+    if (!mounted) return;
 
+    setState(() {
+      _canCheckBiometrics = canCheckBiometrics;
+    });
+  }
+
+  Future<void> _authenticate() async {
+    bool authenticated = false;
+    try {
+      setState(() {
+        _isAuthenticating = true;
+        _authorized = 'Authenticating';
+      });
+      authenticated = await auth.authenticate(
+          localizedReason: 'Let OS determine authentication method',
+          useErrorDialogs: true,
+          stickyAuth: true);
+      setState(() {
+        _isAuthenticating = false;
+      });
+    } on PlatformException catch (e) {
+      print(e);
+      setState(() {
+        _isAuthenticating = false;
+        _authorized = "Error - ${e.message}";
+      });
+      return;
+    }
+    if (!mounted) return;
+
+    setState(
+            () => _authorized = authenticated ? 'Authorized' : 'Not Authorized');
+  }
 
 
   void getCurrentUser() async {
@@ -209,22 +260,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
               paddingButton(Color(0xff01937C), 'Face ID', () async{
-
-    final isAuthenticated = await LocalAuthApi.authenticate();
-
-    if(isAuthenticated){
-    Navigator
-        .of(context)
-        .pushReplacement(
-    MaterialPageRoute(
-    builder: (BuildContext context) => HomeScreen(
-    loggedUser,
-    )
-    ));
-
-
+                _authenticate();
         }
-    }
+
     ),
 
               Row(
