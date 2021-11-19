@@ -14,6 +14,7 @@ import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'home_screen.dart';
 import 'package:flash_chat/generated/l10n.dart';
 class LoginScreen extends StatefulWidget {
@@ -30,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String password;
   bool showSpinner = false;
 
+  SharedPreferences preferences;
 
 
   final LocalAuthentication auth = LocalAuthentication();
@@ -42,8 +44,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-
+getLocalStorage();
     super.initState();
+  }
+
+  void getLocalStorage() async {
+    preferences = await SharedPreferences.getInstance();
   }
 
   Future<void> _authenticateWithBiometrics() async {
@@ -74,10 +80,45 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!mounted) return;
 
     final String message = authenticated ? 'Authorized' : 'Not Authorized';
-    setState(() {
+    setState(() async {
       _authorized = message;
-    });
+      if(_authorized == "Authorized"){
+        final user = await _auth.signInWithEmailAndPassword(email: preferences.getString('Email'), password: preferences.getString('Pass')).catchError((err) {
+
+          Platform.isIOS ? showIOSGeneralAlert(context,err.message): showGeneralErrorAlertDialog(context, 'Error', err.message);
+
+        });
+
+        try{
+          if(user != null) {
+            getCurrentUser();
+            getData();
+
+            Navigator.of(context).pop();
+            Navigator
+                .of(context)
+                .pushReplacement(
+                MaterialPageRoute(
+                    builder: (BuildContext context) => HomeScreen(
+                      loggedUser,
+                    )
+                )
+            );
+
+          }
+          setState(() {
+            showSpinner = false;
+          });}
+        catch(e){
+          print(e);
+        }
+      }
+      }
+    );
+
   }
+
+
 
 
   Future<void> _checkBiometrics() async {
@@ -271,6 +312,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   getCurrentUser();
                   getData();
 
+
+                  preferences.setString('Email', email);
+                  preferences.setString('Pass', password);
+
                   Navigator.of(context).pop();
                   Navigator
                       .of(context)
@@ -293,7 +338,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
               paddingButton(Color(0xff01937C), 'Face ID', () async{
+
+
                 _authenticateWithBiometrics();
+
         }
 
     ),
