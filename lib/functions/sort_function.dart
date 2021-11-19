@@ -1,6 +1,4 @@
 
-import 'dart:math';
-
 import 'package:flash_chat/Components/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +12,9 @@ List<ExpensesBubble> normalView(List<QueryDocumentSnapshot> list , QueryDocument
 
   QueryDocumentSnapshot currentExpen;
   List<ExpensesBubble> expensesList = [];
+  Timestamp expenseDates;
+  DateTime currentMonth = DateTime.now();
+
   bool isLast = false;
 
   int i = 0;
@@ -56,6 +57,8 @@ List<ExpensesBubble> normalView(List<QueryDocumentSnapshot> list , QueryDocument
 
   for (var expense in list) {
 
+    expenseDates = expense.get('expenseDate');
+    if(expenseDates.toDate().month == currentMonth.month){
     final expenseName = expense.get('expenseName');
     final expenseTotal = expense.get('expenseCost');
     timestamp = expense.get('expenseDate');
@@ -74,7 +77,7 @@ List<ExpensesBubble> normalView(List<QueryDocumentSnapshot> list , QueryDocument
       isLast: isLast,
     ));
     isLast= false;
-  }
+  }}
   return expensesList;
 }
 

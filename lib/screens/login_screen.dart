@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash_chat/Components/Rounded_button.dart';
 import 'package:flash_chat/functions/AlertButtonFunction.dart';
+import 'package:flash_chat/local_auth/LocalAuthApi.dart';
 import 'package:flash_chat/modalScreens/reset_password.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
@@ -30,7 +31,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+
     super.initState();
+  }
+
+  void authenticateInfo() async {
+    final isAuthenticated = await LocalAuthApi.authenticate();
+
+    if(isAuthenticated){
+      
+    }
+
+
   }
 
   void getCurrentUser() async {

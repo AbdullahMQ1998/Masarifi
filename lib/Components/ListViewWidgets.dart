@@ -105,7 +105,7 @@ class ExpenseListView extends StatelessWidget {
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Text(
-            'No Expense',
+            'No Expense for this month',
           );
         }
         var expenses = snapshot.data.docs;
@@ -117,7 +117,7 @@ class ExpenseListView extends StatelessWidget {
           child: Container(
             height: 242,
             child: ListView(
-              children: normalView(expenses , userInfoList),
+              children: normalView(expenses , userInfoList).length == 0 ? [Center(child: Text("No expense for the current Month"))] : normalView(expenses , userInfoList)  ,
             ),
           ),
         );

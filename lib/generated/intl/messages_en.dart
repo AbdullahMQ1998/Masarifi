@@ -116,7 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "welcomeText" : MessageLookupByLibrary.simpleMessage("Welcome"),
     "wouldYouLikeDeleteExpense" : MessageLookupByLibrary.simpleMessage("Would you like to delete the current expense?"),
     "wouldYouLikeDeleteMonthly" : MessageLookupByLibrary.simpleMessage("Would you like to delete the current monthly bill?"),
-    "yearsBasedOnRetireDay" : MessageLookupByLibrary.simpleMessage("years based on your retirement date"),
+    "yearsBasedOnRetireDay" : MessageLookupByLibrary.simpleMessage("in years based on your retirement date"),
     "yourBudgetNeeds" : MessageLookupByLibrary.simpleMessage("your budget on needs is"),
     "yourBudgetWants" : MessageLookupByLibrary.simpleMessage("your budget on wants is"),
     "yourExpense" : MessageLookupByLibrary.simpleMessage("Your Expense"),

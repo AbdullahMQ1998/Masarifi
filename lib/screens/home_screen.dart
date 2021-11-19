@@ -44,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<QueryDocumentSnapshot> userInfoList;
   List<QueryDocumentSnapshot> expenseList;
 
+
   List<QueryDocumentSnapshot> otherUserExpenseList;
   List<QueryDocumentSnapshot> otherUserInfoList;
   String isFirstDay = "false";
