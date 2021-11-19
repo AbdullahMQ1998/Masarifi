@@ -32,18 +32,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
 
+
     super.initState();
   }
 
-  void authenticateInfo() async {
-    final isAuthenticated = await LocalAuthApi.authenticate();
-
-    if(isAuthenticated){
-      
-    }
 
 
-  }
+
 
   void getCurrentUser() async {
     final user = await _auth.currentUser;
@@ -212,6 +207,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
               },),
 
+
+              paddingButton(Color(0xff01937C), 'Face ID', () async{
+
+    final isAuthenticated = await LocalAuthApi.authenticate();
+
+    if(isAuthenticated){
+    Navigator
+        .of(context)
+        .pushReplacement(
+    MaterialPageRoute(
+    builder: (BuildContext context) => HomeScreen(
+    loggedUser,
+    )
+    ));
+
+
+        }
+    }
+    ),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
