@@ -98,7 +98,16 @@
   "notifications": "Don't forget to add your expenses 👀",
   "exportExcel": "Export Excel File",
   "excelAlert": "Excel reader is mandatory inorder to export Excel file",
-  "createExcel": "Create Excel File"
+  "createExcel": "Create Excel File",
+  "rembmerMe": "Remember Me",
+  "monthlyPageTitle" : "Monthly Reports",
+  "monthTitle" : "Month",
+  "monthlyBudget": "Monthly Budget",
+  "moneySpent": "Money Spent",
+  "moneySaved": "Money Saved",
+  "monthlyBills": "Monthly Bills",
+  "totalExpense": "Total Expenses"
+
 
 
 

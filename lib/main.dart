@@ -12,9 +12,9 @@ import 'package:provider/provider.dart';
 import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
-import 'package:flash_chat/screens/chat_screen.dart';
-import 'package:flash_chat/screens/register_user_info.dart';
 
+import 'package:flash_chat/screens/register_user_info.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flash_chat/notification/notificationAPI.dart';
@@ -25,7 +25,9 @@ import 'package:timezone/data/latest.dart' as tz;
 
 
 void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   tz.initializeTimeZones();
+  await Firebase.initializeApp();
   runApp(Masarifii());
 }
 
@@ -110,7 +112,6 @@ void onClickedNotification(String t){
             WelcomeScreen.id: (context) => WelcomeScreen(),
             LoginScreen.id: (context) => LoginScreen(),
             RegistrationScreen.id: (context) => RegistrationScreen(),
-            ChatScreen.id: (context) => ChatScreen(),
             RegisterUserInfo.id: (context) => RegisterUserInfo(),
             HomeScreen.id: (context) => HomeScreen(loggedUser),
 

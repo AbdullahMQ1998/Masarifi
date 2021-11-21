@@ -1034,6 +1034,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Remember Me`
+  String get rembmerMe {
+    return Intl.message(
+      'Remember Me',
+      name: 'rembmerMe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Monthly Reports`
+  String get monthlyPageTitle {
+    return Intl.message(
+      'Monthly Reports',
+      name: 'monthlyPageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Month`
+  String get monthTitle {
+    return Intl.message(
+      'Month',
+      name: 'monthTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Monthly Budget`
+  String get monthlyBudget {
+    return Intl.message(
+      'Monthly Budget',
+      name: 'monthlyBudget',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Money Spent`
+  String get moneySpent {
+    return Intl.message(
+      'Money Spent',
+      name: 'moneySpent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Money Saved`
+  String get moneySaved {
+    return Intl.message(
+      'Money Saved',
+      name: 'moneySaved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Expenses`
+  String get totalExpense {
+    return Intl.message(
+      'Total Expenses',
+      name: 'totalExpense',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

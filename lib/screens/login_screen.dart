@@ -1,11 +1,8 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash_chat/Components/Rounded_button.dart';
 import 'package:flash_chat/functions/AlertButtonFunction.dart';
-
 import 'package:flash_chat/modalScreens/reset_password.dart';
-import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
@@ -32,6 +29,9 @@ class _LoginScreenState extends State<LoginScreen> {
   bool showSpinner = false;
 
   SharedPreferences preferences;
+  bool _isChecked = false;
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
 
   final LocalAuthentication auth = LocalAuthentication();
@@ -45,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
 getLocalStorage();
+_loadUserEmailPassword();
     super.initState();
   }
 
@@ -118,7 +119,19 @@ getLocalStorage();
 
   }
 
-
+  void _handleRemeberme(bool value) {
+    _isChecked = value;
+    SharedPreferences.getInstance().then(
+          (prefs) {
+        prefs.setBool("remember_me", value);
+        prefs.setString('email', _emailController.text);
+        prefs.setString('password', _passwordController.text);
+      },
+    );
+    setState(() {
+      _isChecked = value;
+    });
+  }
 
 
   Future<void> _checkBiometrics() async {
@@ -165,6 +178,28 @@ getLocalStorage();
   }
 
 
+  void _loadUserEmailPassword() async {
+    try {
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      var _email = _prefs.getString("email") ?? "";
+      var _password = _prefs.getString("password") ?? "";
+      var _remeberMe = _prefs.getBool("remember_me") ?? false;
+      if (_remeberMe) {
+        setState(() {
+          _isChecked = true;
+        });
+        _emailController.text = _email ?? "";
+        _passwordController.text = _password ?? "";
+      }
+    } catch (e)
+    {
+      print(e);
+    }
+  }
+
+
+
+
   void getCurrentUser() async {
     final user = await _auth.currentUser;
     try {
@@ -199,8 +234,16 @@ getLocalStorage();
         });
   }
 
+
+
+
+
   @override
   Widget build(BuildContext context) {
+
+    if(email != null && password != null){
+      _authenticateWithBiometrics();
+    }
 
     return Scaffold(
       // backgroundColor: Color(0xffF4F9F9),
@@ -210,7 +253,7 @@ getLocalStorage();
           padding: EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+
             children: <Widget>[
               Hero(
                 tag: 'logo',
@@ -223,6 +266,7 @@ getLocalStorage();
                 height: 48.0,
               ),
               TextField(
+                controller: _emailController,
                 textAlign: TextAlign.center,
                 onChanged: (value) {
 
@@ -246,9 +290,13 @@ getLocalStorage();
                 height: 10.0,
               ),
               TextField(
+                controller: _passwordController,
                 textAlign: TextAlign.center,
                 obscureText: true,
 
+                onSubmitted: (value) async {
+
+                },
                 onChanged: (value){
                   setState(() {
                     password = value;
@@ -267,8 +315,19 @@ getLocalStorage();
               ),
               
               Row(children: [
-                Expanded(child: SizedBox()),
-                
+                  Checkbox(
+                  activeColor: Color(0xff00C8E8),
+            value: _isChecked,
+                    onChanged: _handleRemeberme,
+                  ),
+                Expanded(
+                  child: Text("${S.of(context).rembmerMe}",
+                    style: TextStyle(
+                   fontSize: 15
+                    ),
+                  ),
+                ),
+
                 TextButton(onPressed: (){
 
 
@@ -295,12 +354,16 @@ getLocalStorage();
 
                 setState(() {
                   showSpinner = true;
+                  email = _emailController.text;
+                  password = _passwordController.text;
                 });
+
 
                 if(email == null || password == null){
                   email = '';
                   password = '';
                 }
+
                 final user = await _auth.signInWithEmailAndPassword(email: email, password: password).catchError((err) {
 
                   Platform.isIOS ? showIOSGeneralAlert(context,err.message): showGeneralErrorAlertDialog(context, 'Error', err.message);
@@ -313,8 +376,10 @@ getLocalStorage();
                   getData();
 
 
+                  if(email != null && password != null){
                   preferences.setString('Email', email);
                   preferences.setString('Pass', password);
+                  }
 
                   Navigator.of(context).pop();
                   Navigator
@@ -337,14 +402,17 @@ getLocalStorage();
               },),
 
 
-              paddingButton(Color(0xff01937C), 'Face ID', () async{
+              Platform.isIOS ?
+              Container(
+                width: 100,
 
-
-                _authenticateWithBiometrics();
-
+                child: paddingButton(Color(0xff01937C), 'Face ID', () async{
+                  _authenticateWithBiometrics();
         }
 
     ),
+              ) :
+                  SizedBox(),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

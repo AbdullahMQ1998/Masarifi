@@ -354,4 +354,93 @@ class ExpensesBubble extends StatelessWidget {
 }
 
 
+class monthExpensesBubble extends StatelessWidget {
+
+  final String expenseName;
+  final String expenseTotal;
+  final IconData expenseIcon;
+  final String expenseDate;
+  final String expenseTime;
+  final bool isLast;
+  final QueryDocumentSnapshot userExpenseList;
+  final QueryDocumentSnapshot userInfoList;
+
+
+
+  monthExpensesBubble({this.expenseIcon,this.expenseName,this.expenseTotal,this.isLast,this.expenseTime,this.expenseDate,this.userExpenseList, this.userInfoList});
+
+  @override
+  Widget build(BuildContext context) {
+    final themChange = Provider.of<DarkThemProvider>(context);
+
+    bool shouldDelete = false;
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 30,right: 30),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+                color: Colors.black12
+            ),
+          ),
+        ),
+        child: Material(
+          borderRadius: BorderRadius.only(
+            topLeft: isLast? Radius.circular(10) : Radius.circular(0),
+            topRight: isLast? Radius.circular(10) : Radius.circular(0),
+          ),
+          elevation: 0,
+
+
+          child: Padding(
+            padding: const EdgeInsets.all(40.0),
+            child: Row(
+
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Icon(expenseIcon,
+                    size: 30,
+
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children:[
+                        Text(userExpenseList.get('expenseName') == null ? "  $expenseName" :" ${userExpenseList.get('expenseName')}",
+                          style: TextStyle(
+                              fontSize: 25
+                          ),),
+                        Text('   $expenseDate $expenseTime',
+                          style: TextStyle(
+                              fontSize: 12
+                          ),),
+
+                      ]
+                  ),
+                ),
+
+
+                Text(expenseTotal,
+                  style: TextStyle(
+                      fontSize: 20,
+
+                      fontWeight: FontWeight.bold
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+
+              ],
+            ),
+          ),
+
+        ),
+      ),
+    );
+  }
+}
+
+
 

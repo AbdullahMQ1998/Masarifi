@@ -5,6 +5,7 @@ import 'package:flash_chat/Provider/dark_them.dart';
 import 'package:flash_chat/generated/l10n.dart';
 import 'package:flash_chat/screens/analysis_screen.dart';
 import 'package:flash_chat/screens/expense_screen.dart';
+import 'package:flash_chat/screens/monthly_report_screen.dart';
 import 'package:flash_chat/screens/saving_plan_screen.dart';
 import 'package:flash_chat/screens/settings_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -75,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void lastDayOftheMonth()  {
     DateTime currentDay = DateTime.now();
     final firstDayOfMonth = DateTime(currentDay.year, currentDay.month, 1);
-    DateTime secondDayOftheMonth= DateTime(currentDay.year,currentDay.month+1 ,2);
+    DateTime secondDayOftheMonth= DateTime(currentDay.year,currentDay.month ,2);
     double userBudget = double.parse(userInfoList[0].get('monthlyIncome')) * 0.80;
 
 
@@ -84,6 +85,16 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     if(currentDay.day == firstDayOfMonth.day && userInfoList[0].get('lastDayBool') == true){
+      _fireStore.collection("monthly_report").add(
+        {
+          'email': userInfoList[0].get('email'),
+          'budgetLeft': userInfoList[0].get('userBudget'),
+          'monthDate': DateTime(currentDay.year,currentDay.month-1),
+          'totalExpense': userInfoList[0].get('totalExpense'),
+          'userBudget': userBudget,
+          'totalMonthly': userInfoList[0].get('totalMonthlyBillCost'),
+        }
+      );
       double zero = 0;
       userInfoList[0].reference.update({'totalExpense': zero.toString() });
       double monthlyExpense =  userBudget - double.parse(userInfoList[0].get('totalMonthlyBillCost'));
@@ -97,10 +108,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     DateTime currentDay = DateTime.now();
     DateTime firstDayOftheMonth= DateTime(currentDay.year,currentDay.month+1 ,1);
-
-
-
-
 
 
 
@@ -345,7 +352,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPress: () {
 
                           DateTime currentDate = DateTime.now();
-                          print(currentDate);
                           DateTime beforeOneMonthDate = DateTime(currentDate.year,
                               currentDate.month - 1, currentDate.day);
 
@@ -413,6 +419,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             saving)));
               },
             ),
+
+            IconButton(
+              icon: Icon(Icons.file_copy),
+              onPressed: () {
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MonthlyReportScreen(expenseList,userInfoList[0])));
+              },
+            ),
+
             IconButton(
               icon: Icon(Icons.settings),
               onPressed: () {
@@ -423,6 +441,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context) => SettingScreen(userInfoList[0],expenseList)));
               },
             ),
+
+
             SizedBox(
               width: 10,
             ),
