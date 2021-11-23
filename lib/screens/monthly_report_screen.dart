@@ -57,7 +57,7 @@ class _MonthlyReportScreenState extends State<MonthlyReportScreen> {
       return Padding(
         padding: const EdgeInsets.all(30.0),
         child: ListView(
-          children: monthlyReports,
+          children: monthlyReports.length == 0 ? [Text("${S.of(context).noMonthlyReport}")] : monthlyReports,
         ),
       );
     } ),

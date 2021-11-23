@@ -86,7 +86,12 @@ _loadUserEmailPassword();
     final String message = authenticated ? 'Authorized' : 'Not Authorized';
     setState(() async {
       _authorized = message;
+      if(preferences.getString('Email') == null || preferences.getString('Pass') == null){
+          showIOSGeneralAlert(context, "Please make sure you have an account in Masarifi");
+      }
+      else
       if(_authorized == "Authorized"){
+
         final user = await _auth.signInWithEmailAndPassword(email: preferences.getString('Email'), password: preferences.getString('Pass')).catchError((err) {
 
           Platform.isIOS ? showIOSGeneralAlert(context,err.message): showGeneralErrorAlertDialog(context, 'Error', err.message);
@@ -317,6 +322,7 @@ _loadUserEmailPassword();
                   ),
                     fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
                     filled: true),
+
 
               ),
               

@@ -109,7 +109,8 @@
   "monthlyBills": "Monthly Bills",
   "totalExpense": "Total Expenses",
   "noMonthlyBill": "No monthly bills so far",
-  "noExpenses" : "No expense for the current month, Let's add some!"
+  "noExpenses" : "No expense for the current month, Let's add some!",
+  "noMonthlyReport": "No monthly reports, wait for the next month"
 
 
 

@@ -96,6 +96,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "needsPercentage" : MessageLookupByLibrary.simpleMessage("50% of your monthly income should cover your most necessary costs."),
     "noExpenses" : MessageLookupByLibrary.simpleMessage("No expense for the current month, Let\'s add some!"),
     "noMonthlyBill" : MessageLookupByLibrary.simpleMessage("No monthly bills so far"),
+    "noMonthlyReport" : MessageLookupByLibrary.simpleMessage("No monthly reports, wait for the next month"),
     "notifications" : MessageLookupByLibrary.simpleMessage("Don\'t forget to add your expenses 👀"),
     "occupation" : MessageLookupByLibrary.simpleMessage("Occupation"),
     "overThousnd" : MessageLookupByLibrary.simpleMessage("Please enter amount over 999 for the monthly income"),

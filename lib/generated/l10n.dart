@@ -1134,6 +1134,16 @@ class S {
       args: [],
     );
   }
+
+  /// `No monthly reports, wait for the next month`
+  String get noMonthlyReport {
+    return Intl.message(
+      'No monthly reports, wait for the next month',
+      name: 'noMonthlyReport',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

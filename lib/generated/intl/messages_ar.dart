@@ -96,6 +96,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "needsPercentage" : MessageLookupByLibrary.simpleMessage(" خصص 50% من راتبك للمصاريف الأساسية وهي كافية لتغطية اغلب المصاريف الاساسية."),
     "noExpenses" : MessageLookupByLibrary.simpleMessage("مافيه مصاريف مسجلة للشهر الحالي"),
     "noMonthlyBill" : MessageLookupByLibrary.simpleMessage("مافيه فواتير شهرية للحين , لا تنسى تضيف"),
+    "noMonthlyReport" : MessageLookupByLibrary.simpleMessage("لا يوجد تقارير شهرية، انتظر للشهر القادم"),
     "notifications" : MessageLookupByLibrary.simpleMessage("لا تنسى تضيف مصاريفك 👀"),
     "occupation" : MessageLookupByLibrary.simpleMessage("الوضع الوظيفي"),
     "overThousnd" : MessageLookupByLibrary.simpleMessage("الرجاء ادخال دخل شهري اكبر من 1000 ريال"),
