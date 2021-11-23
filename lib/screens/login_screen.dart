@@ -252,9 +252,6 @@ _loadUserEmailPassword();
 
     final themChange = Provider.of<DarkThemProvider>(context);
 
-    if(email != null && password != null){
-      _authenticateWithBiometrics();
-    }
 
     return Scaffold(
       // backgroundColor: Color(0xffF4F9F9),
