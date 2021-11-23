@@ -1,9 +1,11 @@
 import 'package:flash_chat/Components/Rounded_button.dart';
+import 'package:flash_chat/Provider/dark_them.dart';
 import 'package:flash_chat/functions/AlertButtonFunction.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'home_screen.dart';
 import 'package:flutter_dropdown/flutter_dropdown.dart';
@@ -110,6 +112,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
 
   @override
   Widget build(BuildContext context) {
+    final themChange = Provider.of<DarkThemProvider>(context);
 
     bool checkNullorSpace(){
       if(userName != null && userName != '' &&  monthlyIncome != null && monthlyIncome != ''){
@@ -168,7 +171,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                         borderSide: BorderSide(color: Colors.white, width: 1.0),
                     borderRadius: BorderRadius.all(Radius.circular(32.0)),
                   ),
-                        fillColor: Colors.grey.shade800,
+                        fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
                         filled: true
                     ),
                   ),
@@ -205,7 +208,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                         borderSide: BorderSide(color: Colors.white, width: 1.0),
                         borderRadius: BorderRadius.all(Radius.circular(32.0)),
                       ),
-                        fillColor: Colors.grey.shade800,
+                        fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
                         filled: true),
                   ),
                   SizedBox(

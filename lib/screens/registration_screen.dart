@@ -1,6 +1,8 @@
 
 import 'dart:io';
 
+import 'package:flash_chat/Provider/dark_them.dart';
+import 'package:flash_chat/chartsData/categoryClass.dart';
 import 'package:flash_chat/functions/AlertButtonFunction.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,8 @@ import 'package:flash_chat/Components/Rounded_button.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'register_user_info.dart';
 import 'package:flash_chat/generated/l10n.dart';
 
@@ -23,9 +27,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   bool showSpinner = false;
   String email;
   String password;
+  SharedPreferences preferences;
+
+
+  void getPref() async{
+    preferences = await SharedPreferences.getInstance();
+  }
+
+  @override
+  void initState() {
+    getPref();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final themChange = Provider.of<DarkThemProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: ModalProgressHUD(
@@ -57,7 +74,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     borderSide: BorderSide( width: 1.0),
                     borderRadius: BorderRadius.all(Radius.circular(32.0)),
                   ),
-                    fillColor: Colors.grey.shade800,
+                    fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
                     filled: true),
               ),
               SizedBox(
@@ -76,7 +93,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     borderSide: BorderSide( width: 1.0),
                     borderRadius: BorderRadius.all(Radius.circular(32.0)),
                   ),
-                    fillColor: Colors.grey.shade800,
+                    fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
                     filled: true),
               ),
               SizedBox(
@@ -99,6 +116,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                 try {
                   if (newUser != null) {
+                    if(email != null && password != null){
+                      preferences.setString('Email', email);
+                      preferences.setString('Pass', password);
+                    }
                     Navigator.pushNamed(context, RegisterUserInfo.id);
                   }
                   setState(() {

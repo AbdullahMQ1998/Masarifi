@@ -77,6 +77,7 @@ void onClickedNotification(String t){
 
   @override
   Widget build(BuildContext context) {
+
     User loggedUser;
     QueryDocumentSnapshot userInfo;
 
@@ -94,8 +95,10 @@ void onClickedNotification(String t){
     child: Consumer<DarkThemProvider>(
 
       builder: (context, themData,child) {
+
+
         return MaterialApp(
-          locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocale,
+          locale:Provider.of<LanguageChangeProvider>(context, listen: true).currentLocale,
           localizationsDelegates: [
             S.delegate,
             GlobalMaterialLocalizations.delegate,

@@ -37,7 +37,7 @@ AnimationController _controller;
 Animation<double> _animation;
 double _miles = 0.0;
 
-
+String occupation;
 
 Animation animation;
 AnimationController animationController;
@@ -88,6 +88,8 @@ void getCurrenLanguage() async {
     String roundedYearToRetire = yearsToRetire.toStringAsFixed(2);
     yearsToRetire = double.parse(roundedYearToRetire);
 
+
+    occupation = widget.userInfo.get('occupation');
 
     return AnimatedBuilder(
         animation: animationController,
@@ -319,7 +321,7 @@ void getCurrenLanguage() async {
                                     '${S.of(context).saving}',
                                     '${S.of(context).savingDefinition}',
                                     '${S.of(context).savingPercentage}',
-                                    '${S.of(context).managedToSave} ${widget.saving.toStringAsFixed(2)} ${S.of(context).investWith} ${Finance.fv(rate: rate, nper: yearsToRetire, pmt: - payments * 12 , pv:0 ).toStringAsFixed(2)} ${S.of(context).saudiRyal} $yearsToRetire ${S.of(context).yearsBasedOnRetireDay}',
+                                    occupation == 'Employed' ? '${S.of(context).managedToSave} ${widget.saving.toStringAsFixed(2)} ${S.of(context).investWith} ${Finance.fv(rate: rate, nper: yearsToRetire, pmt: - payments * 12 , pv:0 ).toStringAsFixed(2)} ${S.of(context).saudiRyal} $yearsToRetire ${S.of(context).yearsBasedOnRetireDay}' : '',
                                     Color(0xffC37B89),
                                 ),
                                 width: 350,

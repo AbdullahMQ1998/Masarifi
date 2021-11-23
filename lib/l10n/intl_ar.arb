@@ -66,6 +66,7 @@
   "email": "البريد الإلكتروني",
   "monthlyIncome": "الدخل الشهري",
   "gender":"الجنس",
+  "occupation": "الوضع الوظيفي",
   "deleteBill": "حذف الفاتورة",
   "deleteExpense": "حذف المصروف",
   "wouldYouLikeDeleteMonthly": "هل تريد حذف الفاتورة الحالية؟",
@@ -106,6 +107,8 @@
   "moneySpent": "النقود المصروفة",
   "moneySaved": "النقود المدخرة",
   "monthlyBills": "الفواتير الشهرية",
-  "totalExpense": "مجموع المصاريف"
+  "totalExpense": "مجموع المصاريف",
+  "noMonthlyBill": "مافيه فواتير شهرية للحين , لا تنسى تضيف",
+  "noExpenses" : "مافيه مصاريف مسجلة للشهر الحالي"
 
 }

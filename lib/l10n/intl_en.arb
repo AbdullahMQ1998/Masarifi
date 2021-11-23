@@ -66,6 +66,7 @@
   "email": "Email",
   "monthlyIncome": "Monthly Income",
   "gender":"Gender",
+  "occupation": "Occupation",
   "deleteBill": "Delete Bill",
   "deleteExpense": "Delete  Expense",
   "wouldYouLikeDeleteMonthly": "Would you like to delete the current monthly bill?",
@@ -106,7 +107,9 @@
   "moneySpent": "Money Spent",
   "moneySaved": "Money Saved",
   "monthlyBills": "Monthly Bills",
-  "totalExpense": "Total Expenses"
+  "totalExpense": "Total Expenses",
+  "noMonthlyBill": "No monthly bills so far",
+  "noExpenses" : "No expense for the current month, Let's add some!"
 
 
 

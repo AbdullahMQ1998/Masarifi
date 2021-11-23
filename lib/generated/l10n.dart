@@ -705,6 +705,16 @@ class S {
     );
   }
 
+  /// `Occupation`
+  String get occupation {
+    return Intl.message(
+      'Occupation',
+      name: 'occupation',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Delete Bill`
   String get deleteBill {
     return Intl.message(
@@ -1100,6 +1110,26 @@ class S {
     return Intl.message(
       'Total Expenses',
       name: 'totalExpense',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No monthly bills so far`
+  String get noMonthlyBill {
+    return Intl.message(
+      'No monthly bills so far',
+      name: 'noMonthlyBill',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No expense for the current month, Let's add some!`
+  String get noExpenses {
+    return Intl.message(
+      'No expense for the current month, Let\'s add some!',
+      name: 'noExpenses',
       desc: '',
       args: [],
     );

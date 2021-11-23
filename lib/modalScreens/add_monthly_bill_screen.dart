@@ -105,6 +105,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
       'Phone': "فاتورة الجوال",
       'Electric': "فاتورة الكهرباء",
       'Installment': "قسط",
+      'Subscription': 'اشتراك شهري'
     };
 
     Map<String, String> arabicToEnglish = {
@@ -114,6 +115,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
       "فاتورة الجوال": 'Phone',
       "فاتورة الكهرباء": 'Electric',
       "قسط": 'Installment',
+      'اشتراك شهري': "Subscription"
     };
 
     void showCupertionPicker(){
@@ -138,6 +140,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                     Text('Phone'),
                     Text('Electric'),
                     Text('Installment'),
+                    Text('Subscription'),
                   ]
               ),
             );});
@@ -166,6 +169,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                     Text('فاتورة الجوال'),
                     Text('فاتورة الكهرب'),
                     Text('قسط'),
+                    Text('اشتراك شهري')
                   ]
               ),
             );});
@@ -180,6 +184,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
       'Phone':3,
       'Electric':4,
       'Installment':5,
+      "Subscription":6,
     };
 
     Map<int,String> monthlyBillCategoryString = {
@@ -188,7 +193,8 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
       2: 'Internet',
       3: 'Phone',
       4: 'Electric',
-      5: 'Installment'
+      5: 'Installment',
+      6:"Subscription"
     };
 
     Map<int, String> arabicMonthlyBillCategoryString = {
@@ -294,6 +300,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                         "فاتورة الجوال",
                         "فاتورة الكهرباء",
                         "قسط",
+                        "اشتراك شهري"
                       ]
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
@@ -324,6 +331,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                         'Phone',
                         'Electric',
                         'installment',
+                        "Subscription"
                       ]
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(

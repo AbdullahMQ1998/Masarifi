@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash_chat/Components/Rounded_button.dart';
+import 'package:flash_chat/Provider/dark_them.dart';
 import 'package:flash_chat/functions/AlertButtonFunction.dart';
 import 'package:flash_chat/modalScreens/reset_password.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
@@ -11,9 +12,11 @@ import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'home_screen.dart';
 import 'package:flash_chat/generated/l10n.dart';
+
 class LoginScreen extends StatefulWidget {
   static const String id = "login_screen";
   @override
@@ -241,6 +244,9 @@ _loadUserEmailPassword();
   @override
   Widget build(BuildContext context) {
 
+
+    final themChange = Provider.of<DarkThemProvider>(context);
+
     if(email != null && password != null){
       _authenticateWithBiometrics();
     }
@@ -282,7 +288,7 @@ _loadUserEmailPassword();
                     borderSide: BorderSide( width: 1.0),
                     borderRadius: BorderRadius.all(Radius.circular(32.0)),
                   ),
-                fillColor: Colors.grey.shade800,
+                fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
                 filled: true),
 
               ),
@@ -309,7 +315,7 @@ _loadUserEmailPassword();
                     borderSide: BorderSide( width: 1.0),
                     borderRadius: BorderRadius.all(Radius.circular(32.0)),
                   ),
-                    fillColor: Colors.grey.shade800,
+                    fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
                     filled: true),
 
               ),

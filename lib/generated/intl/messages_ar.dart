@@ -94,7 +94,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "needs" : MessageLookupByLibrary.simpleMessage("مصاريف اساسية"),
     "needsDefinition" : MessageLookupByLibrary.simpleMessage("المصاريف الاساسية هي المصاريف التي لا يمكن التخلي عنها و يصعب العيش بدونها."),
     "needsPercentage" : MessageLookupByLibrary.simpleMessage(" خصص 50% من راتبك للمصاريف الأساسية وهي كافية لتغطية اغلب المصاريف الاساسية."),
+    "noExpenses" : MessageLookupByLibrary.simpleMessage("مافيه مصاريف مسجلة للشهر الحالي"),
+    "noMonthlyBill" : MessageLookupByLibrary.simpleMessage("مافيه فواتير شهرية للحين , لا تنسى تضيف"),
     "notifications" : MessageLookupByLibrary.simpleMessage("لا تنسى تضيف مصاريفك 👀"),
+    "occupation" : MessageLookupByLibrary.simpleMessage("الوضع الوظيفي"),
     "overThousnd" : MessageLookupByLibrary.simpleMessage("الرجاء ادخال دخل شهري اكبر من 1000 ريال"),
     "perUser" : MessageLookupByLibrary.simpleMessage("للمستخدم"),
     "preferences" : MessageLookupByLibrary.simpleMessage("التفضيلات"),

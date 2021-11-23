@@ -6,6 +6,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flash_chat/Components/Rounded_button.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flash_chat/generated/l10n.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = "welcome_screen";
@@ -19,6 +20,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
   @override
   void initState() {
     // TODO: implement initState
+
     super.initState();
     Firebase.initializeApp();
     controller = AnimationController(
@@ -42,9 +44,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
     controller.dispose();
     super.dispose();
   }
+  SharedPreferences per;
+
+
+  void getPreference() async {
+    per = await SharedPreferences.getInstance();
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
 
       body: Padding(

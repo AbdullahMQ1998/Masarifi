@@ -106,6 +106,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
 
+
+    Locale myLocale = Localizations.localeOf(context);
+
+
     DateTime currentDay = DateTime.now();
     DateTime firstDayOftheMonth= DateTime(currentDay.year,currentDay.month+1 ,1);
 
@@ -336,7 +340,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
 
                       //MonthlyBill list in Components > ListviewWidgets file
-                      MonthlyBillsSVerticalListView(widget, usersInfo[0]),
+                      Center(child: MonthlyBillsSVerticalListView(widget, usersInfo[0])),
 
                       Divider(
                         height: 10,

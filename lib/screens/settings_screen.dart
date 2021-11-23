@@ -192,6 +192,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                 dropdownValue = newValue;
                                per.setString('language',languagePick[dropdownValue]);
                                 langChange.changeLocale(languagePick[dropdownValue]);
+                                per.setString('langChanged','true');
                               });
                             },
                             items: <String>[

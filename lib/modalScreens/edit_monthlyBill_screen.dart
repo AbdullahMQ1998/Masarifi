@@ -94,6 +94,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
       'Phone': "فاتورة الجوال",
       'Electric': "فاتورة الكهرباء",
       'Installment': "قسط",
+      'Subscription':"اشتراك شهري"
     };
 
     Map<String, String> arabicToEnglish = {
@@ -103,6 +104,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
       "فاتورة الجوال": 'Phone',
       "فاتورة الكهرباء": 'Electric',
       "قسط": 'Installment',
+      "اشتراك شهري": "Subscription"
     };
 
     Map<String, int> monthlyBillCategoryInt = {
@@ -112,6 +114,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
       'Phone': 3,
       'Electric': 4,
       'Installment': 5,
+      'Subscription': 6,
     };
 
     Map<int, String> monthlyBillCategoryString = {
@@ -120,7 +123,8 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
       2: 'Internet',
       3: 'Phone',
       4: 'Electric',
-      5: 'Installment'
+      5: 'Installment',
+      6: "Subscription"
     };
 
     Map<int, String> arabicMonthlyBillCategoryString = {
@@ -129,7 +133,8 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
       2: 'فاتورة الأنترنت',
       3: 'فاتورة الجوال',
       4: 'فاتورة الكهرب',
-      5: 'قسط'
+      5: 'قسط',
+      6: "اشتراك شهري"
     };
 
     if (pickerChanged == false) {
@@ -168,6 +173,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                     Text('Phone'),
                     Text('Electric'),
                     Text('Installment'),
+                    Text("Subscription")
                   ]),
             );
           });
@@ -195,6 +201,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                     Text('فاتورة الجوال'),
                     Text('فاتورة الكهرب'),
                     Text('قسط'),
+                    Text("اشتراك شهري")
                   ]),
             );
           });
@@ -406,6 +413,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                         "فاتورة الجوال",
                         "فاتورة الكهرباء",
                         "قسط",
+                        "اشتراك شهري"
                       ].map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -435,6 +443,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                               'Phone',
                               'Electric',
                               'Installment',
+                              "Subscription"
                             ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,

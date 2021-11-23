@@ -1,4 +1,5 @@
 import 'package:flash_chat/functions/sort_function.dart';
+import 'package:flash_chat/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/screens/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -64,6 +65,7 @@ class MonthlyBillsSVerticalListView extends StatelessWidget {
             'Phone':Icons.phone_android,
             'Electric':Icons.flash_on,
             'Installment':Icons.receipt,
+            'Subscription': Icons.subscriptions_outlined
           };
 
           for (var bill in bills) {
@@ -78,8 +80,11 @@ class MonthlyBillsSVerticalListView extends StatelessWidget {
 
 
           return ListView(
-            scrollDirection: Axis.horizontal,
-            children: monthlyBillList,
+            scrollDirection: monthlyBillList.length == 0 ? Axis.vertical: Axis.horizontal,
+            children: monthlyBillList.length == 0 ? [
+
+              Center(child: Text('${S.of(context).noMonthlyBill}')),
+            ]: monthlyBillList,
           );
         },
       ),
@@ -105,7 +110,7 @@ class ExpenseListView extends StatelessWidget {
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Text(
-            'No Expense for this month',
+            '${S.of(context).noExpenses}',
           );
         }
         var expenses = snapshot.data.docs;

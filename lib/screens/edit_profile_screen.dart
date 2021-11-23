@@ -1,14 +1,12 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flash_chat/chartsData/categoryClass.dart';
 import 'package:flash_chat/functions/AlertButtonFunction.dart';
-import 'package:flash_chat/screens/settings_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/generated/l10n.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -26,10 +24,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   bool editMonthlyIncome = false;
   String monthlyIncome;
 
+  bool isEmployee = true;
+
   bool editGender = false;
   bool editGender2 = true;
   String gender;
   SharedPreferences preferences;
+
+
+  bool editOccupation = false;
+  bool editOccupation2 = true;
+  String occupation;
+
 
 
 
@@ -65,6 +71,33 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   }
 
+
+
+  DateTime selectedDate = DateTime.now();
+  String format;
+
+  _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2021),
+        lastDate: DateTime(2090),
+        selectableDayPredicate: _decideWhichDayToEnable
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
+
+
+  bool _decideWhichDayToEnable(DateTime day) {
+    if ((day.isAfter(DateTime.now().subtract(Duration(days: 1))))) {
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!editGender && editGender2) {
@@ -74,6 +107,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       }
     }
 
+
+
+
+
+
+    Map<String,String> occupationTranslator ={
+      "موظف" : "Employed",
+      "غير موظف" : "Unemployed",
+      "متقاعد" : "Retired"
+    };
+
+    Map<String,String> occupationTranslatorEng ={
+        "Employed":"موظف",
+       "Unemployed": "غير موظف",
+     "Retired"  :"متقاعد",
+    };
+
+    if(!editOccupation && editOccupation2){
+      occupation = widget.userInfo.get('occupation');
+      if(currentLang == 'ar'){
+        occupation = occupationTranslatorEng[widget.userInfo.get('occupation')];
+      }
+    }
 
 
 
@@ -131,8 +187,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                    if (monthlyIncome == null) {
                      gender = widget.userInfo.get('gender');
+                     occupation = widget.userInfo.get('occupation');
                    }
                    widget.userInfo.reference.update({'gender': currentLang == "ar"? genderTransaltorENG[gender] : gender});
+                   widget.userInfo.reference.update({'occupation': currentLang == "ar"? occupationTranslator[occupation] : occupation});
 
                    Navigator.pop(context);
                  },
@@ -188,254 +246,401 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(30.0),
                 child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //UserName
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Text(
-                          '${S.of(context).userName}',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            editUsername
-                                ? Expanded(
-                                    child: TextField(
-                                      onSubmitted: (value) {
-                                        setState(() {
-                                          editUsername = false;
-                                        });
-                                      },
-                                      maxLength: 25,
-                                      autofocus: true,
-                                      decoration: InputDecoration(
-                                        hintText: userName,
-                                        counter: Offstage(),
-                                        disabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                      ),
-                                      onChanged: (text) {
-                                        setState(() {
-                                          userName = text;
-                                        });
-                                      },
-                                    ),
-                                  )
-                                : Text(
-                                    userName == null
-                                        ? widget.userInfo.get('userName')
-                                        : userName,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 15),
-                              child: Container(
-                                height: 25,
-                                child: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        editUsername = true;
-                                      });
-                                    },
-                                    icon: Icon(Icons.edit)),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: Divider(
-                          thickness: 3,
-                        ),
-                      ),
-
-                      //Email
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Text(
-                          '${S.of(context).email}',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: Text(
-                                widget.userInfo.get('email'),
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        //UserName
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Text(
+                            '${S.of(context).userName}',
+                            style: TextStyle(
+                              color: Colors.grey,
                             ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: Divider(
-                          thickness: 3,
-                        ),
-                      ),
-
-                      // MonthlyIncome
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Text(
-                          '${S.of(context).monthlyIncome}',
-                          style: TextStyle(
-                            color: Colors.grey,
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            editMonthlyIncome
-                                ? Expanded(
-                                    child: TextField(
-                                      onSubmitted: (value) {
-                                        setState(() {
-                                          if (double.parse(monthlyIncome) <= 999) {
-                                            Platform.isIOS? showIOSGeneralAlert(context, "${S.of(context).overThousnd}"):showGeneralErrorAlertDialog(
-                                                context,
-                                                '${S.of(context).error}',
-                                                '${S.of(context).overThousnd}');
-                                            monthlyIncome = null;
-                                          }
-                                          else
-                                            editMonthlyIncome = false;
-                                        });
-                                      },
-                                      keyboardType: TextInputType.numberWithOptions(signed: true),
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.digitsOnly,
-                                      ],
-                                      maxLength: 6,
-                                      autofocus: true,
-                                      decoration: InputDecoration(
-                                        hintText: userName,
-                                        counter: Offstage(),
-                                        disabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              editUsername
+                                  ? Expanded(
+                                      child: TextField(
+                                        onSubmitted: (value) {
+                                          setState(() {
+                                            editUsername = false;
+                                          });
+                                        },
+                                        maxLength: 25,
+                                        autofocus: true,
+                                        decoration: InputDecoration(
+                                          hintText: userName,
+                                          counter: Offstage(),
+                                          disabledBorder: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                        ),
+                                        onChanged: (text) {
+                                          setState(() {
+                                            userName = text;
+                                          });
+                                        },
                                       ),
-                                      onChanged: (text) {
+                                    )
+                                  : Text(
+                                      userName == null
+                                          ? widget.userInfo.get('userName')
+                                          : userName,
+                                      style:
+                                          TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 15),
+                                child: Container(
+                                  height: 25,
+                                  child: IconButton(
+                                      onPressed: () {
                                         setState(() {
-                                          monthlyIncome = text;
+                                          editUsername = true;
                                         });
                                       },
+                                      icon: Icon(Icons.edit)),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 15),
+                          child: Divider(
+                            thickness: 3,
+                          ),
+                        ),
+
+                        //Email
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Text(
+                            '${S.of(context).email}',
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  widget.userInfo.get('email'),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 15),
+                          child: Divider(
+                            thickness: 3,
+                          ),
+                        ),
+
+                        // MonthlyIncome
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Text(
+                            '${S.of(context).monthlyIncome}',
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              editMonthlyIncome
+                                  ? Expanded(
+                                      child: TextField(
+                                        onSubmitted: (value) {
+                                          setState(() {
+                                            if (double.parse(monthlyIncome) <= 999) {
+                                              Platform.isIOS? showIOSGeneralAlert(context, "${S.of(context).overThousnd}"):showGeneralErrorAlertDialog(
+                                                  context,
+                                                  '${S.of(context).error}',
+                                                  '${S.of(context).overThousnd}');
+                                              monthlyIncome = null;
+                                            }
+                                            else
+                                              editMonthlyIncome = false;
+                                          });
+                                        },
+                                        keyboardType: TextInputType.numberWithOptions(signed: true),
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.digitsOnly,
+                                        ],
+                                        maxLength: 6,
+                                        autofocus: true,
+                                        decoration: InputDecoration(
+                                          hintText: userName,
+                                          counter: Offstage(),
+                                          disabledBorder: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                        ),
+                                        onChanged: (text) {
+                                          setState(() {
+                                            monthlyIncome = text;
+                                          });
+                                        },
+                                      ),
+                                    )
+                                  : Text(
+                                      monthlyIncome == null
+                                          ? '${widget.userInfo.get('monthlyIncome')} ${S.of(context).saudiRyal}'
+                                          : '$monthlyIncome ${S.of(context).saudiRyal}',
+                                      style:
+                                          TextStyle(fontWeight: FontWeight.bold),
                                     ),
-                                  )
-                                : Text(
-                                    monthlyIncome == null
-                                        ? '${widget.userInfo.get('monthlyIncome')} ${S.of(context).saudiRyal}'
-                                        : '$monthlyIncome ${S.of(context).saudiRyal}',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 15),
-                              child: Container(
-                                height: 25,
-                                child: IconButton(
-                                    onPressed: () {
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 15),
+                                child: Container(
+                                  height: 25,
+                                  child: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          editMonthlyIncome = true;
+                                        });
+                                      },
+                                      icon: Icon(Icons.edit)),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 15),
+                          child: Divider(
+                            thickness: 3,
+                          ),
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(),
+                          child: Text(
+                            '${S.of(context).gender}',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                  child: currentLang == 'ar' ? DropdownButton(
+                                    value: gender,
+                                    iconSize: 24,
+                                    elevation: 10,
+                                    style: const TextStyle(),
+                                    onChanged: (String newValue) {
                                       setState(() {
-                                        editMonthlyIncome = true;
+                                        editGender2 = false;
+                                        editGender = false;
+                                        gender = newValue;
                                       });
                                     },
-                                    icon: Icon(Icons.edit)),
-                              ),
-                            )
-                          ],
+                                    items: <String>[
+                                      'ذكر',
+                                      'انثى',
+                                    ].map<DropdownMenuItem<String>>((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value,style: TextStyle(
+                                            color: Colors.grey
+                                        ),),
+                                      );
+                                    }).toList(),
+                                  ) : DropdownButton(
+                                value: gender,
+                                iconSize: 24,
+                                elevation: 10,
+                                style: const TextStyle(),
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                    editGender2 = false;
+                                    editGender = false;
+                                    gender = newValue;
+                                  });
+                                },
+                                items: <String>[
+                                  'Male',
+                                  'Female',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value,style: TextStyle(
+                                        color: Colors.grey
+                                    ),),
+                                  );
+                                }).toList(),
+                              ))
+                            ],
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: Divider(
-                          thickness: 3,
-                        ),
-                      ),
 
-                      Padding(
-                        padding: const EdgeInsets.only(),
-                        child: Text(
-                          '${S.of(context).gender}',
-                          style: TextStyle(color: Colors.grey),
+                        Padding(
+                          padding: const EdgeInsets.only(),
+                          child: Text(
+                            '${S.of(context).occupation}',
+                            style: TextStyle(color: Colors.grey),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                                child: currentLang == 'ar' ? DropdownButton(
-                                  value: gender,
-                                  iconSize: 24,
-                                  elevation: 10,
-                                  style: const TextStyle(),
-                                  onChanged: (String newValue) {
-                                    setState(() {
-                                      editGender2 = false;
-                                      editGender = false;
-                                      gender = newValue;
-                                    });
-                                  },
-                                  items: <String>[
-                                    'ذكر',
-                                    'انثى',
-                                  ].map<DropdownMenuItem<String>>((String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList(),
-                                ) : DropdownButton(
-                              value: gender,
-                              iconSize: 24,
-                              elevation: 10,
-                              style: const TextStyle(),
-                              onChanged: (String newValue) {
-                                setState(() {
-                                  editGender2 = false;
-                                  editGender = false;
-                                  gender = newValue;
-                                });
-                              },
-                              items: <String>[
-                                'Male',
-                                'Female',
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ))
-                          ],
+
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                  child: currentLang == 'ar' ? DropdownButton(
+                                    value: occupation,
+                                    iconSize: 24,
+                                    elevation: 10,
+                                    style: const TextStyle(),
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        editOccupation2 = false;
+                                        editOccupation = false;
+                                        occupation = newValue;
+                                        setState(() {
+                                          if(occupationTranslator[newValue] == 'Retired' || occupationTranslator[newValue] == 'Unemployed'){
+                                            isEmployee = false;
+                                          }
+                                          else{
+                                            isEmployee = true;
+                                          }
+                                        });
+                                      });
+                                    },
+                                    items: <String>[
+                                      'موظف',
+                                      'غير موظف',
+                                      'متقاعد',
+                                    ].map<DropdownMenuItem<String>>((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value,style: TextStyle(
+                                          color: Colors.grey
+                                        ),),
+                                      );
+                                    }).toList(),
+                                  ) : DropdownButton(
+                                    value: occupation,
+                                    iconSize: 24,
+                                    elevation: 10,
+                                    style: const TextStyle(),
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        editOccupation2 = false;
+                                        editOccupation = false;
+                                       occupation = newValue;
+                                        setState(() {
+                                          if(occupation == 'Retired' || occupation == 'Unemployed'){
+                                            isEmployee = false;
+                                          }
+                                          else{
+                                            isEmployee = true;
+                                          }
+                                        });
+                                      });
+                                    },
+                                    items: <String>[
+                                      'Employed',
+                                      'Unemployed',
+                                      'Retired'
+                                    ].map<DropdownMenuItem<String>>((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value,style: TextStyle(
+                                            color: Colors.grey
+                                        ),),
+                                      );
+                                    }).toList(),
+                                  ))
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+
+                        Visibility(
+                          visible: isEmployee,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('${S.of(context).expectedRetireDay}',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                color: Colors.grey
+                              ),),
+                          ),
+                        ),
+
+
+
+
+                        Visibility(
+                          visible: isEmployee,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 150,
+                                child: TextButton(
+                                  onPressed: () => _selectDate(context),
+                                  child: Row(
+                                      children:[
+                                        Icon(Icons.calendar_today_rounded,
+                                          color: Colors.grey,
+                                        ),
+                                        Text(" ${DateFormat('yyyy-MM-dd').format(selectedDate)}",
+                                          style:
+                                          TextStyle( fontWeight: FontWeight.bold , color: Colors.grey),
+                                        ),
+                                      ]
+                                  ),
+                                  style: ButtonStyle(
+
+                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(18.0),
+                                            side: BorderSide(color: Colors.grey),
+                                          )
+                                      )
+                                  ),
+                                ),
+                              ),
+
+                              IconButton(onPressed: () {
+                                showGeneralErrorAlertDialog(context,'${S.of(context).retirementDate}','${S.of(context).retirementDateAnswer}');
+                              }, icon: Icon(Icons.info_outline))
+
+
+                            ],
+                          ),
+                        ),
+
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
           ),
+
         ],
       ),
     );
