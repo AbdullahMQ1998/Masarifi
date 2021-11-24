@@ -105,6 +105,7 @@ class ExpenseListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('expense').where('email', isEqualTo: widget.loggedUser.email)
           .snapshots(),
@@ -121,7 +122,7 @@ class ExpenseListView extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.only(top: 3),
           child: Container(
-            height: 242,
+            height: height * 0.32,
             child: ListView(
               children: normalView(expenses , userInfoList).length == 0 ? [Center(child: Text("No expense for the current Month"))] : normalView(expenses , userInfoList)  ,
             ),
