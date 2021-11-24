@@ -117,7 +117,7 @@ class monthlyBillBubble extends StatelessWidget {
     bool shouldDelete = false;
 
     return Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.only(left: 8.0 ,right: 8),
       child: Column(
 
         children: [
@@ -153,7 +153,7 @@ class monthlyBillBubble extends StatelessWidget {
                           children:[
 
                             monthlyBubbleTextStyle(
-                            firstText: "", secondText: "$billName ", padding: 0 ,fontSize: 25,
+                            firstText: "", secondText: " $billName ", padding: 0 ,fontSize: 25,
                           ),
 
                            Icon(billIcon,

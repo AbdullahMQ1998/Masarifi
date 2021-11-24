@@ -122,7 +122,7 @@ class ExpenseListView extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.only(top: 3),
           child: Container(
-            height: height * 0.32,
+            height: height / 2,
             child: ListView(
               children: normalView(expenses , userInfoList).length == 0 ? [Center(child: Text("No expense for the current Month"))] : normalView(expenses , userInfoList)  ,
             ),

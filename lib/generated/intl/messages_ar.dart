@@ -111,7 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "saving" : MessageLookupByLibrary.simpleMessage("ادخار واسثتمار"),
     "savingDefinition" : MessageLookupByLibrary.simpleMessage("ادخار 20% من دخلك الشهري يساعد على بناء خطة ادخار ممتازة لتحقيق اهداف مالية متسقبلية."),
     "savingPercentage" : MessageLookupByLibrary.simpleMessage("ال 20% المتبقية من الدخل يجب ان يسثتمر بها او ادخارها ولا يجب مسها الا للضرورة القصوى"),
-    "savingPlan" : MessageLookupByLibrary.simpleMessage("خطة الادخار"),
+    "savingPlan" : MessageLookupByLibrary.simpleMessage("خطة الأدخار"),
     "search" : MessageLookupByLibrary.simpleMessage("ابحث"),
     "settings" : MessageLookupByLibrary.simpleMessage("الأعدادات"),
     "signOut" : MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),

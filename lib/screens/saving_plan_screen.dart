@@ -307,7 +307,7 @@ void getCurrenLanguage() async {
                                     '${S.of(context).basedOn} ${widget.userInfo.get('monthlyIncome')} ${S.of(context).saudiRyal}, ${S.of(context).yourBudgetNeeds} ${widget.needs} ${S.of(context).saudiRyal}',
                                     Color(0xffB983FF)
                                 ),
-                                width: 300,
+
                               ),
 
                               Container(
@@ -316,7 +316,7 @@ void getCurrenLanguage() async {
                                     '${S.of(context).wantsPercentage}',
                                     '${S.of(context).basedOn} ${widget.userInfo.get('monthlyIncome')} ${S.of(context).saudiRyal}, ${S.of(context).yourBudgetWants} ${widget.wants} ${S.of(context).saudiRyal}',
                                     Color(0xff94B3FD)),
-                                width: 350,
+
                               ),
 
                               Container(
@@ -327,7 +327,7 @@ void getCurrenLanguage() async {
                                     occupation == 'Employed' ? '${S.of(context).managedToSave} ${widget.saving.toStringAsFixed(2)} ${S.of(context).investWith} ${Finance.fv(rate: rate, nper: yearsToRetire, pmt: - payments * 12 , pv:0 ).toStringAsFixed(2)} ${S.of(context).saudiRyal} $yearsToRetire ${S.of(context).yearsBasedOnRetireDay}' : '',
                                     Color(0xffC37B89),
                                 ),
-                                width: 350,
+
                               )
 
                             ],
