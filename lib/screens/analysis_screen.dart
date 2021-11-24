@@ -177,14 +177,14 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                                                 "${arabicOthersExpensescounters[getMaxOtherUsersList()[0]]}",
                                                 style: new TextStyle(
                                                     fontWeight: FontWeight.bold,
-                                                    fontSize: 20.0,
+                                                    fontSize: 15.0,
                                                     color: Colors.white),
                                               )
                                             : Text(
                                                 "${othersExpensescounters[getMaxOtherUsersList()[0]]}",
                                                 style: new TextStyle(
                                                     fontWeight: FontWeight.bold,
-                                                    fontSize: 20.0,
+                                                    fontSize: 15.0,
                                                     color: Colors.white),
                                               ),
                                       ),

@@ -253,205 +253,210 @@ _loadUserEmailPassword();
     final themChange = Provider.of<DarkThemProvider>(context);
 
 
-    return Scaffold(
-      // backgroundColor: Color(0xffF4F9F9),
-      body: ModalProgressHUD(
-        inAsyncCall: showSpinner,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return WillPopScope(
+      onWillPop: (){
+        return Future.value(false);
+      },
+      child: Scaffold(
+        // backgroundColor: Color(0xffF4F9F9),
+        body: ModalProgressHUD(
+          inAsyncCall: showSpinner,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
 
-            children: <Widget>[
-              Hero(
-                tag: 'logo',
-                child: Container(
-                  height: 200.0,
-                  child: Image.asset('images/logo.png'),
+              children: <Widget>[
+                Hero(
+                  tag: 'logo',
+                  child: Container(
+                    height: 200.0,
+                    child: Image.asset('images/logo.png'),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 48.0,
-              ),
-              TextField(
-                controller: _emailController,
-                textAlign: TextAlign.center,
-                onChanged: (value) {
+                SizedBox(
+                  height: 48.0,
+                ),
+                TextField(
+                  controller: _emailController,
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
 
-                  setState(() {
-                    email = value;
-                  });
+                    setState(() {
+                      email = value;
+                    });
+
+                    },
+
+                  decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).enterYourMail}' ,
+
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide( width: 1.0),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ),
+                  fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
+                  filled: true),
+
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                TextField(
+                  controller: _passwordController,
+                  textAlign: TextAlign.center,
+                  obscureText: true,
+
+                  onSubmitted: (value) async {
 
                   },
+                  onChanged: (value){
+                    setState(() {
+                      password = value;
+                    });
+                  },
 
-                decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).enterYourMail}' ,
+                  decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).enterYourPass}',
 
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide( width: 1.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
-                fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
-                filled: true),
-
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              TextField(
-                controller: _passwordController,
-                textAlign: TextAlign.center,
-                obscureText: true,
-
-                onSubmitted: (value) async {
-
-                },
-                onChanged: (value){
-                  setState(() {
-                    password = value;
-                  });
-                },
-
-                decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).enterYourPass}',
-
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide( width: 1.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
-                    fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
-                    filled: true),
-
-
-              ),
-              
-              Row(children: [
-                  Checkbox(
-                  activeColor: Color(0xff00C8E8),
-            value: _isChecked,
-                    onChanged: _handleRemeberme,
-                  ),
-                Expanded(
-                  child: Text("${S.of(context).rembmerMe}",
-                    style: TextStyle(
-                   fontSize: 15
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide( width: 1.0),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
                     ),
-                  ),
+                      fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
+                      filled: true),
+
+
                 ),
 
-                TextButton(onPressed: (){
+                Row(children: [
+                    Checkbox(
+                    activeColor: Color(0xff00C8E8),
+              value: _isChecked,
+                      onChanged: _handleRemeberme,
+                    ),
+                  Expanded(
+                    child: Text("${S.of(context).rembmerMe}",
+                      style: TextStyle(
+                     fontSize: 15
+                      ),
+                    ),
+                  ),
 
-
-                  showModalBottomSheet(
-                    barrierColor: Colors.transparent,
-                      context: context,
-                      builder: (BuildContext context) => ResetPassword()
-                         );
-
-                }, child: Text('${S.of(context).forgotPassword}')),
-              ],),
-              
-             
-              SizedBox(
-                height: 24.0,
-              ),
-
-
-
-
-
-              paddingButton(Color(0xff01937C), '${S.of(context).logIn}', () async{
-
-
-                setState(() {
-                  showSpinner = true;
-                  email = _emailController.text;
-                  password = _passwordController.text;
-                });
-
-
-                if(email == null || password == null){
-                  email = '';
-                  password = '';
-                }
-
-                final user = await _auth.signInWithEmailAndPassword(email: email, password: password).catchError((err) {
-
-                  Platform.isIOS ? showIOSGeneralAlert(context,err.message): showGeneralErrorAlertDialog(context, 'Error', err.message);
-
-                });
-
-                try{
-                if(user != null) {
-                  getCurrentUser();
-                  getData();
-
-
-                  if(email != null && password != null){
-                  preferences.setString('Email', email);
-                  preferences.setString('Pass', password);
-                  }
-
-                  Navigator.of(context).pop();
-                  Navigator
-                      .of(context)
-                      .pushReplacement(
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => HomeScreen(
-                            loggedUser,
-                          )
-                      )
-                  );
-
-                }
-                setState(() {
-                  showSpinner = false;
-                });}
-                catch(e){
-                  print(e);
-                }
-              },),
-
-
-              Platform.isIOS ?
-              Container(
-                width: 100,
-
-                child: paddingButton(Color(0xff01937C), 'Face ID', () async{
-                  _authenticateWithBiometrics();
-        }
-
-    ),
-              ) :
-                  SizedBox(),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('${S.of(context).dontHaveAccount}',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold
-                    ),),
                   TextButton(onPressed: (){
 
-                    Navigator.push( (context),
+
+                    showModalBottomSheet(
+                      barrierColor: Colors.transparent,
+                        context: context,
+                        builder: (BuildContext context) => ResetPassword()
+                           );
+
+                  }, child: Text('${S.of(context).forgotPassword}')),
+                ],),
+
+
+                SizedBox(
+                  height: 24.0,
+                ),
+
+
+
+
+
+                paddingButton(Color(0xff01937C), '${S.of(context).logIn}', () async{
+
+
+                  setState(() {
+                    showSpinner = true;
+                    email = _emailController.text;
+                    password = _passwordController.text;
+                  });
+
+
+                  if(email == null || password == null){
+                    email = '';
+                    password = '';
+                  }
+
+                  final user = await _auth.signInWithEmailAndPassword(email: email, password: password).catchError((err) {
+
+                    Platform.isIOS ? showIOSGeneralAlert(context,err.message): showGeneralErrorAlertDialog(context, 'Error', err.message);
+
+                  });
+
+                  try{
+                  if(user != null) {
+                    getCurrentUser();
+                    getData();
+
+
+                    if(email != null && password != null){
+                    preferences.setString('Email', email);
+                    preferences.setString('Pass', password);
+                    }
+
+                    Navigator.of(context).pop();
+                    Navigator
+                        .of(context)
+                        .pushReplacement(
                         MaterialPageRoute(
-                            builder: (BuildContext context) => RegistrationScreen()));
+                            builder: (BuildContext context) => HomeScreen(
+                              loggedUser,
+                            )
+                        )
+                    );
+
+                  }
+                  setState(() {
+                    showSpinner = false;
+                  });}
+                  catch(e){
+                    print(e);
+                  }
+                },),
 
 
-                  }, child: Text('${S.of(context).signUp}',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff01937C),
-                        fontSize: 15
-                    ),))
-                ],
-              ),
+                Platform.isIOS ?
+                Container(
+                  width: 100,
+
+                  child: paddingButton(Color(0xff01937C), 'Face ID', () async{
+                    _authenticateWithBiometrics();
+          }
+
+      ),
+                ) :
+                    SizedBox(),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('${S.of(context).dontHaveAccount}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold
+                      ),),
+                    TextButton(onPressed: (){
+
+                      Navigator.push( (context),
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => RegistrationScreen()));
 
 
-            ],
+                    }, child: Text('${S.of(context).signUp}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff01937C),
+                          fontSize: 15
+                      ),))
+                  ],
+                ),
+
+
+              ],
+            ),
           ),
         ),
+        resizeToAvoidBottomInset: false,
       ),
-      resizeToAvoidBottomInset: false,
     );
   }
 }

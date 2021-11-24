@@ -11,12 +11,13 @@ class MonthlyBillsSVerticalListView extends StatelessWidget {
 
   final QueryDocumentSnapshot userInfo;
   final HomeScreen widget;
+
   MonthlyBillsSVerticalListView(this.widget,this.userInfo);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 140,
+      height: 160,
 
       child: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance

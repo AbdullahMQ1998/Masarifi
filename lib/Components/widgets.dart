@@ -91,6 +91,7 @@ class monthlyBillBubble extends StatelessWidget {
   final QueryDocumentSnapshot userInfo;
 
 
+
   @override
   Widget build(BuildContext context) {
     final themChange = Provider.of<DarkThemProvider>(context);
@@ -146,13 +147,13 @@ class monthlyBillBubble extends StatelessWidget {
                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(right: 5,bottom: 10),
+                        padding: EdgeInsets.only(right: 5,bottom: 25),
                         child: Row(
 
                           children:[
 
                             monthlyBubbleTextStyle(
-                            firstText: "", secondText: "$billName ", padding: 0, fontSize: 25,
+                            firstText: "", secondText: "$billName ", padding: 0 ,fontSize: 25,
                           ),
 
                            Icon(billIcon,

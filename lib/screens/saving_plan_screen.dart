@@ -103,186 +103,189 @@ void getCurrenLanguage() async {
                 child: Column(
                     children: [
 
-                      Row(
-                          mainAxisAlignment: currentLang == "ar"? MainAxisAlignment.spaceBetween: MainAxisAlignment.start,
-                        children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
 
 
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20 , left:5),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Color(0xff01937C),
-                                borderRadius: BorderRadius.all(Radius.circular(30))
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Column(
-                                  children: [
-
-                                    new FadeTransition(
-                                      opacity: animationController.drive(CurveTween(curve: Curves.easeIn)),
-                                      child:  Column(
-                                          children: [
-
-
-
-                                            Text('${S.of(context).needs}',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: currentLang == "ar" ? 15 : 20,
-                                                  fontWeight: FontWeight.bold
-                                              ),),
-
-                                            Divider(
-
-                                            )
-
-                                          ]
-                                      ),
-                                    ),
-
-                                    Row(
-                                      children: [
-                                        McCountingText(
-                                          begin: 0,
-                                          end: widget.needs,
-                                          style: TextStyle(
-                                            color: CupertinoColors.white,
-                                            fontSize: currentLang == "ar" ? 15 :  17,
-                                          ),
-                                          duration: Duration(seconds: 1),
-                                          curve: Curves.decelerate,
-                                        ),
-                                        Text(' ${S.of(context).saudiRyal}',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: currentLang == "ar" ? 15 : 17
-                                          ),),
-                                      ],
-                                    ),
-
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20 , left:  5),
-                            child: Container(
-                              decoration: BoxDecoration(
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20 , left:5),
+                              child: Container(
+                                decoration: BoxDecoration(
                                   color: Color(0xff01937C),
                                   borderRadius: BorderRadius.all(Radius.circular(30))
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Column(
-                                  children: [
-                                    new FadeTransition(
-                                      opacity: animationController.drive(CurveTween(curve: Curves.easeIn)),
-                                      child:  Column(
-                                          children: [
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Column(
+                                    children: [
 
-                                            Text('${S.of(context).wants}',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: currentLang == "ar" ? 15 : 17,
-                                                  fontWeight: FontWeight.bold
-                                              ),),
+                                      new FadeTransition(
+                                        opacity: animationController.drive(CurveTween(curve: Curves.easeIn)),
+                                        child:  Column(
+                                            children: [
 
 
-                                            Divider()
-                                          ]
-                                      ),
-                                    ),
 
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        McCountingText(
-                                          begin: 0,
-                                          end: widget.wants,
-                                          style: TextStyle(
-                                            color: CupertinoColors.white,
-                                            fontSize: currentLang == "ar" ? 15 : 17,
-                                          ),
-                                          duration: Duration(seconds: 1),
-                                          curve: Curves.decelerate,
+                                              Text('${S.of(context).needs}',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: currentLang == "ar" ? 15 : 20,
+                                                    fontWeight: FontWeight.bold
+                                                ),),
+
+                                              Divider(
+
+                                              )
+
+                                            ]
                                         ),
-                                        Text(' ${S.of(context).saudiRyal}',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: currentLang == "ar" ? 15 : 17
-                                          ),),
-                                      ],
-                                    ),
+                                      ),
 
-                                  ],
+                                      Row(
+                                        children: [
+                                          McCountingText(
+                                            begin: 0,
+                                            end: widget.needs,
+                                            style: TextStyle(
+                                              color: CupertinoColors.white,
+                                              fontSize: currentLang == "ar" ? 15 :  17,
+                                            ),
+                                            duration: Duration(seconds: 1),
+                                            curve: Curves.decelerate,
+                                          ),
+                                          Text(' ${S.of(context).saudiRyal}',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: currentLang == "ar" ? 15 : 17
+                                            ),),
+                                        ],
+                                      ),
+
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
 
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5.0 , top: 20),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Color(0xff01937C),
-                                  borderRadius: BorderRadius.all(Radius.circular(30))
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    new FadeTransition(
-                                      opacity: animationController.drive(CurveTween(curve: Curves.easeIn)),
-                                      child:  Column(
-                                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20 , left:  5),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Color(0xff01937C),
+                                    borderRadius: BorderRadius.all(Radius.circular(30))
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Column(
+                                    children: [
+                                      new FadeTransition(
+                                        opacity: animationController.drive(CurveTween(curve: Curves.easeIn)),
+                                        child:  Column(
+                                            children: [
 
-                                            Text('${S.of(context).saving}',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: currentLang == "ar" ? 15 : 17,
-                                                  fontWeight: FontWeight.bold
-                                              ),),
-
-                                            Divider()
+                                              Text('${S.of(context).wants}',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: currentLang == "ar" ? 15 : 20,
+                                                    fontWeight: FontWeight.bold
+                                                ),),
 
 
-                                          ]
-                                      ),
-                                    ),
-
-
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        McCountingText(
-                                          begin: 0,
-                                          end: widget.saving,
-                                          style: TextStyle(
-                                            color: CupertinoColors.white,
-                                            fontSize: currentLang == "ar" ? 15 : 17,
-                                          ),
-                                          duration: Duration(seconds: 1),
-                                          curve: Curves.decelerate,
+                                              Divider()
+                                            ]
                                         ),
-                                        Text(' ${S.of(context).saudiRyal}',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: currentLang == "ar" ? 15 : 17
-                                          ),),
-                                      ],
-                                    ),
+                                      ),
 
-                                  ],
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          McCountingText(
+                                            begin: 0,
+                                            end: widget.wants,
+                                            style: TextStyle(
+                                              color: CupertinoColors.white,
+                                              fontSize: currentLang == "ar" ? 15 : 17,
+                                            ),
+                                            duration: Duration(seconds: 1),
+                                            curve: Curves.decelerate,
+                                          ),
+                                          Text(' ${S.of(context).saudiRyal}',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: currentLang == "ar" ? 15 : 17
+                                            ),),
+                                        ],
+                                      ),
+
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
 
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.only(left: 5.0 , top: 20),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Color(0xff01937C),
+                                    borderRadius: BorderRadius.all(Radius.circular(30))
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      new FadeTransition(
+                                        opacity: animationController.drive(CurveTween(curve: Curves.easeIn)),
+                                        child:  Column(
+                                            children: [
+
+                                              Text('${S.of(context).saving}',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: currentLang == "ar" ? 15 : 20,
+                                                    fontWeight: FontWeight.bold
+                                                ),),
+
+                                              Divider()
+
+
+                                            ]
+                                        ),
+                                      ),
+
+
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          McCountingText(
+                                            begin: 0,
+                                            end: widget.saving,
+                                            style: TextStyle(
+                                              color: CupertinoColors.white,
+                                              fontSize: currentLang == "ar" ? 15 : 17,
+                                            ),
+                                            duration: Duration(seconds: 1),
+                                            curve: Curves.decelerate,
+                                          ),
+                                          Text(' ${S.of(context).saudiRyal}',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: currentLang == "ar" ? 15 : 17
+                                            ),),
+                                        ],
+                                      ),
+
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                          ],
+                        ),
                       ),
 
                       Divider(
