@@ -59,7 +59,7 @@ class _SettingScreenState extends State<SettingScreen> {
   void getPreference() async {
     per = await SharedPreferences.getInstance();
     setState(() {
-      dropdownValue = dropDownPick[per.getString('language')] == null ? 'العربية' : dropDownPick[per.getString('language')];
+      dropdownValue =  dropDownPick[per.getString('language')];
     });
 
   }

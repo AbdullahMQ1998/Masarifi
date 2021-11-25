@@ -300,6 +300,17 @@ class ExpensesBubble extends StatelessWidget {
                 ),
 
                 Expanded(
+                  child: Text(expenseTotal,
+                    style: TextStyle(
+                        fontSize: 20,
+
+                        fontWeight: FontWeight.bold
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                ),
+
+                Expanded(
                   child: Column(
 
                     children: [
@@ -335,14 +346,7 @@ class ExpensesBubble extends StatelessWidget {
                   ),
                 ),
 
-                Text(expenseTotal,
-                  style: TextStyle(
-                      fontSize: 20,
 
-                      fontWeight: FontWeight.bold
-                  ),
-                  textAlign: TextAlign.right,
-                ),
 
               ],
             ),

@@ -42,9 +42,11 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
 
   @override
   void initState() {
+    getCurrenLanguage();
     super.initState();
     getCurrentUser();
   }
+
 
 
   void getCurrentUser() async {
@@ -85,7 +87,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
 
 
 
-  String currentLang = "ar";
+  String currentLang = 'ar';
 
   void getCurrenLanguage() async {
     preferences = await SharedPreferences.getInstance();
