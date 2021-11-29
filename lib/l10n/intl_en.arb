@@ -118,7 +118,8 @@
   "expensePage": "Expenses",
   "checkEmail": "Check your email",
   "receiveEmailMasarifi": "You will receive an email with the password reset link if the email exist in Masarifi",
-  "passwordNotCorrect" : "The password does not match"
+  "passwordNotCorrect" : "The password does not match",
+  "confirmPass" : "Confirm Password"
 
 
 

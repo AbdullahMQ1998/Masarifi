@@ -38,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "categoryChart" : MessageLookupByLibrary.simpleMessage("Expenses Total"),
     "checkEmail" : MessageLookupByLibrary.simpleMessage("Check your email"),
     "confirm" : MessageLookupByLibrary.simpleMessage("Confirm"),
+    "confirmPass" : MessageLookupByLibrary.simpleMessage("Confirm Password"),
     "costInMonthsBubble" : MessageLookupByLibrary.simpleMessage("Cost: "),
     "creatAnAccountButton" : MessageLookupByLibrary.simpleMessage("Create an account"),
     "createAnAccounttoMas" : MessageLookupByLibrary.simpleMessage("Create an account to Masarifi to get all the features"),

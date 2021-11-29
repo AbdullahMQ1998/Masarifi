@@ -38,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "categoryChart" : MessageLookupByLibrary.simpleMessage("عدد المصاريف"),
     "checkEmail" : MessageLookupByLibrary.simpleMessage("تحقق من بريدك الإلكتروني"),
     "confirm" : MessageLookupByLibrary.simpleMessage("نعم"),
+    "confirmPass" : MessageLookupByLibrary.simpleMessage("تأكيد كلمة المرور"),
     "costInMonthsBubble" : MessageLookupByLibrary.simpleMessage("التكلفة: "),
     "creatAnAccountButton" : MessageLookupByLibrary.simpleMessage("انشاء حساب"),
     "createAnAccounttoMas" : MessageLookupByLibrary.simpleMessage("انشئ حسابك في مصاريفي عشان تستفيد من كل خصائص التطبيق"),

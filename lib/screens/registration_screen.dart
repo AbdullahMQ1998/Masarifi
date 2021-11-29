@@ -124,7 +124,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   });
 
                 },
-                decoration: kTextFieldDecoration.copyWith(hintText: 'Confirm Password' ,
+                decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context)}' ,
 
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide( width: 1.0),
