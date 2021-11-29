@@ -335,15 +335,13 @@ class ExpensesBubble extends StatelessWidget {
                   ),
                 ),
 
-                Expanded(
-                  child: Text(expenseTotal,
-                    style: TextStyle(
-                        fontSize: 12,
+                Text(expenseTotal,
+                  style: TextStyle(
+                      fontSize: 12,
 
-                        fontWeight: FontWeight.bold
-                    ),
-                    textAlign: TextAlign.right,
+                      fontWeight: FontWeight.bold
                   ),
+                  textAlign: TextAlign.right,
                 ),
 
               ],

@@ -49,6 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
 getLocalStorage();
 _loadUserEmailPassword();
+
     super.initState();
   }
 
@@ -129,11 +130,15 @@ _loadUserEmailPassword();
 
   void _handleRemeberme(bool value) {
     _isChecked = value;
+
     SharedPreferences.getInstance().then(
           (prefs) {
-        prefs.setBool("remember_me", value);
-        prefs.setString('email', _emailController.text);
-        prefs.setString('password', _passwordController.text);
+            setState(() {
+              prefs.setBool("remember_me", value);
+              prefs.setString('email', _emailController.text);
+              prefs.setString('password', _passwordController.text);
+            });
+
       },
     );
     setState(() {
@@ -189,8 +194,8 @@ _loadUserEmailPassword();
   void _loadUserEmailPassword() async {
     try {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
-      var _email = _prefs.getString("email") ?? "";
-      var _password = _prefs.getString("password") ?? "";
+      var _email = _prefs.getString("Email") ?? "";
+      var _password = _prefs.getString("Pass") ?? "";
       var _remeberMe = _prefs.getBool("remember_me") ?? false;
       if (_remeberMe) {
         setState(() {
@@ -392,6 +397,7 @@ _loadUserEmailPassword();
                     if(email != null && password != null){
                     preferences.setString('Email', email);
                     preferences.setString('Pass', password);
+
                     }
 
                     Navigator.of(context).pop();
