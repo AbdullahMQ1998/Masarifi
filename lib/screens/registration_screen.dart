@@ -91,6 +91,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   onChanged: (value){
                     setState(() {
                       password = value;
+                      if(confirmPass == password){
+                        isConfirmed = true;
+                      }
+                      if(confirmPass != password){
+                        isConfirmed = false;
+                      }
+                      isEmpty = false;
+                      if(value.isEmpty)
+                        isEmpty = true;
                     });
                   },
                   decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).enterYourPass}' ,
@@ -113,11 +122,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   onChanged: (value){
                     setState(() {
                       confirmPass = value;
-                    });
-
-                  },
-                  onSubmitted: (v){
-                    setState(() {
                       if(confirmPass == password){
                         isConfirmed = true;
                       }
@@ -125,11 +129,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         isConfirmed = false;
                       }
                       isEmpty = false;
-                      if(v.isEmpty)
+                      if(value.isEmpty)
                         isEmpty = true;
                     });
 
                   },
+
                   decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).confirmPass}' ,
 
                       enabledBorder: OutlineInputBorder(
