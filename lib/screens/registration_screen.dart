@@ -48,167 +48,174 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final themChange = Provider.of<DarkThemProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: ModalProgressHUD(
-        inAsyncCall: showSpinner,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Hero(
-                tag: 'logo',
-                child: Container(
-                  height: 200.0,
-                  child: Image.asset('images/logo.png'),
+      body: SingleChildScrollView(
+        child: ModalProgressHUD(
+          inAsyncCall: showSpinner,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Hero(
+                  tag: 'logo',
+                  child: Container(
+                    height: 200.0,
+                    child: Image.asset('images/logo.png'),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 48.0,
-              ),
-              TextField(
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.emailAddress,
-                onChanged: (value){
-                  email = value;
-                },
-                decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).enterYourMail}' ,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide( width: 1.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
-                    fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
-                    filled: true),
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              TextField(
-                textAlign: TextAlign.center,
-                obscureText: true,
+                SizedBox(
+                  height: 48.0,
+                ),
+                TextField(
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (value){
+                    email = value;
+                  },
+                  decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).enterYourMail}' ,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide( width: 1.0),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ),
+                      fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
+                      filled: true),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                TextField(
+                  textAlign: TextAlign.center,
+                  obscureText: true,
 
-                onChanged: (value){
-                  password = value;
-                },
-                decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).enterYourPass}' ,
-
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide( width: 1.0),
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                  ),
-                    fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
-                    filled: true),
-              ),
-
-              SizedBox(
-                height: 8.0,
-              ),
-              TextField(
-                textAlign: TextAlign.center,
-                obscureText: true,
-
-                onChanged: (value){
-                  confirmPass = value;
-                },
-                onSubmitted: (v){
-                  setState(() {
-                    if(confirmPass == password){
-                      isConfirmed = true;
-                    }
-                    if(confirmPass != password){
-                      isConfirmed = false;
-                    }
-                    isEmpty = false;
-                    if(v.isEmpty)
-                      isEmpty = true;
-                  });
-
-                },
-                decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context)}' ,
+                  onChanged: (value){
+                    setState(() {
+                      password = value;
+                    });
+                  },
+                  decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).enterYourPass}' ,
 
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide( width: 1.0),
                       borderRadius: BorderRadius.all(Radius.circular(32.0)),
                     ),
-                    fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
-                    filled: true),
-              ),
-              SizedBox(
-                height: 24.0,
-              ),
-              paddingButton( Color(0xff01937C), '${S.of(context).register}', () async {
-                if (isEmpty) {
-                  Platform.isIOS?
-                  showIOSGeneralAlert(context, "${S
-                      .of(context)
-                      .makeSureyoufilled}") : showGeneralErrorAlertDialog(context, "${S.of(context).error}", '${S
-                      .of(context)
-                      .makeSureyoufilled}');
-                }
-                else if (isConfirmed == false) {
-                  Platform.isIOS?
-                  showIOSGeneralAlert(context, "${S.of(context).passwordNotCorrect}") : showGeneralErrorAlertDialog(context,"${S.of(context).error}", '${S
-                      .of(context)
-                      .passwordNotCorrect}');
-                }
+                      fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
+                      filled: true),
+                ),
 
-                else {
-                  setState(() {
-                    showSpinner = true;
-                  });
-                  if (email == null || password == null) {
-                    email = '';
-                    password = '';
-                  }
-                  final newUser = await _auth.createUserWithEmailAndPassword(
-                      email: email, password: password).catchError((err) {
-                    Platform.isIOS
-                        ? showIOSGeneralAlert(context, err.message)
-                        : showGeneralErrorAlertDialog(context, 'Error',
-                        err.message);
-                  }
-                  );
+                SizedBox(
+                  height: 10.0,
+                ),
+                TextField(
+                  textAlign: TextAlign.center,
+                  obscureText: true,
 
-                  try {
-                    if (newUser != null) {
-                      if (email != null && password != null) {
-                        preferences.setString('Email', email);
-                        preferences.setString('Pass', password);
-                      }
-                      Navigator.pushNamed(context, RegisterUserInfo.id);
-                    }
+                  onChanged: (value){
                     setState(() {
-                      showSpinner = false;
+                      confirmPass = value;
                     });
-                  } catch (e) {
-                    print(e);
+
+                  },
+                  onSubmitted: (v){
+                    setState(() {
+                      if(confirmPass == password){
+                        isConfirmed = true;
+                      }
+                      if(confirmPass != password){
+                        isConfirmed = false;
+                      }
+                      isEmpty = false;
+                      if(v.isEmpty)
+                        isEmpty = true;
+                    });
+
+                  },
+                  decoration: kTextFieldDecoration.copyWith(hintText: '${S.of(context).confirmPass}' ,
+
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide( width: 1.0),
+                        borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                      ),
+                      fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
+                      filled: true),
+                ),
+                SizedBox(
+                  height: 24.0,
+                ),
+                paddingButton( Color(0xff01937C), '${S.of(context).register}', () async {
+                  if (isEmpty) {
+                    Platform.isIOS?
+                    showIOSGeneralAlert(context, "${S
+                        .of(context)
+                        .makeSureyoufilled}") : showGeneralErrorAlertDialog(context, "${S.of(context).error}", '${S
+                        .of(context)
+                        .makeSureyoufilled}');
                   }
-                }
-              }),
+                  else if (isConfirmed == false) {
+                    Platform.isIOS?
+                    showIOSGeneralAlert(context, "${S.of(context).passwordNotCorrect}") : showGeneralErrorAlertDialog(context,"${S.of(context).error}", '${S
+                        .of(context)
+                        .passwordNotCorrect}');
+                  }
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('${S.of(context).alreadyHaveAccount}',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold
-                    ),),
-                  TextButton(onPressed: (){
+                  else {
+                    setState(() {
+                      showSpinner = true;
+                    });
+                    if (email == null || password == null) {
+                      email = '';
+                      password = '';
+                    }
+                    final newUser = await _auth.createUserWithEmailAndPassword(
+                        email: email, password: password).catchError((err) {
+                      Platform.isIOS
+                          ? showIOSGeneralAlert(context, err.message)
+                          : showGeneralErrorAlertDialog(context, 'Error',
+                          err.message);
+                    }
+                    );
 
-                    Navigator.push( (context), MaterialPageRoute(
-                            builder: (BuildContext context) => LoginScreen()));
-                  }, child: Text('${S.of(context).loginHere}',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff01937C),
-                        fontSize: 15
-                    ),))
-                ],
-              ),
+                    try {
+                      if (newUser != null) {
+                        if (email != null && password != null) {
+                          preferences.setString('Email', email);
+                          preferences.setString('Pass', password);
+                        }
+                        Navigator.pushNamed(context, RegisterUserInfo.id);
+                      }
+                      setState(() {
+                        showSpinner = false;
+                      });
+                    } catch (e) {
+                      print(e);
+                    }
+                  }
+                }),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('${S.of(context).alreadyHaveAccount}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold
+                      ),),
+                    TextButton(onPressed: (){
+
+                      Navigator.push( (context), MaterialPageRoute(
+                              builder: (BuildContext context) => LoginScreen()));
+                    }, child: Text('${S.of(context).loginHere}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff01937C),
+                          fontSize: 15
+                      ),))
+                  ],
+                ),
 
 
 
-            ],
+              ],
+            ),
           ),
         ),
       ),
