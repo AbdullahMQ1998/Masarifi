@@ -115,7 +115,9 @@
   "areyousureDeleteAccount": "All of your expenses,monthly bills and monthly reports will be deleted, are you sure you want to delete your account?",
   "makeSureyoufilled": "Make sure you have filled the required information",
   "validEmail": "Make sure you have enter a valid email",
-  "expensePage": "Expenses"
+  "expensePage": "Expenses",
+  "checkEmail": "Check your email",
+  "receiveEmailMasarifi": "You will receive an email with the password reset link if the email exist in Masarifi"
 
 
 

@@ -1,3 +1,4 @@
+import 'package:flash_chat/Provider/language_change_provider.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/animation.dart';
@@ -6,6 +7,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flash_chat/Components/Rounded_button.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flash_chat/generated/l10n.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -17,10 +19,11 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProviderStateMixin{
   AnimationController controller;
   Animation animation;
+  String dropdownValue = 'English';
   @override
   void initState() {
     // TODO: implement initState
-
+    getPreference();
     super.initState();
     Firebase.initializeApp();
     controller = AnimationController(
@@ -39,6 +42,24 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
     });
   }
 
+  Map<String , String> languagePick = {
+    "English": "en",
+    "العربية" : "ar"
+  };
+
+  Map<String , String> dropDownPick = {
+    "en" :  "English",
+    "ar" : "العربية"
+  };
+
+  void getPreference() async {
+    per = await SharedPreferences.getInstance();
+    setState(() {
+      dropdownValue =  dropDownPick[per.getString('language')] ?? "English";
+    });
+
+  }
+
   @override
   void dispose() {
     controller.dispose();
@@ -47,12 +68,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
   SharedPreferences per;
 
 
-  void getPreference() async {
-    per = await SharedPreferences.getInstance();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final langChange = Provider.of<LanguageChangeProvider>(context);
+
+
 
     return Scaffold(
 
@@ -88,6 +108,38 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
             paddingButton(Color(0xff01937C), '${S.of(context).register}', (){
               Navigator.pushNamed(context, RegistrationScreen.id);
             }),
+
+
+            DropdownButton(
+              value: dropdownValue,
+              iconSize: 20,
+              elevation: 10,
+              style: const TextStyle(),
+              underline: SizedBox(),
+              onChanged: (newValue) async {
+                per = await SharedPreferences.getInstance();
+                setState(() {
+                  dropdownValue = newValue;
+                  per.setString('language',languagePick[dropdownValue]);
+                  langChange.changeLocale(languagePick[dropdownValue]);
+                  per.setString('langChanged','true');
+                });
+              },
+              items: <String>[
+                'English',
+                'العربية',
+              ].map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: TextStyle(
+                        fontSize: 20,color: Colors.grey,
+                        fontWeight: FontWeight.bold),
+                  ),
+                );
+              }).toList(),
+            )
 
           ],
         ),

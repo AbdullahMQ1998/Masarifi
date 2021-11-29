@@ -1194,6 +1194,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Check your email`
+  String get checkEmail {
+    return Intl.message(
+      'Check your email',
+      name: 'checkEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You will receive an email with the password reset link if the email exist in Masarifi`
+  String get receiveEmailMasarifi {
+    return Intl.message(
+      'You will receive an email with the password reset link if the email exist in Masarifi',
+      name: 'receiveEmailMasarifi',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

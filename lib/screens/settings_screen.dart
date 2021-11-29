@@ -323,7 +323,7 @@ class _SettingScreenState extends State<SettingScreen> {
                             size: 30,
                           ),
                           Text(
-                            " Delete Account",
+                            " ${S.of(context).deleteAccount}",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,

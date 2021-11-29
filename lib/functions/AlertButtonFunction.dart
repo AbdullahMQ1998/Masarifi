@@ -14,11 +14,11 @@ import 'package:flash_chat/generated/l10n.dart';
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) => CupertinoAlertDialog(
-        title: const Text('Alert'),
+        title:  Text('Alert'),
         content: Text(text),
         actions: <CupertinoDialogAction>[
           CupertinoDialogAction(
-            child: const Text('Confirm'),
+            child: Text('${S.of(context).confirm}'),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -28,6 +28,27 @@ import 'package:flash_chat/generated/l10n.dart';
       ),
     );
   }
+
+showIOSGeneralAlertwithDoulbePop(BuildContext context, String title,String text){
+
+  showCupertinoDialog<void>(
+    context: context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title:  Text(title),
+      content: Text(text),
+      actions: <CupertinoDialogAction>[
+        CupertinoDialogAction(
+          child: Text('${S.of(context).confirm}'),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+        ),
+
+      ],
+    ),
+  );
+}
 
 
 showIOSDeleteMonthlyBillsAlert(BuildContext context,QueryDocumentSnapshot userInfo, QueryDocumentSnapshot userMonthlyBillList,bool shouldDelete){
@@ -235,6 +256,37 @@ showGeneralErrorAlertDialog(BuildContext context, String title , String text) {
     },
   );
 }
+
+
+showGeneralErrorAlertDialogwithDoublePop(BuildContext context, String title , String text) {
+
+  // set up the button
+  Widget okButton = TextButton(
+    child: Text("${S.of(context).confirm}"),
+    onPressed: () {
+      Navigator.pop(context);
+      Navigator.pop(context);
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text(title),
+    content: Text(text),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
 
 
 
