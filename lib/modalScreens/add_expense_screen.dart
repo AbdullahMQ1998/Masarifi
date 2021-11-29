@@ -271,7 +271,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
-                        maxLength: 10,
+                        maxLength: 15,
                         textAlign: TextAlign.center,
 
                         onChanged: (text) {

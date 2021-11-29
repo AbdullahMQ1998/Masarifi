@@ -153,7 +153,7 @@ class monthlyBillBubble extends StatelessWidget {
                           children:[
 
                             monthlyBubbleTextStyle(
-                            firstText: "", secondText: " $billName ", padding: 0 ,fontSize: 25,
+                            firstText: "", secondText: "$billName  ", padding: 0 ,fontSize: 25,
                           ),
 
                            Icon(billIcon,
@@ -280,7 +280,7 @@ class ExpensesBubble extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: Icon(expenseIcon,
-                    size: 30,
+                    size: 20,
 
                   ),
                 ),
@@ -289,9 +289,9 @@ class ExpensesBubble extends StatelessWidget {
                     children:[
                       Text(userExpenseList.get('expenseName') == null ? "  $expenseName" :" ${userExpenseList.get('expenseName')}",
                         style: TextStyle(
-                            fontSize: 25
+                            fontSize: 15
                         ),),
-                      Text('   $expenseDate $expenseTime',
+                      Text(' $expenseDate $expenseTime',
                         style: TextStyle(
                             fontSize: 12
                         ),),
@@ -299,44 +299,46 @@ class ExpensesBubble extends StatelessWidget {
                     ]
                 ),
 
-                Column(
+                Expanded(
+                  child: Column(
 
-                  children: [
+                    children: [
 
-                    IconButton(onPressed:
-                        () {
+                      IconButton(onPressed:
+                          () {
 
-                      showModalBottomSheet(
-                          barrierColor: themChange.getDarkTheme() ? Colors.transparent : null,
-                          context: context,
-                          builder: (BuildContext context) =>
-                              EditExpenseScreen((taskTitle) {
-                                Navigator.pop(context);
-                              },
-                                  userExpenseList,
-                                  userInfoList
-                              ));
+                        showModalBottomSheet(
+                            barrierColor: themChange.getDarkTheme() ? Colors.transparent : null,
+                            context: context,
+                            builder: (BuildContext context) =>
+                                EditExpenseScreen((taskTitle) {
+                                  Navigator.pop(context);
+                                },
+                                    userExpenseList,
+                                    userInfoList
+                                ));
 
-                    },
-                      icon: Icon(Icons.edit),
-                      iconSize: 25,
+                      },
+                        icon: Icon(Icons.edit),
+                        iconSize: 20,
 
-                    ),
-                    IconButton(onPressed: (){
+                      ),
+                      IconButton(onPressed: (){
 
-                      Platform.isIOS? showIOSDeleteExpenseAlert(context, userInfoList, userExpenseList, shouldDelete):
-                      showAlertDialogForExpense(context, shouldDelete, userInfoList, userExpenseList);
+                        Platform.isIOS? showIOSDeleteExpenseAlert(context, userInfoList, userExpenseList, shouldDelete):
+                        showAlertDialogForExpense(context, shouldDelete, userInfoList, userExpenseList);
 
-                    }, icon: Icon(Icons.delete),
-                      iconSize: 25,),
+                      }, icon: Icon(Icons.delete),
+                        iconSize: 20,),
 
-                  ],
+                    ],
+                  ),
                 ),
 
                 Expanded(
                   child: Text(expenseTotal,
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 12,
 
                         fontWeight: FontWeight.bold
                     ),
@@ -402,7 +404,7 @@ class monthExpensesBubble extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: Icon(expenseIcon,
-                    size: 30,
+                    size: 20,
 
                   ),
                 ),
@@ -412,9 +414,9 @@ class monthExpensesBubble extends StatelessWidget {
                       children:[
                         Text(userExpenseList.get('expenseName') == null ? "  $expenseName" :" ${userExpenseList.get('expenseName')}",
                           style: TextStyle(
-                              fontSize: 25
+                              fontSize: 15
                           ),),
-                        Text('   $expenseDate $expenseTime',
+                        Text(' $expenseDate $expenseTime',
                           style: TextStyle(
                               fontSize: 12
                           ),),
@@ -426,7 +428,7 @@ class monthExpensesBubble extends StatelessWidget {
 
                 Text(expenseTotal,
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 15,
 
                       fontWeight: FontWeight.bold
                   ),

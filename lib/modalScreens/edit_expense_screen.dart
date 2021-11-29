@@ -241,13 +241,13 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                   '${S.of(context).editExpense}',
                   style: TextStyle(
                       color: Color(0xff01937C),
-                      fontSize: 30,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                      left: 50, right: 50, top: 20, bottom: 20),
+                      left: 10, right: 20, top: 20, bottom: 20),
                   child: Column(children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -263,7 +263,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                                   }
                                 });
                               },
-                              maxLength: 10,
+                              maxLength: 15,
                               textAlign: TextAlign.center,
                               autofocus: true,
                               onChanged: (text) {
@@ -285,9 +285,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                                         : expenseName,
                                     style: TextStyle(fontSize: 30),
                                   ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
+
                                   IconButton(
                                     onPressed: () {
                                       setState(() {
