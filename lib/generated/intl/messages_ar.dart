@@ -105,6 +105,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notifications" : MessageLookupByLibrary.simpleMessage("لا تنسى تضيف مصاريفك 👀"),
     "occupation" : MessageLookupByLibrary.simpleMessage("الوضع الوظيفي"),
     "overThousnd" : MessageLookupByLibrary.simpleMessage("الرجاء ادخال دخل شهري اكبر من 1000 ريال"),
+    "passwordNotCorrect" : MessageLookupByLibrary.simpleMessage("كلمة السر غير متطابقة"),
     "perUser" : MessageLookupByLibrary.simpleMessage("للمستخدم"),
     "preferences" : MessageLookupByLibrary.simpleMessage("التفضيلات"),
     "receiveEmailMasarifi" : MessageLookupByLibrary.simpleMessage("سوف تتلقى بريد إلكتروني مع رابط اعادة كلمة السر اذا كان بريدك الإلكتروني مسجل في تطبيق مصاريفي"),

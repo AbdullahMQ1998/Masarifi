@@ -105,6 +105,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notifications" : MessageLookupByLibrary.simpleMessage("Don\'t forget to add your expenses 👀"),
     "occupation" : MessageLookupByLibrary.simpleMessage("Occupation"),
     "overThousnd" : MessageLookupByLibrary.simpleMessage("Please enter amount over 999 for the monthly income"),
+    "passwordNotCorrect" : MessageLookupByLibrary.simpleMessage("The password does not match"),
     "perUser" : MessageLookupByLibrary.simpleMessage("Per User"),
     "preferences" : MessageLookupByLibrary.simpleMessage("PREFERENCES"),
     "receiveEmailMasarifi" : MessageLookupByLibrary.simpleMessage("You will receive an email with the password reset link if the email exist in Masarifi"),

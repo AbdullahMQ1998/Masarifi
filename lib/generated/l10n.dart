@@ -1214,6 +1214,16 @@ class S {
       args: [],
     );
   }
+
+  /// `The password does not match`
+  String get passwordNotCorrect {
+    return Intl.message(
+      'The password does not match',
+      name: 'passwordNotCorrect',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

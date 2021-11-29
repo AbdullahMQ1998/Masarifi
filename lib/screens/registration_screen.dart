@@ -27,6 +27,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   bool showSpinner = false;
   String email;
   String password;
+  String confirmPass;
+  bool isConfirmed = false;
+  bool isEmpty = true;
   SharedPreferences preferences;
 
 
@@ -96,37 +99,90 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
                     filled: true),
               ),
+
+              SizedBox(
+                height: 8.0,
+              ),
+              TextField(
+                textAlign: TextAlign.center,
+                obscureText: true,
+
+                onChanged: (value){
+                  confirmPass = value;
+                },
+                onSubmitted: (v){
+                  setState(() {
+                    if(confirmPass == password){
+                      isConfirmed = true;
+                    }
+                    if(confirmPass != password){
+                      isConfirmed = false;
+                    }
+                    isEmpty = false;
+                    if(v.isEmpty)
+                      isEmpty = true;
+                  });
+
+                },
+                decoration: kTextFieldDecoration.copyWith(hintText: 'Confirm Password' ,
+
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide( width: 1.0),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ),
+                    fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
+                    filled: true),
+              ),
               SizedBox(
                 height: 24.0,
               ),
               paddingButton( Color(0xff01937C), '${S.of(context).register}', () async {
-                setState(() {
-                  showSpinner = true;
-                });
-                if(email == null || password == null){
-                  email = '';
-                  password = '';
+                if (isEmpty) {
+                  Platform.isIOS?
+                  showIOSGeneralAlert(context, "${S
+                      .of(context)
+                      .makeSureyoufilled}") : showGeneralErrorAlertDialog(context, "${S.of(context).error}", '${S
+                      .of(context)
+                      .makeSureyoufilled}');
                 }
-                final newUser = await _auth.createUserWithEmailAndPassword(
-                    email: email, password: password).catchError((err) {
-                  Platform.isIOS ? showIOSGeneralAlert(context, err.message) : showGeneralErrorAlertDialog(context, 'Error', err.message) ;
-
+                else if (isConfirmed == false) {
+                  Platform.isIOS?
+                  showIOSGeneralAlert(context, "${S.of(context).passwordNotCorrect}") : showGeneralErrorAlertDialog(context,"${S.of(context).error}", '${S
+                      .of(context)
+                      .passwordNotCorrect}');
                 }
-                    );
 
-                try {
-                  if (newUser != null) {
-                    if(email != null && password != null){
-                      preferences.setString('Email', email);
-                      preferences.setString('Pass', password);
-                    }
-                    Navigator.pushNamed(context, RegisterUserInfo.id);
-                  }
+                else {
                   setState(() {
-                    showSpinner = false;
+                    showSpinner = true;
                   });
-                } catch (e) {
-                  print(e);
+                  if (email == null || password == null) {
+                    email = '';
+                    password = '';
+                  }
+                  final newUser = await _auth.createUserWithEmailAndPassword(
+                      email: email, password: password).catchError((err) {
+                    Platform.isIOS
+                        ? showIOSGeneralAlert(context, err.message)
+                        : showGeneralErrorAlertDialog(context, 'Error',
+                        err.message);
+                  }
+                  );
+
+                  try {
+                    if (newUser != null) {
+                      if (email != null && password != null) {
+                        preferences.setString('Email', email);
+                        preferences.setString('Pass', password);
+                      }
+                      Navigator.pushNamed(context, RegisterUserInfo.id);
+                    }
+                    setState(() {
+                      showSpinner = false;
+                    });
+                  } catch (e) {
+                    print(e);
+                  }
                 }
               }),
 
