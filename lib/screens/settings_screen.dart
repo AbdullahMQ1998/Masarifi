@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/Provider/dark_them.dart';
@@ -18,7 +20,10 @@ class SettingScreen extends StatefulWidget {
   static const String id = 'settings_screen';
   final QueryDocumentSnapshot userInfo;
   final List<QueryDocumentSnapshot> userExpense;
-  SettingScreen(this.userInfo,this.userExpense);
+  final List<QueryDocumentSnapshot> usermonthlyBill;
+  final List<QueryDocumentSnapshot> monthlyReportList;
+
+  SettingScreen(this.userInfo,this.userExpense,this.usermonthlyBill,this.monthlyReportList);
 
 
 
@@ -291,7 +296,7 @@ class _SettingScreenState extends State<SettingScreen> {
                             size: 30,
                           ),
                           Text(
-                            "  ${S.of(context).signOut}",
+                            " ${S.of(context).signOut}",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -300,7 +305,34 @@ class _SettingScreenState extends State<SettingScreen> {
                         ],
                       ),
                     ),
-                    Divider()
+                    Divider(),
+
+                    FlatButton(
+                      onPressed: () {
+
+                        bool shouldDelete = false;
+                        Platform.isIOS?
+                        showIOSDeleteAccount(context, _auth.currentUser, widget.userInfo,widget.userExpense, widget.usermonthlyBill, widget.monthlyReportList , shouldDelete) :
+                        showAlertDialogForAccount(context, _auth.currentUser, widget.userInfo,widget.userExpense, widget.usermonthlyBill, widget.monthlyReportList , shouldDelete);
+
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.account_box_sharp,
+                            size: 30,
+                          ),
+                          Text(
+                            " Delete Account",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
                   ],
                 ),
               ),

@@ -110,7 +110,14 @@
   "totalExpense": "Total Expenses",
   "noMonthlyBill": "No monthly bills so far",
   "noExpenses" : "No expense for the current month, Let's add some!",
-  "noMonthlyReport": "No monthly reports, wait for the next month"
+  "noMonthlyReport": "No monthly reports, wait for the next month",
+  "deleteAccount": "Delete Account",
+  "areyousureDeleteAccount": "All of your expenses,monthly bills and monthly reports will be deleted, are you sure you want to delete your account?",
+  "makeSureyoufilled": "Make sure you have filled the required information",
+  "validEmail": "Make sure you have enter a valid email",
+  "expensePage": "Expenses"
+
+
 
 
 

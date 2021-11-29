@@ -26,7 +26,7 @@ class ExpenseScreen extends StatefulWidget {
 
 class _ExpenseScreenState extends State<ExpenseScreen> {
 
-  int differenceBetweenDates;
+  int differenceBetweenDates = 29;
   int picker = 0;
   int counter = 0;
 
@@ -54,7 +54,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
       context: context,
       initialDate: widget.date,
       firstDate: DateTime(2021),
-      lastDate: DateTime(2030),
+      lastDate: DateTime.now(),
     );
     if (picked != null && picked != selectedDate)
       setState(() {
@@ -488,6 +488,10 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
         ),
       ),
 
+      appBar: AppBar(
+        title: Text('${S.of(context).expensePage}'),
+        backgroundColor: Color(0xff01937C),
+      ),
       
       );
 

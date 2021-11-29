@@ -1144,6 +1144,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Delete Account`
+  String get deleteAccount {
+    return Intl.message(
+      'Delete Account',
+      name: 'deleteAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All of your expenses,monthly bills and monthly reports will be deleted, are you sure you want to delete your account?`
+  String get areyousureDeleteAccount {
+    return Intl.message(
+      'All of your expenses,monthly bills and monthly reports will be deleted, are you sure you want to delete your account?',
+      name: 'areyousureDeleteAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Make sure you have filled the required information`
+  String get makeSureyoufilled {
+    return Intl.message(
+      'Make sure you have filled the required information',
+      name: 'makeSureyoufilled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Make sure you have enter a valid email`
+  String get validEmail {
+    return Intl.message(
+      'Make sure you have enter a valid email',
+      name: 'validEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expenses`
+  String get expensePage {
+    return Intl.message(
+      'Expenses',
+      name: 'expensePage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

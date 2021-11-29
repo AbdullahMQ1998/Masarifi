@@ -124,7 +124,7 @@ class ExpenseListView extends StatelessWidget {
           child: Container(
             height: height / 2,
             child: ListView(
-              children: normalView(expenses , userInfoList).length == 0 ? [Center(child: Text("No expense for the current Month"))] : normalView(expenses , userInfoList)  ,
+              children: normalView(expenses , userInfoList).length == 0 ? [Center(child: Text("${S.of(context).noExpenses}"))] : normalView(expenses , userInfoList)  ,
             ),
           ),
         );

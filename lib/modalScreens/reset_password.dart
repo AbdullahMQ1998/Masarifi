@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/functions/AlertButtonFunction.dart';
+import 'package:flash_chat/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -78,7 +79,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           TextButton(
             onPressed: () {
               if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email) || email == null || email == '' || email == ' '){
-                Platform.isIOS? showIOSGeneralAlert(context, 'Please make sure you have entered a valid mail'):
+                Platform.isIOS? showIOSGeneralAlert(context, '${S.of(context).validEmail}'):
                 showEmailAlertDialog(context);
               }
               else{

@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -110,6 +112,56 @@ showIOSDeleteExpenseAlert(BuildContext context,QueryDocumentSnapshot userInfoLis
           },
         ),
 
+
+
+
+
+
+        CupertinoDialogAction(
+          child: Text('${S.of(context).cancel}'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+
+      ],
+    ),
+  );
+}
+
+
+showIOSDeleteAccount(BuildContext context,User user,QueryDocumentSnapshot userInfo,List<QueryDocumentSnapshot> userExpenseList,List<QueryDocumentSnapshot> monthlyBillList,List<QueryDocumentSnapshot> monthlyReportList,bool shouldDelete){
+
+  showCupertinoDialog<void>(
+    context: context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title:  Text('${S.of(context).deleteAccount}'),
+      content: Text("${S.of(context).areyousureDeleteAccount}"),
+      actions: <CupertinoDialogAction>[
+        CupertinoDialogAction(
+          child: Text('${S.of(context).confirm}'),
+          onPressed: () {
+
+            for(int i = 0 ; i < userExpenseList.length;i++){
+              userExpenseList[i].reference.delete();
+            }
+            for(int i = 0 ; i < monthlyBillList.length;i++){
+              monthlyBillList[i].reference.delete();
+            }
+            for(int i = 0; i<monthlyReportList.length ; i++){
+              monthlyReportList[i].reference.delete();
+            }
+            userInfo.reference.delete();
+            user.delete();
+            Navigator.pushNamed(context, WelcomeScreen.id);
+          },
+        ),
+
+
+
+
+
+
         CupertinoDialogAction(
           child: Text('${S.of(context).cancel}'),
           onPressed: () {
@@ -126,11 +178,12 @@ showIOSDeleteExpenseAlert(BuildContext context,QueryDocumentSnapshot userInfoLis
 
 
 
+
 showErrorAlertDialog(BuildContext context) {
 
   // set up the button
   Widget okButton = TextButton(
-    child: Text("OK"),
+    child: Text("${S.of(context).confirm}"),
     onPressed: () {
       Navigator.pop(context);
     },
@@ -138,8 +191,8 @@ showErrorAlertDialog(BuildContext context) {
 
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    title: Text("Error"),
-    content: Text("Make sure you have filled the required information"),
+    title: Text("${S.of(context).error}"),
+    content: Text("${S.of(context).makeSureyoufilled}"),
     actions: [
       okButton,
     ],
@@ -159,7 +212,7 @@ showGeneralErrorAlertDialog(BuildContext context, String title , String text) {
 
   // set up the button
   Widget okButton = TextButton(
-    child: Text("OK"),
+    child: Text("${S.of(context).confirm}"),
     onPressed: () {
       Navigator.pop(context);
     },
@@ -189,7 +242,7 @@ showEmailAlertDialog(BuildContext context) {
 
   // set up the button
   Widget okButton = TextButton(
-    child: Text("OK"),
+    child: Text("${S.of(context).confirm}"),
     onPressed: () {
       Navigator.pop(context);
     },
@@ -197,8 +250,8 @@ showEmailAlertDialog(BuildContext context) {
 
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    title: Text("Error"),
-    content: Text("Make sure you have enter a vaild email"),
+    title: Text("${S.of(context).error}"),
+    content: Text("${S.of(context).validEmail}"),
     actions: [
       okButton,
     ],
@@ -282,6 +335,10 @@ showAlertDialogForExpense(BuildContext context , bool shouldDelete,QueryDocument
 
 
 
+
+
+
+
 showAlertDialogForMonthlyBill(BuildContext context , bool shouldDelete,QueryDocumentSnapshot userInfo, QueryDocumentSnapshot userMonthlyBillList) {
 
   // set up the buttons
@@ -324,6 +381,60 @@ showAlertDialogForMonthlyBill(BuildContext context , bool shouldDelete,QueryDocu
   AlertDialog alert = AlertDialog(
     title: Text("${S.of(context).deleteBill}"),
     content: Text("${S.of(context).wouldYouLikeDeleteMonthly}"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+
+showAlertDialogForAccount(BuildContext context,User user,QueryDocumentSnapshot userInfo ,List<QueryDocumentSnapshot> userExpenseList,List<QueryDocumentSnapshot> monthlyBillList,List<QueryDocumentSnapshot> monthlyReportList,bool shouldDelete) {
+
+  // set up the buttons
+  Widget cancelButton = TextButton(
+    child: Text("${S.of(context).cancel}",
+      style:TextStyle(
+          color: Colors.grey
+      )
+      ,),
+    onPressed:  () {
+      Navigator.pop(context);
+    },
+  );
+  Widget continueButton = TextButton(
+    child: Text("${S.of(context).confirm}",
+      style: TextStyle(
+          color: Colors.red
+      ),),
+    onPressed:  () {
+      for(int i = 0 ; i < userExpenseList.length;i++){
+        userExpenseList[i].reference.delete();
+      }
+      for(int i = 0 ; i < monthlyBillList.length;i++){
+        monthlyBillList[i].reference.delete();
+      }
+      for(int i = 0; i<monthlyReportList.length ; i++){
+        monthlyReportList[i].reference.delete();
+      }
+      userInfo.reference.delete();
+      user.delete();
+      Navigator.pushNamed(context, WelcomeScreen.id);
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("${S.of(context).deleteAccount}"),
+    content: Text("${S.of(context).areyousureDeleteAccount}"),
     actions: [
       cancelButton,
       continueButton,

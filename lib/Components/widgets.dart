@@ -299,6 +299,40 @@ class ExpensesBubble extends StatelessWidget {
                     ]
                 ),
 
+                Column(
+
+                  children: [
+
+                    IconButton(onPressed:
+                        () {
+
+                      showModalBottomSheet(
+                          barrierColor: themChange.getDarkTheme() ? Colors.transparent : null,
+                          context: context,
+                          builder: (BuildContext context) =>
+                              EditExpenseScreen((taskTitle) {
+                                Navigator.pop(context);
+                              },
+                                  userExpenseList,
+                                  userInfoList
+                              ));
+
+                    },
+                      icon: Icon(Icons.edit),
+                      iconSize: 25,
+
+                    ),
+                    IconButton(onPressed: (){
+
+                      Platform.isIOS? showIOSDeleteExpenseAlert(context, userInfoList, userExpenseList, shouldDelete):
+                      showAlertDialogForExpense(context, shouldDelete, userInfoList, userExpenseList);
+
+                    }, icon: Icon(Icons.delete),
+                      iconSize: 25,),
+
+                  ],
+                ),
+
                 Expanded(
                   child: Text(expenseTotal,
                     style: TextStyle(
@@ -309,44 +343,6 @@ class ExpensesBubble extends StatelessWidget {
                     textAlign: TextAlign.right,
                   ),
                 ),
-
-                Expanded(
-                  child: Column(
-
-                    children: [
-
-                      IconButton(onPressed:
-                          () {
-
-                        showModalBottomSheet(
-                          barrierColor: themChange.getDarkTheme() ? Colors.transparent : null,
-                            context: context,
-                            builder: (BuildContext context) =>
-                                EditExpenseScreen((taskTitle) {
-                                  Navigator.pop(context);
-                                },
-                                    userExpenseList,
-                                    userInfoList
-                                ));
-
-                      },
-                        icon: Icon(Icons.edit),
-                        iconSize: 25,
-
-                      ),
-                      IconButton(onPressed: (){
-
-                        Platform.isIOS? showIOSDeleteExpenseAlert(context, userInfoList, userExpenseList, shouldDelete):
-                       showAlertDialogForExpense(context, shouldDelete, userInfoList, userExpenseList);
-
-                      }, icon: Icon(Icons.delete),
-                        iconSize: 25,),
-
-                    ],
-                  ),
-                ),
-
-
 
               ],
             ),

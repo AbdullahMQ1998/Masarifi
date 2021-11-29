@@ -44,6 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final _auth = FirebaseAuth.instance;
   List<QueryDocumentSnapshot> userInfoList;
   List<QueryDocumentSnapshot> expenseList;
+  List<QueryDocumentSnapshot> monthlyBillList;
+  List<QueryDocumentSnapshot> monthlyReportList;
 
 
   List<QueryDocumentSnapshot> otherUserExpenseList;
@@ -221,7 +223,7 @@ getCurrenLanguage();
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {
                               return Text(
-                                'No Expense',
+                                '',
                               );
                             }
                             var expenses = snapshot.data.docs;
@@ -247,6 +249,41 @@ getCurrenLanguage();
                           return SizedBox();
                         },
                       ),
+
+
+                      StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('monthly_bills')
+                              .where('email', isEqualTo: widget.loggedUser.email)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return Text(
+                                '',
+                              );
+                            }
+                            var monthlyBill = snapshot.data.docs;
+                            monthlyBillList = monthlyBill;
+
+                            return SizedBox();
+                          }),
+
+                      StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('monthly_report')
+                              .where('email', isEqualTo: widget.loggedUser.email)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return Text(
+                                '',
+                              );
+                            }
+                            var monthlyReport = snapshot.data.docs;
+                            monthlyReportList = monthlyReport;
+
+                            return SizedBox();
+                          }),
 
                       Container(
                         color: _topContainerColor(
@@ -319,10 +356,6 @@ getCurrenLanguage();
                               ],
                             ),
 
-
-
-
-
                             SizedBox(
                               height: 5,
                             ),
@@ -344,6 +377,9 @@ getCurrenLanguage();
                         text: "${S.of(context).monthlyBills}",
                         totalAmount: usersInfo[0].get('totalMonthlyBillCost'),
                         userInfo: usersInfo[0],
+                        onPress: (){
+
+                        },
                       ),
 
                       //MonthlyBill list in Components > ListviewWidgets file
@@ -361,7 +397,7 @@ getCurrenLanguage();
 
                       RowTextWithTotal(
                         userInfo: usersInfo[0],
-                        text: "${S.of(context).expense} >",
+                        text: "${S.of(context).expense} >>",
                         totalAmount: usersInfo[0].get('totalExpense'),
                         onPress: () {
 
@@ -452,7 +488,7 @@ getCurrenLanguage();
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SettingScreen(userInfoList[0],expenseList)));
+                        builder: (context) => SettingScreen(userInfoList[0],expenseList,monthlyBillList,monthlyReportList)));
               },
             ),
 
