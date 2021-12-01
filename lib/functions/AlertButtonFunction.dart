@@ -417,7 +417,7 @@ showAlertDialogForMonthlyBill(BuildContext context , bool shouldDelete,QueryDocu
       double currentTotalBudget = double.parse(userInfo.get('userBudget'));
       double currentTotalMonthlyBillCost = double.parse(userInfo.get('totalMonthlyBillCost'));
       double updatedTotalBudget = currentTotalBudget + currentTotalMonthlyBillCost;
-      double updatedTotalMonthlyBillCost = currentTotalMonthlyBillCost - currentTotalMonthlyBillCost;
+      double updatedTotalMonthlyBillCost = currentTotalMonthlyBillCost - currentMonthlyBillCost;
 
       userInfo.reference.update({'userBudget': updatedTotalBudget.toString()});
       userInfo.reference.update({'totalMonthlyBillCost': updatedTotalMonthlyBillCost.toString()});

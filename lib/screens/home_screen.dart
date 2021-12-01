@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<QueryDocumentSnapshot> otherUserExpenseList;
   List<QueryDocumentSnapshot> otherUserInfoList;
-  String isFirstDay = "false";
+
 
 
   String currentLang = "ar";
@@ -102,8 +102,10 @@ getCurrenLanguage();
           'totalExpense': userInfoList[0].get('totalExpense'),
           'userBudget': userBudget,
           'totalMonthly': userInfoList[0].get('totalMonthlyBillCost'),
+          'monthlyBills': userInfoList[0].get('totalMonthlyBillCost')
         }
       );
+      print('hee');
       double zero = 0;
       userInfoList[0].reference.update({'totalExpense': zero.toString() });
       double monthlyExpense =  userBudget - double.parse(userInfoList[0].get('totalMonthlyBillCost'));
@@ -114,15 +116,6 @@ getCurrenLanguage();
 
   @override
   Widget build(BuildContext context) {
-
-
-    Locale myLocale = Localizations.localeOf(context);
-
-
-    DateTime currentDay = DateTime.now();
-    DateTime firstDayOftheMonth= DateTime(currentDay.year,currentDay.month+1 ,1);
-
-
 
 
 
@@ -147,26 +140,8 @@ getCurrenLanguage();
         return Color(0xff01937C);
     }
 
-    int _getDaysLeftForSalary(Timestamp salaryDate) {
-      DateTime formattedSalaryDate =
-          DateTime.parse(salaryDate.toDate().toString());
-      DateTime currentDate = DateTime.now();
-      int daysLeftForSalary =
-          formattedSalaryDate.difference(currentDate).inDays;
-
-      return daysLeftForSalary;
-    }
-
     double totalBudget = 0;
-
-
-
     updateNotification();
-
-
-
-
-
 
     return Scaffold(
       body: SingleChildScrollView(

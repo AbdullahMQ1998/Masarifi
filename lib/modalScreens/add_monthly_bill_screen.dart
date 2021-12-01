@@ -56,13 +56,16 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
   }
 
 
+  DateTime currentDay = DateTime.now();
+
 
   _selectDate(BuildContext context) async {
+    int lastDay = DateTime(currentDay.year,currentDay.month+1,0).day;
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime(2021),
-      lastDate: DateTime(2030),
+      firstDate: DateTime(DateTime.now().year,DateTime.now().month),
+      lastDate: DateTime(DateTime.now().year,DateTime.now().month, lastDay ),
     );
     if (picked != null && picked != selectedDate)
       setState(() {

@@ -73,10 +73,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
 
 
-  DateTime selectedDate = DateTime.now();
-  String format;
+
+ DateTime selectedDate;
+
+  bool dateChanged = false;
 
   _selectDate(BuildContext context) async {
+
+
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
@@ -86,6 +90,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
     if (picked != null && picked != selectedDate)
       setState(() {
+        dateChanged = true;
         selectedDate = picked;
       });
   }
@@ -131,9 +136,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       }
     }
 
+    Timestamp currentdate = widget.userInfo.get('expectedRetireDate');
 
 
+    if(dateChanged == false)
+    selectedDate = DateTime.parse(currentdate.toDate().toString());
     return Scaffold(
+
+
 
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -189,6 +199,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                      gender = widget.userInfo.get('gender');
                      occupation = widget.userInfo.get('occupation');
                    }
+
+
+                   if(selectedDate == null){
+                     selectedDate == widget.userInfo.get('expectedRetireDate');
+                   }
+
+                   widget.userInfo.reference.update({'expectedRetireDate': selectedDate});
+
                    widget.userInfo.reference.update({'gender': currentLang == "ar"? genderTransaltorENG[gender] : gender});
                    widget.userInfo.reference.update({'occupation': currentLang == "ar"? occupationTranslator[occupation] : occupation});
 

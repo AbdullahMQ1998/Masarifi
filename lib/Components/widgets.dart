@@ -110,7 +110,8 @@ class monthlyBillBubble extends StatelessWidget {
 
     // if the date is yesterday or more the function will make the bill to the next month
     if(billDate.toDate().difference(todayDate).isNegative && daysLeft != 0){
-      DateTime newDate = DateTime(todayDate.year,todayDate.month+1,todayDate.day);
+
+      DateTime newDate = DateTime(todayDate.year,todayDate.month+1,billDate.toDate().day);
       daysLeft = newDate.difference(billDate.toDate()).inDays;
       userMonthlyBillList.reference.update({'billDate': newDate});
     }

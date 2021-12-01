@@ -815,10 +815,10 @@ class S {
     );
   }
 
-  /// `Enter Your Passowrd`
+  /// `Enter Your Password`
   String get enterYourPass {
     return Intl.message(
-      'Enter Your Passowrd',
+      'Enter Your Password',
       name: 'enterYourPass',
       desc: '',
       args: [],
@@ -915,10 +915,10 @@ class S {
     );
   }
 
-  /// `RetirementDate`
+  /// `Retirement Date`
   String get retirementDate {
     return Intl.message(
-      'RetirementDate',
+      'Retirement Date',
       name: 'retirementDate',
       desc: '',
       args: [],
@@ -1025,10 +1025,10 @@ class S {
     );
   }
 
-  /// `Excel reader is mandatory inorder to export Excel file`
+  /// `Excel reader is mandatory in order to export Excel file`
   String get excelAlert {
     return Intl.message(
-      'Excel reader is mandatory inorder to export Excel file',
+      'Excel reader is mandatory in order to export Excel file',
       name: 'excelAlert',
       desc: '',
       args: [],
@@ -1125,10 +1125,10 @@ class S {
     );
   }
 
-  /// `No expense for the current month, Let's add some!`
+  /// `No expenses for the current month, Let's add some!`
   String get noExpenses {
     return Intl.message(
-      'No expense for the current month, Let\'s add some!',
+      'No expenses for the current month, Let\'s add some!',
       name: 'noExpenses',
       desc: '',
       args: [],
