@@ -295,10 +295,10 @@ class S {
     );
   }
 
-  /// `Average Number of Expenses Per Category Between Users Compared To You`
+  /// `Average Number of Expenses Per Category Between Masarifi Users Compared To You`
   String get masaryfyAverageUsersCatefories {
     return Intl.message(
-      'Average Number of Expenses Per Category Between Users Compared To You',
+      'Average Number of Expenses Per Category Between Masarifi Users Compared To You',
       name: 'masaryfyAverageUsersCatefories',
       desc: '',
       args: [],
@@ -1280,6 +1280,16 @@ class S {
     return Intl.message(
       'No Results Found',
       name: 'noResults',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Make sure you have entered a valid number`
+  String get rightNumber {
+    return Intl.message(
+      'Make sure you have entered a valid number',
+      name: 'rightNumber',
       desc: '',
       args: [],
     );

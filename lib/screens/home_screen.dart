@@ -350,7 +350,7 @@ getCurrenLanguage();
                       ),
                       RowTextWithTotal(
                         text: "${S.of(context).monthlyBills}",
-                        totalAmount: usersInfo[0].get('totalMonthlyBillCost'),
+                        totalAmount: double.parse(usersInfo[0].get('totalMonthlyBillCost')).toStringAsFixed(2),
                         userInfo: usersInfo[0],
                         onPress: (){
 
@@ -373,7 +373,7 @@ getCurrenLanguage();
                       RowTextWithTotal(
                         userInfo: usersInfo[0],
                         text: "${S.of(context).expense} >>",
-                        totalAmount: usersInfo[0].get('totalExpense'),
+                        totalAmount: double.parse(usersInfo[0].get('totalExpense')).toStringAsFixed(2),
                         onPress: () {
 
                           DateTime currentDate = DateTime.now();

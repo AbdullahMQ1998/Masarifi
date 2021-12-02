@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flash_chat/Provider/dark_them.dart';
+import 'package:flash_chat/functions/AlertButtonFunction.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
@@ -494,6 +495,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                     if (expenseCost == null) {
                       expenseCost = widget.userExpenseList.get('expenseCost');
                     }
+                    if(double.tryParse(expenseCost) != null)
                     widget.userExpenseList.reference
                         .update({'expenseCost': expenseCost});
 
@@ -516,7 +518,11 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                       }
                     }
 
+                    if(double.tryParse(expenseCost) != null)
                     Navigator.pop(context);
+                    else{
+                      showIOSGeneralAlert(context, "${S.of(context).rightNumber}");
+                    }
                   },
                   child: Text(
                     '${S.of(context).update}',

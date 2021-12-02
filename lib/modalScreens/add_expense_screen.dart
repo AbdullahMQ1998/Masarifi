@@ -288,7 +288,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       child: TextField(
                         maxLength: 6,
                         textAlign: TextAlign.center,
-                        keyboardType: TextInputType.numberWithOptions(signed: true,decimal: true),
+                        keyboardType: TextInputType.numberWithOptions(decimal: true,signed: true),
                         onChanged: (value) {
                           setState(() {
                             expenseCost = value;
@@ -387,11 +387,18 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   onPressed: () {
                     formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
                     formattedTime = DateFormat().add_jm().format(selectedDate);
+
+                    if(double.tryParse(expenseCost) == null && expenseCost.isNotEmpty){
+                      showIOSGeneralAlert(context, '${S.of(context).rightNumber}');
+                    }
+
                     if (checkNullorSpace()) {
                       currentTotalBudget = double.parse(widget.userInfo[0].get('userBudget'));
                       currentTotalBudget -= double.parse(expenseCost);
                       widget.userInfo[0].reference
                           .update({'userBudget': currentTotalBudget.toString()});
+
+
 
                       currentTotalExpense =
                           double.parse(widget.userInfo[0].get('totalExpense'));
@@ -413,10 +420,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                         'expenseID': expenseID,
                         'expenseIcon': Platform.isIOS? expenseCategoryString[picker] : currentLang == "ar" ? arabicToEnglish[dropdownValue] :dropdownValue,
                       });
-
                       Navigator.pop(context);
                       Navigator.pop(context);
                     } else {
+                      Platform.isIOS? showIOSGeneralAlert(context, "${S.of(context).makeSureyoufilled}"):
                       showErrorAlertDialog(context);
                     }
                   },

@@ -544,6 +544,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
 
                       widget.userMonthlyBillList.reference
                           .update({'billName': billName});
+                      if(double.tryParse(billCost) != null)
                       widget.userMonthlyBillList.reference
                           .update({'billCost': billCost});
                       widget.userInfo.reference
@@ -562,7 +563,10 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                             .update({'billIcon': dropdownValue});
                       }
 
+                      if(double.tryParse(billCost) != null)
                       Navigator.pop(context);
+                      else
+                        showIOSGeneralAlert(context, "${S.of(context).rightNumber}");
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),

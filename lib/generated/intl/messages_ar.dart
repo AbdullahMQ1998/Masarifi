@@ -117,6 +117,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "resultFound" : MessageLookupByLibrary.simpleMessage("نتيجة مطابقة"),
     "retirementDate" : MessageLookupByLibrary.simpleMessage("تاريخ التقاعد"),
     "retirementDateAnswer" : MessageLookupByLibrary.simpleMessage("نحتاج تاريخ التقاعد المتوقع عشان نعطيك نتائج ومعلومات تفيدك ونتمنى تختاره بجدية"),
+    "rightNumber" : MessageLookupByLibrary.simpleMessage("الرجاء تأكد من ادخال رقم صحيح"),
     "saudiRyal" : MessageLookupByLibrary.simpleMessage("ريال"),
     "save" : MessageLookupByLibrary.simpleMessage("حفظ"),
     "saving" : MessageLookupByLibrary.simpleMessage("ادخار واسثتمار"),

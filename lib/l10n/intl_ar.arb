@@ -124,6 +124,7 @@
   "resultFound" : "نتيجة مطابقة",
   "writeDelete" : "اكتب \"DELETE\" لتأكيد الحذف",
   "searchByName": "ابحث عن طريق اسم المصروف",
-  "noResults": "لا يوجد نتائج"
+  "noResults": "لا يوجد نتائج",
+  "rightNumber": "الرجاء تأكد من ادخال رقم صحيح"
 
 }

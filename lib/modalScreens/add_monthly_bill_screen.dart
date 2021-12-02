@@ -377,9 +377,14 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                 FlatButton(
                   onPressed: () {
 
+
                     formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
                     formattedTime = DateFormat().add_jm().format(selectedDate);
 
+
+                    if(double.tryParse(monthlyBillCost) == null && monthlyBillCost.isNotEmpty){
+                      showIOSGeneralAlert(context, '${S.of(context).rightNumber}');
+                    }
                     if (checkNullorSpace()) {
                       //Update MonthlyIncome.
                       currentTotalBudget = double.parse(widget.userInfo[0].get('userBudget'));
@@ -409,11 +414,9 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
                       Navigator.pop(context);
                       Navigator.pop(context);
                     } else {
-
-
+                      Platform.isIOS?
+                      showIOSGeneralAlert(context, "${S.of(context).makeSureyoufilled}"):
                       showErrorAlertDialog(context);
-
-
                     }
                   },
                   child: Text(

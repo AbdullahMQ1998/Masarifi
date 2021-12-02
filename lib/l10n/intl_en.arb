@@ -25,7 +25,7 @@
   "masarifiCategoryCount":"Total Number of Expenses Per Category Between Masarifi Users (Excluding You)",
   "mostCategory": "Most Category",
   "leastCategory": "Least Category",
-  "masaryfyAverageUsersCatefories": "Average Number of Expenses Per Category Between Users Compared To You",
+  "masaryfyAverageUsersCatefories": "Average Number of Expenses Per Category Between Masarifi Users Compared To You",
   "avgExpense":"Avg Expense",
   "yourExpense": "Your Expense",
   "mostAvgCategory": "Most Average Category",
@@ -124,7 +124,8 @@
   "resultFound" : "Results found",
   "writeDelete" : "Write \"DELETE\" to confirm",
   "searchByName": "Search by expense name",
-  "noResults": "No Results Found"
+  "noResults": "No Results Found",
+  "rightNumber": "Make sure you have entered a valid number"
 
 
 

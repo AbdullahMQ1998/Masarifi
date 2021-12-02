@@ -180,8 +180,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                      monthlyIncome =
                          widget.userInfo.get('monthlyIncome');
                    }
+                   if(double.tryParse(monthlyIncome) != null)
                    widget.userInfo.reference
                        .update({'monthlyIncome': monthlyIncome});
+                   else
+                     showIOSGeneralAlert(context, "${S.of(context).rightNumber}");
 
                    double totalExpense =
                    double.parse(widget.userInfo.get('totalExpense'));
@@ -210,7 +213,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                    widget.userInfo.reference.update({'gender': currentLang == "ar"? genderTransaltorENG[gender] : gender});
                    widget.userInfo.reference.update({'occupation': currentLang == "ar"? occupationTranslator[occupation] : occupation});
 
+                   if(double.tryParse(monthlyIncome) != null)
                    Navigator.pop(context);
+
                  },
                  child: Text(
                    '${S.of(context).save}',
@@ -400,10 +405,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                               editMonthlyIncome = false;
                                           });
                                         },
-                                        keyboardType: TextInputType.numberWithOptions(signed: true),
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.digitsOnly,
-                                        ],
+                                        keyboardType: TextInputType.numberWithOptions(signed: true,decimal: true),
                                         maxLength: 6,
                                         autofocus: true,
                                         decoration: InputDecoration(
