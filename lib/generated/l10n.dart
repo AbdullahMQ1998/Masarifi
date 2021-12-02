@@ -105,20 +105,20 @@ class S {
     );
   }
 
-  /// `Add Expense`
+  /// `Add an Expense`
   String get addExpense {
     return Intl.message(
-      'Add Expense',
+      'Add an Expense',
       name: 'addExpense',
       desc: '',
       args: [],
     );
   }
 
-  /// `Add Monthly Bill`
+  /// `Add an Monthly Bill`
   String get addMonthlyBill {
     return Intl.message(
-      'Add Monthly Bill',
+      'Add an Monthly Bill',
       name: 'addMonthlyBill',
       desc: '',
       args: [],
@@ -265,10 +265,10 @@ class S {
     );
   }
 
-  /// `Total Of Expense Per Category Between Masarifi Users`
+  /// `Total of Expense Per Category Between Masarifi Users Excluding You`
   String get masarifiCategoryCount {
     return Intl.message(
-      'Total Of Expense Per Category Between Masarifi Users',
+      'Total of Expense Per Category Between Masarifi Users Excluding You',
       name: 'masarifiCategoryCount',
       desc: '',
       args: [],
@@ -295,10 +295,10 @@ class S {
     );
   }
 
-  /// `Average Expense Per Category Between Users Compare To You`
+  /// `Average Expense Per Category Between Users Compared To You`
   String get masaryfyAverageUsersCatefories {
     return Intl.message(
-      'Average Expense Per Category Between Users Compare To You',
+      'Average Expense Per Category Between Users Compared To You',
       name: 'masaryfyAverageUsersCatefories',
       desc: '',
       args: [],
@@ -1230,6 +1230,46 @@ class S {
     return Intl.message(
       'Confirm Password',
       name: 'confirmPass',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Results found`
+  String get resultFound {
+    return Intl.message(
+      'Results found',
+      name: 'resultFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Write "DELETE" to confirm`
+  String get writeDelete {
+    return Intl.message(
+      'Write "DELETE" to confirm',
+      name: 'writeDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search by expense name`
+  String get searchByName {
+    return Intl.message(
+      'Search by expense name',
+      name: 'searchByName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Results Found`
+  String get noResults {
+    return Intl.message(
+      'No Results Found',
+      name: 'noResults',
       desc: '',
       args: [],
     );

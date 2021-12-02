@@ -1,6 +1,8 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/Components/widgets.dart';
+import 'package:flash_chat/constants.dart';
 import 'package:flash_chat/functions/sort_function.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +31,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
   int differenceBetweenDates = 29;
   int picker = 0;
   int counter = 0;
+  String name;
 
 
   DateTime selectedDate = DateTime.now();
@@ -59,6 +62,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
     if (picked != null && picked != selectedDate)
       setState(() {
         counter++;
+        if(name == null || name.isEmpty)
         picker = 4;
         selectedDate = picked;
         differenceBetweenDates = currentDay.difference(selectedDate).inDays;
@@ -85,6 +89,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
     if (picked != null && picked != selectedDate2)
       setState(() {
         selectedDate2 = picked;
+        if(name == null || name.isEmpty)
         picker = 4;
         isEnabled2 = true;
 
@@ -143,6 +148,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
 
   @override
   Widget build(BuildContext context) {
+  double height = MediaQuery.of(context).size.height;
 
 
     if(dropDownChanged == false || dropdownValue == null){
@@ -163,7 +169,10 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
     currentDate2 = DateFormat('yyyy-MM-dd').format(selectedDate2);
 
 
+    TextEditingController textEditingController;
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       // backgroundColor: Color(0xfff2f3f4),
       body: SafeArea(
         child: Column(
@@ -171,7 +180,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
 
 
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: currentLang == 'ar'? EdgeInsets.only(left: 20.0,right: 20) : EdgeInsets.only(left: 20.0,right: 20 , bottom: 20),
               child: Container(
                 decoration: BoxDecoration(
 
@@ -379,6 +388,21 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                        ),
 
                        Padding(
+                         padding: const EdgeInsets.all(8.0),
+                         child: TextField(
+                           controller: textEditingController,
+                           onChanged: (value){
+                             setState(() {
+                               picker = 3;
+                               name = value;
+                             });
+
+                           },
+                           decoration: kTextFieldDecoration.copyWith(hintText: "${S.of(context).searchByName}"),
+                         ),
+                       ),
+
+                       Padding(
                          padding: const EdgeInsets.all(15.0),
                          child: TextButton(onPressed: (){
                            setState(() {
@@ -386,10 +410,18 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                counter++;
                              selectedDate = widget.date;
                              }
+                             if(name == null || name.isEmpty)
                              picker = 1;
                              if(dropdownValue != 'All' && arabicToEnglish[dropdownValue] != "All"){
+                               if(name.isNotEmpty){
+                                 setState(() {
+                                   picker = 5;
+                                 });
+                               }
+                               else
                                picker = 2;
                              }
+
                            });
                          },
                              child: Row(
@@ -404,7 +436,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
 
                                      borderRadius: BorderRadius.all(Radius.circular(100))
                                    ),
-                                   
+
                                  ),
                                  Text('${S.of(context).search}',
                                    style: TextStyle(
@@ -454,7 +486,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Text(
-                'No Expense',
+                'No Expenses',
               );
             }
             var expenses = snapshot.data.docs;
@@ -471,13 +503,41 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                     if(pick == 2){
                       return sortByDateAndType(expenses, selectedDate, selectedDate2, currentLang== 'ar'? arabicToEnglish[dropdownValue]:dropdownValue,widget.userInfo);
                     }
+                    if(pick == 3){
+                      return searchByName(expenses, widget.userInfo, name);
+                    }
+                    if(pick == 5){
+                      return sortByDateAndTypeAndName(expenses, selectedDate, selectedDate2, currentLang== 'ar'? arabicToEnglish[dropdownValue]:dropdownValue,widget.userInfo ,name);
+                    }
                     else
-                    return normalView(expenses,widget.userInfo);
+                    return normalViewExpensesPage(expenses,widget.userInfo);
             }
 
 
-            return ListView(
-              children: sortPicker(picker),
+
+            return Column(
+              children:[
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 5),
+                    child: sortPicker(picker).length == 0 ? Center(child: Text("${S.of(context).noResults}")): Text("${sortPicker(picker).length} ${S.of(context).resultFound}",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold
+                    ),),
+                  ),
+                ],),
+
+                Container(
+                  child: ListView(
+                  children: sortPicker(picker),
+              ),
+                  height: height / 3.2,
+                ),
+              ]
             );
 
           },

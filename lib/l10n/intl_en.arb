@@ -6,8 +6,8 @@
   "costInMonthsBubble": "Cost: ",
   "daysLeft": "Days left" ,
   "expense":"Expenses",
-  "addExpense": "Add Expense",
-  "addMonthlyBill": "Add Monthly Bill",
+  "addExpense": "Add an Expense",
+  "addMonthlyBill": "Add an Monthly Bill",
   "expenseName": "Expense Name",
   "expenseCost": "Expense Cost",
   "expenseCategory" : "Expense Category",
@@ -22,10 +22,10 @@
   "delete":"Delete",
   "dataAnalysisPageTitle": "Masarifi Data Analysis",
   "categoryChart": "Expenses Total",
-  "masarifiCategoryCount":"Total Of Expense Per Category Between Masarifi Users",
+  "masarifiCategoryCount":"Total of Expense Per Category Between Masarifi Users Excluding You",
   "mostCategory": "Most Category",
   "leastCategory": "Least Category",
-  "masaryfyAverageUsersCatefories": "Average Expense Per Category Between Users Compare To You",
+  "masaryfyAverageUsersCatefories": "Average Expense Per Category Between Users Compared To You",
   "avgExpense":"Avg Expense",
   "yourExpense": "Your Expense",
   "mostAvgCategory": "Most Average Category",
@@ -119,7 +119,12 @@
   "checkEmail": "Check your email",
   "receiveEmailMasarifi": "You will receive an email with the password reset link if the email exist in Masarifi",
   "passwordNotCorrect" : "The password does not match",
-  "confirmPass" : "Confirm Password"
+  "confirmPass" : "Confirm Password",
+  "resultFound" : "Results found",
+  "writeDelete" : "Write \"DELETE\" to confirm",
+  "searchByName": "Search by expense name",
+  "noResults": "No Results Found"
+
 
 
 

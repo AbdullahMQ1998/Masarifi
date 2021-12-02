@@ -82,6 +82,7 @@ class _SettingScreenState extends State<SettingScreen> {
     final langChange = Provider.of<LanguageChangeProvider>(context);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Color(0xff01937C),
         title: Text("${S.of(context).settings}"),
@@ -327,6 +328,7 @@ class _SettingScreenState extends State<SettingScreen> {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
+                              color: Colors.red
                             ),
                           ),
                         ],
