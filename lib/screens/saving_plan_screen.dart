@@ -327,7 +327,7 @@ void getCurrenLanguage() async {
                                     '${S.of(context).saving}',
                                     '${S.of(context).savingDefinition}',
                                     '${S.of(context).savingPercentage}',
-                                    occupation == 'Employed' ? '${S.of(context).managedToSave} ${widget.saving.toStringAsFixed(2)} ${S.of(context).investWith} ${Finance.fv(rate: rate, nper: yearsToRetire, pmt: - payments * 12 , pv:0 ).toStringAsFixed(2)} ${S.of(context).saudiRyal} $yearsToRetire ${S.of(context).yearsBasedOnRetireDay}' : '',
+                                    occupation == 'Employed' ? '${S.of(context).managedToSave} ${widget.saving.toStringAsFixed(2)} ${S.of(context).investWith} ${Finance.fv(rate: rate, nper: yearsToRetire, pmt: - payments * 12 , pv:0 ).toStringAsFixed(2)} ${S.of(context).saudiRyal} ${S.of(context).YearsIn} $yearsToRetire ${S.of(context).yearsBasedOnRetireDay}' : '',
                                     Color(0xffC37B89),
                                 ),
 

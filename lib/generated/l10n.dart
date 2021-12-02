@@ -115,10 +115,10 @@ class S {
     );
   }
 
-  /// `Add an Monthly Bill`
+  /// `Add a Monthly Bill`
   String get addMonthlyBill {
     return Intl.message(
-      'Add an Monthly Bill',
+      'Add a Monthly Bill',
       name: 'addMonthlyBill',
       desc: '',
       args: [],
@@ -265,10 +265,10 @@ class S {
     );
   }
 
-  /// `Total of Expense Per Category Between Masarifi Users Excluding You`
+  /// `Total Number of Expenses Per Category Between Masarifi Users (Excluding You)`
   String get masarifiCategoryCount {
     return Intl.message(
-      'Total of Expense Per Category Between Masarifi Users Excluding You',
+      'Total Number of Expenses Per Category Between Masarifi Users (Excluding You)',
       name: 'masarifiCategoryCount',
       desc: '',
       args: [],
@@ -295,10 +295,10 @@ class S {
     );
   }
 
-  /// `Average Expense Per Category Between Users Compared To You`
+  /// `Average Number of Expenses Per Category Between Users Compared To You`
   String get masaryfyAverageUsersCatefories {
     return Intl.message(
-      'Average Expense Per Category Between Users Compared To You',
+      'Average Number of Expenses Per Category Between Users Compared To You',
       name: 'masaryfyAverageUsersCatefories',
       desc: '',
       args: [],
@@ -595,10 +595,20 @@ class S {
     );
   }
 
-  /// `in years based on your retirement date`
+  /// `in`
+  String get YearsIn {
+    return Intl.message(
+      'in',
+      name: 'YearsIn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `years based on your retirement date`
   String get yearsBasedOnRetireDay {
     return Intl.message(
-      'in years based on your retirement date',
+      'years based on your retirement date',
       name: 'yearsBasedOnRetireDay',
       desc: '',
       args: [],

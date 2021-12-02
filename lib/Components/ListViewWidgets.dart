@@ -64,7 +64,7 @@ class MonthlyBillsSVerticalListView extends StatelessWidget {
             'Water': Icons.water,
             'Internet': Icons.wifi,
             'Phone':Icons.phone_android,
-            'Electric':Icons.flash_on,
+            'Electricity':Icons.flash_on,
             'Installment':Icons.receipt,
             'Subscription': Icons.subscriptions_outlined
           };

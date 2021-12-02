@@ -288,10 +288,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       child: TextField(
                         maxLength: 6,
                         textAlign: TextAlign.center,
-                        keyboardType: TextInputType.numberWithOptions(signed: true),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
+                        keyboardType: TextInputType.numberWithOptions(signed: true,decimal: true),
                         onChanged: (value) {
                           setState(() {
                             expenseCost = value;

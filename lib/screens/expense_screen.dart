@@ -304,6 +304,9 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                      setState(() {
                                        dropdownValue = newValue;
                                        dropDownChanged = true;
+                                       if(newValue == "الكل"){
+                                         picker = 6;
+                                       }
                                      });
                                    },
                                    items: <String>[
@@ -342,6 +345,9 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                      setState(() {
                                        dropdownValue = newValue;
                                        dropDownChanged = true;
+                                       if(newValue == "All"){
+                                         picker = 6;
+                                       }
                                      });
                                    },
                                    items: <String>[
@@ -393,6 +399,10 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                            controller: textEditingController,
                            onChanged: (value){
                              setState(() {
+                               if(picker == 2){
+                                 name = value;
+                               }
+                               else
                                picker = 3;
                                name = value;
                              });
@@ -413,7 +423,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                              if(name == null || name.isEmpty)
                              picker = 1;
                              if(dropdownValue != 'All' && arabicToEnglish[dropdownValue] != "All"){
-                               if(name.isNotEmpty){
+                               if(name != null){
                                  setState(() {
                                    picker = 5;
                                  });

@@ -164,11 +164,11 @@ showIOSDeleteMonthlyBillsAlert(BuildContext context,QueryDocumentSnapshot userIn
           onPressed: () {
 
 
-            double currentMonthlyBillCost = double.parse(userMonthlyBillList.get('billCost'));
-            double currentTotalBudget = double.parse(userInfo.get('userBudget'));
-            double currentTotalMonthlyBillCost = double.parse(userInfo.get('totalMonthlyBillCost'));
-            double updatedTotalBudget = currentTotalBudget + currentTotalMonthlyBillCost;
-            double updatedTotalMonthlyBillCost = currentTotalMonthlyBillCost - currentTotalMonthlyBillCost;
+            double currentMonthlyBillCost = double.parse(userMonthlyBillList.get('billCost')); // 50
+            double currentTotalBudget = double.parse(userInfo.get('userBudget')); // 16000
+            double currentTotalMonthlyBillCost = double.parse(userInfo.get('totalMonthlyBillCost')); // 1670
+            double updatedTotalBudget = currentTotalBudget + currentMonthlyBillCost; // 16000 + 1670
+            double updatedTotalMonthlyBillCost = currentTotalMonthlyBillCost - currentMonthlyBillCost;
 
             userInfo.reference.update({'userBudget': updatedTotalBudget.toString()});
             userInfo.reference.update({'totalMonthlyBillCost': updatedTotalMonthlyBillCost.toString()});
@@ -513,10 +513,10 @@ showAlertDialogForMonthlyBill(BuildContext context , bool shouldDelete,QueryDocu
 
       //Here we Delete the current Expense
 
-      double currentMonthlyBillCost = double.parse(userMonthlyBillList.get('billCost'));
-      double currentTotalBudget = double.parse(userInfo.get('userBudget'));
-      double currentTotalMonthlyBillCost = double.parse(userInfo.get('totalMonthlyBillCost'));
-      double updatedTotalBudget = currentTotalBudget + currentTotalMonthlyBillCost;
+      double currentMonthlyBillCost = double.parse(userMonthlyBillList.get('billCost')); // 50
+      double currentTotalBudget = double.parse(userInfo.get('userBudget')); // 16000
+      double currentTotalMonthlyBillCost = double.parse(userInfo.get('totalMonthlyBillCost')); // 1670
+      double updatedTotalBudget = currentTotalBudget + currentMonthlyBillCost; // 16000 + 1670
       double updatedTotalMonthlyBillCost = currentTotalMonthlyBillCost - currentMonthlyBillCost;
 
       userInfo.reference.update({'userBudget': updatedTotalBudget.toString()});

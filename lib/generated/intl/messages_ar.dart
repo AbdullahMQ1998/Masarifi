@@ -21,6 +21,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "YearsIn" : MessageLookupByLibrary.simpleMessage("في"),
     "add" : MessageLookupByLibrary.simpleMessage("اضافة"),
     "addExpense" : MessageLookupByLibrary.simpleMessage("أضف مصروف"),
     "addMonthlyBill" : MessageLookupByLibrary.simpleMessage("أضف فاتورة شهرية"),
@@ -140,7 +141,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wouldYouLikeDeleteExpense" : MessageLookupByLibrary.simpleMessage("هل تريد حذف المصروف الحالي؟"),
     "wouldYouLikeDeleteMonthly" : MessageLookupByLibrary.simpleMessage("هل تريد حذف الفاتورة الحالية؟"),
     "writeDelete" : MessageLookupByLibrary.simpleMessage("اكتب \"DELETE\" لتأكيد الحذف"),
-    "yearsBasedOnRetireDay" : MessageLookupByLibrary.simpleMessage("في سنوات بناءً على تاريخ تقاعدك"),
+    "yearsBasedOnRetireDay" : MessageLookupByLibrary.simpleMessage("سنوات بناءً على تاريخ تقاعدك"),
     "yourBudgetNeeds" : MessageLookupByLibrary.simpleMessage("ميزانيتك على المصاريف الاساسية هي"),
     "yourBudgetWants" : MessageLookupByLibrary.simpleMessage("ميزانيتك على المصاريف التكميلية هي"),
     "yourExpense" : MessageLookupByLibrary.simpleMessage("مصاريفك"),

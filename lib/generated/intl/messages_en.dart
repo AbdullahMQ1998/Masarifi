@@ -21,9 +21,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "YearsIn" : MessageLookupByLibrary.simpleMessage("in"),
     "add" : MessageLookupByLibrary.simpleMessage("Add"),
     "addExpense" : MessageLookupByLibrary.simpleMessage("Add an Expense"),
-    "addMonthlyBill" : MessageLookupByLibrary.simpleMessage("Add an Monthly Bill"),
+    "addMonthlyBill" : MessageLookupByLibrary.simpleMessage("Add a Monthly Bill"),
     "alreadyHaveAccount" : MessageLookupByLibrary.simpleMessage("Already have an account?"),
     "areyousureDeleteAccount" : MessageLookupByLibrary.simpleMessage("All of your expenses,monthly bills and monthly reports will be deleted, are you sure you want to delete your account?"),
     "avgExpense" : MessageLookupByLibrary.simpleMessage("Avg Expense"),
@@ -83,10 +84,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "makeSureyoufilled" : MessageLookupByLibrary.simpleMessage("Make sure you have filled the required information"),
     "managedToSave" : MessageLookupByLibrary.simpleMessage("If you manged to save"),
     "masarifi" : MessageLookupByLibrary.simpleMessage("Masarifi"),
-    "masarifiCategoryCount" : MessageLookupByLibrary.simpleMessage("Total of Expense Per Category Between Masarifi Users Excluding You"),
+    "masarifiCategoryCount" : MessageLookupByLibrary.simpleMessage("Total Number of Expenses Per Category Between Masarifi Users (Excluding You)"),
     "masarifiMonthly" : MessageLookupByLibrary.simpleMessage("Masarifi Users Monthly Expense Count"),
     "masarifiUserDaily" : MessageLookupByLibrary.simpleMessage("Masarifi Users Daily Expense Count"),
-    "masaryfyAverageUsersCatefories" : MessageLookupByLibrary.simpleMessage("Average Expense Per Category Between Users Compared To You"),
+    "masaryfyAverageUsersCatefories" : MessageLookupByLibrary.simpleMessage("Average Number of Expenses Per Category Between Users Compared To You"),
     "moneySaved" : MessageLookupByLibrary.simpleMessage("Money Saved"),
     "moneySpent" : MessageLookupByLibrary.simpleMessage("Money Spent"),
     "monthTitle" : MessageLookupByLibrary.simpleMessage("Month"),
@@ -140,7 +141,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "wouldYouLikeDeleteExpense" : MessageLookupByLibrary.simpleMessage("Would you like to delete the current expense?"),
     "wouldYouLikeDeleteMonthly" : MessageLookupByLibrary.simpleMessage("Would you like to delete the current monthly bill?"),
     "writeDelete" : MessageLookupByLibrary.simpleMessage("Write \"DELETE\" to confirm"),
-    "yearsBasedOnRetireDay" : MessageLookupByLibrary.simpleMessage("in years based on your retirement date"),
+    "yearsBasedOnRetireDay" : MessageLookupByLibrary.simpleMessage("years based on your retirement date"),
     "yourBudgetNeeds" : MessageLookupByLibrary.simpleMessage("your budget on needs is"),
     "yourBudgetWants" : MessageLookupByLibrary.simpleMessage("your budget on wants is"),
     "yourExpense" : MessageLookupByLibrary.simpleMessage("Your Expense"),

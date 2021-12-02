@@ -92,7 +92,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
       'Water': "فاتورة المياة",
       'Internet': "فاتورة الانترنت",
       'Phone': "فاتورة الجوال",
-      'Electric': "فاتورة الكهرباء",
+      'Electricity': "فاتورة الكهرباء",
       'Installment': "قسط",
       'Subscription':"اشتراك شهري"
     };
@@ -102,7 +102,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
       "فاتورة المياة": 'Water',
       "فاتورة الانترنت": 'Internet',
       "فاتورة الجوال": 'Phone',
-      "فاتورة الكهرباء": 'Electric',
+      "فاتورة الكهرباء": 'Electricity',
       "قسط": 'Installment',
       "اشتراك شهري": "Subscription"
     };
@@ -112,7 +112,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
       'Water': 1,
       'Internet': 2,
       'Phone': 3,
-      'Electric': 4,
+      'Electricity': 4,
       'Installment': 5,
       'Subscription': 6,
     };
@@ -122,7 +122,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
       1: 'Water',
       2: 'Internet',
       3: 'Phone',
-      4: 'Electric',
+      4: 'Electricity',
       5: 'Installment',
       6: "Subscription"
     };
@@ -171,7 +171,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                     Text('Water'),
                     Text('Internet'),
                     Text('Phone'),
-                    Text('Electric'),
+                    Text('Electricity'),
                     Text('Installment'),
                     Text("Subscription")
                   ]),
@@ -343,10 +343,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                               textAlign: TextAlign.center,
                               autofocus: true,
                               keyboardType:
-                                  TextInputType.numberWithOptions(signed: true),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
+                                  TextInputType.numberWithOptions(signed: true,decimal: true),
                               onChanged: (text) {
                                 setState(() {
                                   billCost = text;
@@ -442,7 +439,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                               'Water',
                               'Internet',
                               'Phone',
-                              'Electric',
+                              'Electricity',
                               'Installment',
                               "Subscription"
                             ].map<DropdownMenuItem<String>>((String value) {

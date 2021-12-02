@@ -336,10 +336,8 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                               textAlign: TextAlign.center,
                               autofocus: true,
                               keyboardType:
-                                  TextInputType.numberWithOptions(signed: true),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
+                                  TextInputType.numberWithOptions(signed: true,decimal: true),
+
                               onChanged: (text) {
                                 setState(() {
                                   expenseCost = text;

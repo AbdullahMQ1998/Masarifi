@@ -145,7 +145,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
 
 
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor:Color(0xFF01937C) ,
        flexibleSpace: SafeArea(
@@ -265,6 +265,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 padding: const EdgeInsets.all(30.0),
                 child: Container(
                   child: SingleChildScrollView(
+
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
