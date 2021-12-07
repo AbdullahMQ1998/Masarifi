@@ -275,20 +275,20 @@ class S {
     );
   }
 
-  /// `Most Category`
+  /// `Highest Expense`
   String get mostCategory {
     return Intl.message(
-      'Most Category',
+      'Highest Expense',
       name: 'mostCategory',
       desc: '',
       args: [],
     );
   }
 
-  /// `Least Category`
+  /// `Lowest Expense`
   String get leastCategory {
     return Intl.message(
-      'Least Category',
+      'Lowest Expense',
       name: 'leastCategory',
       desc: '',
       args: [],
@@ -325,10 +325,10 @@ class S {
     );
   }
 
-  /// `Most Average Category`
+  /// `Highest Average Expense`
   String get mostAvgCategory {
     return Intl.message(
-      'Most Average Category',
+      'Highest Average Expense',
       name: 'mostAvgCategory',
       desc: '',
       args: [],
@@ -355,10 +355,10 @@ class S {
     );
   }
 
-  /// `Your Most Category`
+  /// `Your Highest Expense`
   String get yourMostCategory {
     return Intl.message(
-      'Your Most Category',
+      'Your Highest Expense',
       name: 'yourMostCategory',
       desc: '',
       args: [],
@@ -385,20 +385,20 @@ class S {
     );
   }
 
-  /// `Lowest Day of Purchase`
+  /// `Least Expensive Day`
   String get lowestDay {
     return Intl.message(
-      'Lowest Day of Purchase',
+      'Least Expensive Day',
       name: 'lowestDay',
       desc: '',
       args: [],
     );
   }
 
-  /// `Best Day of Purchase`
+  /// `Most Expensive Day`
   String get bestDay {
     return Intl.message(
-      'Best Day of Purchase',
+      'Most Expensive Day',
       name: 'bestDay',
       desc: '',
       args: [],
@@ -425,20 +425,20 @@ class S {
     );
   }
 
-  /// `Lowest Month Of Purchase`
+  /// `Least Expensive Month`
   String get lowestMonth {
     return Intl.message(
-      'Lowest Month Of Purchase',
+      'Least Expensive Month',
       name: 'lowestMonth',
       desc: '',
       args: [],
     );
   }
 
-  /// `Best Month Of Purchase`
+  /// `Most Expensive Month`
   String get bestMonth {
     return Intl.message(
-      'Best Month Of Purchase',
+      'Most Expensive Month',
       name: 'bestMonth',
       desc: '',
       args: [],

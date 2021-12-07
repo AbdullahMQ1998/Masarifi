@@ -457,6 +457,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                 height: 300,
                 child: SfCartesianChart(
                   legend: Legend(
+                    position: LegendPosition.top,
                       isVisible: true,
                       textStyle: TextStyle(
                           color: themChange.getDarkTheme()
@@ -644,7 +645,8 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                           fontWeight: FontWeight.bold,
                           color: themChange.getDarkTheme()
                               ? Colors.white
-                              : Colors.black)),
+                              : Colors.black),
+                  position: LegendPosition.top),
                   title: ChartTitle(
                       text: '${S.of(context).masarifiMonthly}',
                       textStyle: TextStyle(

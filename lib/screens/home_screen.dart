@@ -135,9 +135,9 @@ getCurrenLanguage();
 
       if (userBdget < halfOfTheBudgetTracker &&
           userBdget <= quarterOfTheBudgetTracker) {
-        return Color(0xffCD113B);
+        return Color(0xffe51342);
       } else
-        return Color(0xff01937C);
+        return Color(0xff007563);
     }
 
     double totalBudget = 0;

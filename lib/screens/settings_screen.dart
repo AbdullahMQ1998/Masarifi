@@ -166,176 +166,178 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             Expanded(
               child: Container(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.language,
-                            size: 30,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: Text(
-                              '${S.of(context).language}',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.language,
+                              size: 30,
                             ),
-                          ),
-                          DropdownButton(
-                            value: dropdownValue,
-                            iconSize: 20,
-                            elevation: 10,
-                            style: const TextStyle(),
-                            underline: SizedBox(),
-                            onChanged: (newValue) async {
-                              per = await SharedPreferences.getInstance();
-                              setState(() {
-                                dropdownValue = newValue;
-                               per.setString('language',languagePick[dropdownValue]);
-                                langChange.changeLocale(languagePick[dropdownValue]);
-                                per.setString('langChanged','true');
-                              });
-                            },
-                            items: <String>[
-                              'English',
-                              'العربية',
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  style: TextStyle(
-                                      fontSize: 20,color: Colors.grey,
-                                  fontWeight: FontWeight.bold),
-                                ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Text(
+                                '${S.of(context).language}',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            DropdownButton(
+                              value: dropdownValue,
+                              iconSize: 20,
+                              elevation: 10,
+                              style: const TextStyle(),
+                              underline: SizedBox(),
+                              onChanged: (newValue) async {
+                                per = await SharedPreferences.getInstance();
+                                setState(() {
+                                  dropdownValue = newValue;
+                                 per.setString('language',languagePick[dropdownValue]);
+                                  langChange.changeLocale(languagePick[dropdownValue]);
+                                  per.setString('langChanged','true');
+                                });
+                              },
+                              items: <String>[
+                                'English',
+                                'العربية',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(
+                                        fontSize: 20,color: Colors.grey,
+                                    fontWeight: FontWeight.bold),
+                                  ),
+                                );
+                              }).toList(),
+                            )
+                          ],
+                        ),
+                      ),
+                      Divider(),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.dark_mode,
+                              size: 30,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Text(
+                                '${S.of(context).darkMode}',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            CustomSwitch(
+                              activeColor: Colors.green,
+                              value: themChange.getDarkTheme(),
+                              onChanged: (value) {
+                                setState(() {
+                                  themChange.setDarkThem(value);
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Divider(),
+
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.file_copy_outlined,
+                              size: 30,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Text(
+                                '${S.of(context).exportExcel}',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+
+                            IconButton(onPressed: (){
+
+                              showIOSGeneralAlert(context, "${S.of(context).excelAlert}");
+                              showModalBottomSheet(context: context, builder: (BuildContext context) =>
+                              ExportExcel(widget.userExpense)
                               );
-                            }).toList(),
-                          )
-                        ],
+
+
+                            }, icon: Icon(Icons.chevron_right))
+
+                          ],
+                        ),
                       ),
-                    ),
-                    Divider(),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.dark_mode,
-                            size: 30,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: Text(
-                              '${S.of(context).darkMode}',
+                      Divider(),
+                      FlatButton(
+                        onPressed: () {
+                          _auth.signOut();
+                          Navigator.pushNamed(context, WelcomeScreen.id);
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.logout,
+                              size: 30,
+                            ),
+                            Text(
+                              " ${S.of(context).signOut}",
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          CustomSwitch(
-                            activeColor: Colors.green,
-                            value: themChange.getDarkTheme(),
-                            onChanged: (value) {
-                              setState(() {
-                                themChange.setDarkThem(value);
-                              });
-                            },
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Divider(),
+                      Divider(),
 
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.file_copy_outlined,
-                            size: 30,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: Text(
-                              '${S.of(context).exportExcel}',
+                      FlatButton(
+                        onPressed: () {
+
+                          bool shouldDelete = false;
+                          Platform.isIOS?
+                          showIOSDeleteAccount(context, _auth.currentUser, widget.userInfo,widget.userExpense, widget.usermonthlyBill, widget.monthlyReportList , shouldDelete) :
+                          showAlertDialogForAccount(context, _auth.currentUser, widget.userInfo,widget.userExpense, widget.usermonthlyBill, widget.monthlyReportList , shouldDelete);
+
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.account_box_sharp,
+                              size: 30,
+                            ),
+                            Text(
+                              " ${S.of(context).deleteAccount}",
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red
+                              ),
                             ),
-                          ),
-
-                          IconButton(onPressed: (){
-
-                            showIOSGeneralAlert(context, "${S.of(context).excelAlert}");
-                            showModalBottomSheet(context: context, builder: (BuildContext context) =>
-                            ExportExcel(widget.userExpense)
-                            );
-
-
-                          }, icon: Icon(Icons.chevron_right))
-
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Divider(),
-                    FlatButton(
-                      onPressed: () {
-                        _auth.signOut();
-                        Navigator.pushNamed(context, WelcomeScreen.id);
-                      },
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.logout,
-                            size: 30,
-                          ),
-                          Text(
-                            " ${S.of(context).signOut}",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Divider(),
 
-                    FlatButton(
-                      onPressed: () {
-
-                        bool shouldDelete = false;
-                        Platform.isIOS?
-                        showIOSDeleteAccount(context, _auth.currentUser, widget.userInfo,widget.userExpense, widget.usermonthlyBill, widget.monthlyReportList , shouldDelete) :
-                        showAlertDialogForAccount(context, _auth.currentUser, widget.userInfo,widget.userExpense, widget.usermonthlyBill, widget.monthlyReportList , shouldDelete);
-
-                      },
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.account_box_sharp,
-                            size: 30,
-                          ),
-                          Text(
-                            " ${S.of(context).deleteAccount}",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
