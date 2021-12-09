@@ -105,7 +105,6 @@ getCurrenLanguage();
           'monthlyBills': userInfoList[0].get('totalMonthlyBillCost')
         }
       );
-      print('hee');
       double zero = 0;
       userInfoList[0].reference.update({'totalExpense': zero.toString() });
       double monthlyExpense =  userBudget - double.parse(userInfoList[0].get('totalMonthlyBillCost'));

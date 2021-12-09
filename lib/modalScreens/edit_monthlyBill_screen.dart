@@ -84,6 +84,8 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
     super.initState();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -226,6 +228,68 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
     if (billIconEnabled == false) {
       dropdownValue = currentLang == 'ar' ? arabicCategory[widget.userMonthlyBillList.get('billIcon')] : widget.userMonthlyBillList.get('billIcon');
     }
+
+    void editMonthlyBill(){
+      if (billName == null) {
+        billName = widget.userMonthlyBillList.get('billName');
+      }
+      if (billCost == null) {
+        billCost = widget.userMonthlyBillList.get('billCost');
+      }
+      if (updateMonthlyIncome == null) {
+        updateMonthlyIncome = widget.userInfo.get('userBudget');
+      }
+      if (updatedTotalMonthlyBillCost == null) {
+        updatedTotalMonthlyBillCost =
+            widget.userInfo.get('totalMonthlyBillCost');
+      }
+
+      if (Platform.isIOS) {
+        widget.userMonthlyBillList.reference.update(
+            {'billIcon': monthlyBillCategoryString[picker]});
+      }
+      if (Platform.isAndroid) {
+        if (dropdownValue == null) {
+          if(currentLang == 'ar')
+            dropdownValue = arabicToEnglish[widget.userMonthlyBillList.get('billIcon')];
+          else
+            dropdownValue =
+                widget.userMonthlyBillList.get('billIcon');
+        }
+      }
+
+      if (dateChanged) {
+        widget.userMonthlyBillList.reference
+            .update({'billDate': selectedDate});
+      }
+
+      widget.userMonthlyBillList.reference
+          .update({'billName': billName});
+      if(double.tryParse(billCost) != null)
+        widget.userMonthlyBillList.reference
+            .update({'billCost': billCost});
+      widget.userInfo.reference
+          .update({'userBudget': updateMonthlyIncome});
+      widget.userInfo.reference.update({
+        'totalMonthlyBillCost': updatedTotalMonthlyBillCost
+      });
+
+      if (Platform.isAndroid){
+        if(currentLang == 'ar'){
+          widget.userMonthlyBillList.reference
+              .update({'billIcon': arabicToEnglish[dropdownValue]});
+        }
+        else
+          widget.userMonthlyBillList.reference
+              .update({'billIcon': dropdownValue});
+      }
+
+      if(double.tryParse(billCost) != null)
+        Navigator.pop(context);
+      else
+        showIOSGeneralAlert(context, "${S.of(context).rightNumber}");
+    }
+
     return Scaffold(
       backgroundColor: themChange.getDarkTheme() ? Colors.grey.shade800 : null,
       body: SingleChildScrollView(
@@ -509,64 +573,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                   ),
                   TextButton(
                     onPressed: () {
-                      if (billName == null) {
-                        billName = widget.userMonthlyBillList.get('billName');
-                      }
-                      if (billCost == null) {
-                        billCost = widget.userMonthlyBillList.get('billCost');
-                      }
-                      if (updateMonthlyIncome == null) {
-                        updateMonthlyIncome = widget.userInfo.get('userBudget');
-                      }
-                      if (updatedTotalMonthlyBillCost == null) {
-                        updatedTotalMonthlyBillCost =
-                            widget.userInfo.get('totalMonthlyBillCost');
-                      }
-
-                      if (Platform.isIOS) {
-                        widget.userMonthlyBillList.reference.update(
-                            {'billIcon': monthlyBillCategoryString[picker]});
-                      }
-                      if (Platform.isAndroid) {
-                        if (dropdownValue == null) {
-                          if(currentLang == 'ar')
-                            dropdownValue = arabicToEnglish[widget.userMonthlyBillList.get('billIcon')];
-                          else
-                          dropdownValue =
-                              widget.userMonthlyBillList.get('billIcon');
-                        }
-                      }
-
-                      if (dateChanged) {
-                        widget.userMonthlyBillList.reference
-                            .update({'billDate': selectedDate});
-                      }
-
-                      widget.userMonthlyBillList.reference
-                          .update({'billName': billName});
-                      if(double.tryParse(billCost) != null)
-                      widget.userMonthlyBillList.reference
-                          .update({'billCost': billCost});
-                      widget.userInfo.reference
-                          .update({'userBudget': updateMonthlyIncome});
-                      widget.userInfo.reference.update({
-                        'totalMonthlyBillCost': updatedTotalMonthlyBillCost
-                      });
-
-                      if (Platform.isAndroid){
-                        if(currentLang == 'ar'){
-                          widget.userMonthlyBillList.reference
-                              .update({'billIcon': arabicToEnglish[dropdownValue]});
-                        }
-                        else
-                        widget.userMonthlyBillList.reference
-                            .update({'billIcon': dropdownValue});
-                      }
-
-                      if(double.tryParse(billCost) != null)
-                      Navigator.pop(context);
-                      else
-                        showIOSGeneralAlert(context, "${S.of(context).rightNumber}");
+                     editMonthlyBill();
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),

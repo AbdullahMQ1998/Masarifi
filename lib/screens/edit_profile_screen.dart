@@ -141,6 +141,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     if(dateChanged == false)
     selectedDate = DateTime.parse(currentdate.toDate().toString());
+
+
+    void newGender(){
+
+    }
+
+    void newOccupation(){
+
+    }
+
     return Scaffold(
 
 

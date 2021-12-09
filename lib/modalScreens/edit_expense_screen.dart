@@ -225,6 +225,69 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
           ? arabicCategory[widget.userExpenseList.get('expenseIcon')]
           : widget.userExpenseList.get('expenseIcon');
 
+    void editExpense(){
+      Timestamp expenseMonthy = widget.userExpenseList.get('expenseDate');
+      DateTime currentMonth = DateTime.now();
+      if (expenseName == null) {
+        expenseName = widget.userExpenseList.get('expenseName');
+      }
+      widget.userExpenseList.reference
+          .update({'expenseName': expenseName});
+
+      if (updatedTotalBudget == null) {
+        updatedTotalBudget =
+            double.parse(widget.userInfo.get('userBudget'));
+      }
+
+      if(expenseMonthy.toDate().month == currentMonth.month){
+        widget.userInfo.reference
+            .update({'userBudget': updatedTotalBudget.toString()});
+      }
+
+      if (updatedExpenseTotal == null) {
+        updatedExpenseTotal =
+            double.parse(widget.userInfo.get('totalExpense'));
+      }
+
+      if(expenseMonthy.toDate().month == currentMonth.month){
+        widget.userInfo.reference.update(
+            {'totalExpense': updatedExpenseTotal.toString()});
+      }
+
+
+      if (expenseCost == null) {
+        expenseCost = widget.userExpenseList.get('expenseCost');
+      }
+      if(double.tryParse(expenseCost) != null)
+        widget.userExpenseList.reference
+            .update({'expenseCost': expenseCost});
+
+      if (Platform.isIOS) {
+        widget.userExpenseList.reference.update(
+            {'expenseIcon': expenseCategoryString[picker]});
+      }
+
+      if (Platform.isAndroid) {
+        if (dropdownValue == null) {
+          dropdownValue =
+              widget.userExpenseList.get('expenseIcon');
+        }
+        if(currentLang == 'ar')
+          widget.userExpenseList.reference
+              .update({'expenseIcon': arabicToEnglish[dropdownValue]});
+        else{
+          widget.userExpenseList.reference
+              .update({'expenseIcon': dropdownValue});
+        }
+      }
+
+      if(double.tryParse(expenseCost) != null)
+        Navigator.pop(context);
+      else{
+        showIOSGeneralAlert(context, "${S.of(context).rightNumber}");
+      }
+    }
+
     return Scaffold(
       backgroundColor: themChange.getDarkTheme() ? Colors.grey.shade800 : null,
       body: SingleChildScrollView(
@@ -457,72 +520,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                 ),
                 FlatButton(
                   onPressed: () {
-
-                    Timestamp expenseMonthy = widget.userExpenseList.get('expenseDate');
-                    DateTime currentMonth = DateTime.now();
-
-                    if (expenseName == null) {
-                      expenseName = widget.userExpenseList.get('expenseName');
-                    }
-                    widget.userExpenseList.reference
-                        .update({'expenseName': expenseName});
-
-                    if (updatedTotalBudget == null) {
-                      updatedTotalBudget =
-                          double.parse(widget.userInfo.get('userBudget'));
-                    }
-
-                    if(expenseMonthy.toDate().month == currentMonth.month){
-                      widget.userInfo.reference
-                          .update({'userBudget': updatedTotalBudget.toString()});
-                    }
-
-
-                    if (updatedExpenseTotal == null) {
-                      updatedExpenseTotal =
-                          double.parse(widget.userInfo.get('totalExpense'));
-                    }
-
-
-
-
-                    if(expenseMonthy.toDate().month == currentMonth.month){
-                      widget.userInfo.reference.update(
-                          {'totalExpense': updatedExpenseTotal.toString()});
-                    }
-
-
-                    if (expenseCost == null) {
-                      expenseCost = widget.userExpenseList.get('expenseCost');
-                    }
-                    if(double.tryParse(expenseCost) != null)
-                    widget.userExpenseList.reference
-                        .update({'expenseCost': expenseCost});
-
-                    if (Platform.isIOS) {
-                      widget.userExpenseList.reference.update(
-                          {'expenseIcon': expenseCategoryString[picker]});
-                    }
-
-                    if (Platform.isAndroid) {
-                      if (dropdownValue == null) {
-                        dropdownValue =
-                            widget.userExpenseList.get('expenseIcon');
-                      }
-                      if(currentLang == 'ar')
-                        widget.userExpenseList.reference
-                            .update({'expenseIcon': arabicToEnglish[dropdownValue]});
-                      else{
-                      widget.userExpenseList.reference
-                          .update({'expenseIcon': dropdownValue});
-                      }
-                    }
-
-                    if(double.tryParse(expenseCost) != null)
-                    Navigator.pop(context);
-                    else{
-                      showIOSGeneralAlert(context, "${S.of(context).rightNumber}");
-                    }
+                    editExpense();
                   },
                   child: Text(
                     '${S.of(context).update}',

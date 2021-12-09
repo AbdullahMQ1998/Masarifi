@@ -326,6 +326,7 @@ class ExpensesBubble extends StatelessWidget {
                       ),
                       IconButton(onPressed: (){
 
+                        //to delete expense from these buttons one for ios and one for android, the functions are on the button
                         Platform.isIOS? showIOSDeleteExpenseAlert(context, userInfoList, userExpenseList, shouldDelete):
                         showAlertDialogForExpense(context, shouldDelete, userInfoList, userExpenseList);
 

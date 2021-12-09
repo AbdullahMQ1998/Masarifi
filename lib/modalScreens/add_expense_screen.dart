@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,7 +15,6 @@ import 'package:flash_chat/generated/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddExpenseScreen extends StatefulWidget {
-
   final Function addExpense;
   final User loggedUser;
   final List<QueryDocumentSnapshot> userInfo;
@@ -41,9 +38,6 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   final _fireStore = FirebaseFirestore.instance;
   SharedPreferences preferences;
 
-
-
-
   bool checkNullorSpace() {
     if (expenseName != null &&
         expenseName != '' &&
@@ -59,28 +53,24 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     }
   }
 
-
   int picker = 0;
-
 
   String dropdownValue;
 
-
-  void showCupertionPicker(){
-
-    showCupertinoModalPopup(context: context,
+  void showCupertionPicker() {
+    showCupertinoModalPopup(
+        context: context,
         builder: (BuildContext context) {
           return Container(
             height: 200,
             child: CupertinoPicker(
-
-                backgroundColor: CupertinoColors.white
-                ,itemExtent: 32, onSelectedItemChanged: (value){
-              setState(() {
-                picker = value;
-              });
-
-            },
+                backgroundColor: CupertinoColors.white,
+                itemExtent: 32,
+                onSelectedItemChanged: (value) {
+                  setState(() {
+                    picker = value;
+                  });
+                },
                 children: [
                   Text('Restaurants'),
                   Text('Shopping'),
@@ -94,12 +84,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   Text('Entertainment'),
                   Text('Education'),
                   Text('Other')
-                ]
-            ),
-          );});
-
+                ]),
+          );
+        });
   }
-
 
   void showArabicCupertionPicker() {
     showCupertinoModalPopup(
@@ -133,8 +121,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
         });
   }
 
-
- bool dropDownChanged = false;
+  bool dropDownChanged = false;
   String currentLang = "ar";
 
   void getCurrenLanguage() async {
@@ -142,25 +129,18 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     setState(() {
       currentLang = preferences.getString('language');
     });
-
   }
-
-
-
 
   @override
   void initState() {
-   getCurrenLanguage();
+    getCurrenLanguage();
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
-    if(dropDownChanged == false)
-    dropdownValue = currentLang == "ar" ? "مطاعم" :'Restaurants';
+    if (dropDownChanged == false)
+      dropdownValue = currentLang == "ar" ? "مطاعم" : 'Restaurants';
 
     Map<String, String> arabicCategory = {
       'Restaurants': 'مطاعم',
@@ -192,36 +172,34 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       "أخرى": 'Other',
     };
 
-
-    Map<String,int> expenseCategoryInt = {
-      'Restaurants':0,
-      'Shopping':1,
-      'Gas':2,
-      'Coffee':3,
-      'Finance':4,
-      'Grocery':5,
-      'Furniture':6,
-      'Health':7,
-      'Online-Shopping':8,
-      'Entertainment':9,
-      'Education':10,
-      'Other':11
+    Map<String, int> expenseCategoryInt = {
+      'Restaurants': 0,
+      'Shopping': 1,
+      'Gas': 2,
+      'Coffee': 3,
+      'Finance': 4,
+      'Grocery': 5,
+      'Furniture': 6,
+      'Health': 7,
+      'Online-Shopping': 8,
+      'Entertainment': 9,
+      'Education': 10,
+      'Other': 11
     };
 
-    Map<int,String> expenseCategoryString = {
-      0 : 'Restaurants',
-      1 : 'Shopping',
+    Map<int, String> expenseCategoryString = {
+      0: 'Restaurants',
+      1: 'Shopping',
       2: 'Gas',
       3: 'Coffee',
       4: 'Finance',
       5: 'Grocery',
       6: 'Furniture',
-      7:'Health',
-      8:'Online-Shopping',
-      9:'Entertainment',
-      10:'Education',
-      11:'Other'
-
+      7: 'Health',
+      8: 'Online-Shopping',
+      9: 'Entertainment',
+      10: 'Education',
+      11: 'Other'
     };
 
     Map<int, String> arabicExpenseCategoryString = {
@@ -240,21 +218,69 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     };
 
 
+    void addExpense(){
+      formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
+      formattedTime = DateFormat().add_jm().format(selectedDate);
+      if (double.tryParse(expenseCost) == null &&
+          expenseCost.isNotEmpty) {
+        showIOSGeneralAlert(
+            context, '${S.of(context).rightNumber}');
+      }
+      if (checkNullorSpace()) {
+        currentTotalBudget =
+            double.parse(widget.userInfo[0].get('userBudget'));
+        currentTotalBudget -= double.parse(expenseCost);
+        widget.userInfo[0].reference.update(
+            {'userBudget': currentTotalBudget.toString()});
+
+        currentTotalExpense =
+            double.parse(widget.userInfo[0].get('totalExpense'));
+        currentTotalExpense += double.parse(expenseCost);
+        widget.userInfo[0].reference.update(
+            {'totalExpense': currentTotalExpense.toString()});
+
+        expenseID = widget.userInfo[0].get('expenseNumber');
+        expenseID += 1;
+        widget.userInfo[0].reference
+            .update({'expenseNumber': expenseID});
+        _fireStore.collection('expense').add({
+          'email': widget.loggedUser.email,
+          'expenseCost': expenseCost,
+          'expenseDate': selectedDate,
+          'expenseName': expenseName,
+          'expenseTime': formattedTime,
+          'expenseID': expenseID,
+          'expenseIcon': Platform.isIOS
+              ? expenseCategoryString[picker]
+              : currentLang == "ar"
+              ? arabicToEnglish[dropdownValue]
+              : dropdownValue,
+        });
+        Navigator.pop(context);
+        Navigator.pop(context);
+      } else {
+        Platform.isIOS
+            ? showIOSGeneralAlert(
+            context, "${S.of(context).makeSureyoufilled}")
+            : showErrorAlertDialog(context);
+      }
+    }
+
+
     final themChange = Provider.of<DarkThemProvider>(context);
     return Scaffold(
-      backgroundColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.white,
+      backgroundColor:
+          themChange.getDarkTheme() ? Colors.grey.shade800 : Colors.white,
       body: SingleChildScrollView(
         child: Container(
           child: Container(
             padding: EdgeInsets.all(30),
             decoration: BoxDecoration(
-
                 borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(20),
-                  topLeft: Radius.circular(20),
-                )),
+              topRight: Radius.circular(20),
+              topLeft: Radius.circular(20),
+            )),
             child: Column(
-
               children: [
                 Text(
                   '${S.of(context).addExpense}',
@@ -273,14 +299,13 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       child: TextField(
                         maxLength: 15,
                         textAlign: TextAlign.center,
-
                         onChanged: (text) {
                           setState(() {
                             expenseName = text;
                           });
                         },
-                        decoration:
-                            kTextFieldDecoration.copyWith(hintText: '${S.of(context).expenseName}'),
+                        decoration: kTextFieldDecoration.copyWith(
+                            hintText: '${S.of(context).expenseName}'),
                       ),
                     ),
                     Padding(
@@ -288,7 +313,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       child: TextField(
                         maxLength: 6,
                         textAlign: TextAlign.center,
-                        keyboardType: TextInputType.numberWithOptions(decimal: true,signed: true),
+                        keyboardType: TextInputType.numberWithOptions(
+                            decimal: true, signed: true),
                         onChanged: (value) {
                           setState(() {
                             expenseCost = value;
@@ -298,134 +324,100 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                           hintText: '${S.of(context).expenseCost}',
                           suffixText: '${S.of(context).saudiRyal}',
                           suffixStyle: TextStyle(),
-
                         ),
                       ),
                     ),
-                    Platform.isIOS? Container(
-                      child: FlatButton(onPressed: (){
-                        currentLang == "ar" ? showArabicCupertionPicker() :
-                        showCupertionPicker();
-                      }, child: currentLang == 'ar' ? Text('${arabicExpenseCategoryString[picker]}') : Text('${expenseCategoryString[picker]}')),
-                    ): currentLang == "ar" ? DropdownButton(
-                      value: dropdownValue,
-                      icon: const Icon(Icons.arrow_downward),
-                      iconSize: 24,
-                      elevation: 10,
-                      style: const TextStyle(color: Colors.grey),
-                      underline: Container(
-                        height: 1,
-                        color: Color(0xff01937C),
-                      ),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          dropdownValue = newValue;
-                          dropDownChanged = true;
-                        });
-                      },
-                      items: <String>[
-                        'مطاعم',
-                        "تسوق",
-                        "بنزين",
-                        "قهوة",
-                        "مالية",
-                        "بقالة",
-                        "أثاث",
-                        "صحة",
-                        "تسوق إلكتروني",
-                        "ترفيه",
-                        "تعليم",
-                        "أخرى",
-                      ]
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ) : DropdownButton(
-                value: dropdownValue,
-                icon: const Icon(Icons.arrow_downward),
-                iconSize: 24,
-                elevation: 10,
-                style: const TextStyle(color: Colors.grey),
-                underline: Container(
-                  height: 1,
-                  color: Color(0xff01937C),
-                ),
-                onChanged: (String newValue) {
-                  setState(() {
-                    dropdownValue = newValue;
-                    dropDownChanged = true;
-                  });
-                },
-                items: <String>[
-                  'Restaurants',
-                  'Shopping',
-                  'Gas',
-                  'Coffee',
-                  'Finance',
-                  'Grocery',
-                  'Furniture',
-                  'Health',
-                  'Online-Shopping',
-                  'Entertainment',
-                  'Education',
-                  'Other'
-                ]
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-              ),
-
+                    Platform.isIOS
+                        ? Container(
+                            child: FlatButton(
+                                onPressed: () {
+                                  currentLang == "ar"
+                                      ? showArabicCupertionPicker()
+                                      : showCupertionPicker();
+                                },
+                                child: currentLang == 'ar'
+                                    ? Text(
+                                        '${arabicExpenseCategoryString[picker]}')
+                                    : Text('${expenseCategoryString[picker]}')),
+                          )
+                        : currentLang == "ar"
+                            ? DropdownButton(
+                                value: dropdownValue,
+                                icon: const Icon(Icons.arrow_downward),
+                                iconSize: 24,
+                                elevation: 10,
+                                style: const TextStyle(color: Colors.grey),
+                                underline: Container(
+                                  height: 1,
+                                  color: Color(0xff01937C),
+                                ),
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                    dropdownValue = newValue;
+                                    dropDownChanged = true;
+                                  });
+                                },
+                                items: <String>[
+                                  'مطاعم',
+                                  "تسوق",
+                                  "بنزين",
+                                  "قهوة",
+                                  "مالية",
+                                  "بقالة",
+                                  "أثاث",
+                                  "صحة",
+                                  "تسوق إلكتروني",
+                                  "ترفيه",
+                                  "تعليم",
+                                  "أخرى",
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              )
+                            : DropdownButton(
+                                value: dropdownValue,
+                                icon: const Icon(Icons.arrow_downward),
+                                iconSize: 24,
+                                elevation: 10,
+                                style: const TextStyle(color: Colors.grey),
+                                underline: Container(
+                                  height: 1,
+                                  color: Color(0xff01937C),
+                                ),
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                    dropdownValue = newValue;
+                                    dropDownChanged = true;
+                                  });
+                                },
+                                items: <String>[
+                                  'Restaurants',
+                                  'Shopping',
+                                  'Gas',
+                                  'Coffee',
+                                  'Finance',
+                                  'Grocery',
+                                  'Furniture',
+                                  'Health',
+                                  'Online-Shopping',
+                                  'Entertainment',
+                                  'Education',
+                                  'Other'
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
                   ]),
                 ),
                 FlatButton(
-                  onPressed: () {
-                    formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
-                    formattedTime = DateFormat().add_jm().format(selectedDate);
-
-                    if(double.tryParse(expenseCost) == null && expenseCost.isNotEmpty){
-                      showIOSGeneralAlert(context, '${S.of(context).rightNumber}');
-                    }
-
-                    if (checkNullorSpace()) {
-                      currentTotalBudget = double.parse(widget.userInfo[0].get('userBudget'));
-                      currentTotalBudget -= double.parse(expenseCost);
-                      widget.userInfo[0].reference
-                          .update({'userBudget': currentTotalBudget.toString()});
-
-
-
-                      currentTotalExpense =
-                          double.parse(widget.userInfo[0].get('totalExpense'));
-                      currentTotalExpense += double.parse(expenseCost);
-                      widget.userInfo[0].reference
-                          .update({'totalExpense': currentTotalExpense.toString()});
-
-                      expenseID = widget.userInfo[0].get('expenseNumber');
-                      expenseID += 1;
-                      widget.userInfo[0].reference
-                          .update({'expenseNumber': expenseID});
-
-                      _fireStore.collection('expense').add({
-                        'email': widget.loggedUser.email,
-                        'expenseCost': expenseCost,
-                        'expenseDate': selectedDate,
-                        'expenseName': expenseName,
-                        'expenseTime': formattedTime,
-                        'expenseID': expenseID,
-                        'expenseIcon': Platform.isIOS? expenseCategoryString[picker] : currentLang == "ar" ? arabicToEnglish[dropdownValue] :dropdownValue,
-                      });
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    } else {
-                      Platform.isIOS? showIOSGeneralAlert(context, "${S.of(context).makeSureyoufilled}"):
-                      showErrorAlertDialog(context);
-                    }
+                  onPressed:() {
+                    addExpense();
                   },
                   child: Text(
                     '${S.of(context).add}',

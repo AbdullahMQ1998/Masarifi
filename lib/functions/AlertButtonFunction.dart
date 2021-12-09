@@ -153,6 +153,21 @@ showIOSGeneralAlertwithDoulbePop(BuildContext context, String title,String text)
 
 showIOSDeleteMonthlyBillsAlert(BuildContext context,QueryDocumentSnapshot userInfo, QueryDocumentSnapshot userMonthlyBillList,bool shouldDelete){
 
+  void deleteMonthlyBill(){
+    double currentMonthlyBillCost = double.parse(userMonthlyBillList.get('billCost')); // 50
+    double currentTotalBudget = double.parse(userInfo.get('userBudget')); // 16000
+    double currentTotalMonthlyBillCost = double.parse(userInfo.get('totalMonthlyBillCost')); // 1670
+    double updatedTotalBudget = currentTotalBudget + currentMonthlyBillCost; // 16000 + 1670
+    double updatedTotalMonthlyBillCost = currentTotalMonthlyBillCost - currentMonthlyBillCost;
+
+    userInfo.reference.update({'userBudget': updatedTotalBudget.toString()});
+    userInfo.reference.update({'totalMonthlyBillCost': updatedTotalMonthlyBillCost.toString()});
+
+    userMonthlyBillList.reference.delete();
+
+    Navigator.pop(context);
+    Navigator.pop(context);
+  }
   showCupertinoDialog<void>(
     context: context,
     builder: (BuildContext context) => CupertinoAlertDialog(
@@ -164,19 +179,7 @@ showIOSDeleteMonthlyBillsAlert(BuildContext context,QueryDocumentSnapshot userIn
           onPressed: () {
 
 
-            double currentMonthlyBillCost = double.parse(userMonthlyBillList.get('billCost')); // 50
-            double currentTotalBudget = double.parse(userInfo.get('userBudget')); // 16000
-            double currentTotalMonthlyBillCost = double.parse(userInfo.get('totalMonthlyBillCost')); // 1670
-            double updatedTotalBudget = currentTotalBudget + currentMonthlyBillCost; // 16000 + 1670
-            double updatedTotalMonthlyBillCost = currentTotalMonthlyBillCost - currentMonthlyBillCost;
-
-            userInfo.reference.update({'userBudget': updatedTotalBudget.toString()});
-            userInfo.reference.update({'totalMonthlyBillCost': updatedTotalMonthlyBillCost.toString()});
-
-            userMonthlyBillList.reference.delete();
-
-            Navigator.pop(context);
-            Navigator.pop(context);
+            deleteMonthlyBill();
           },
         ),
 
@@ -193,7 +196,35 @@ showIOSDeleteMonthlyBillsAlert(BuildContext context,QueryDocumentSnapshot userIn
 }
 
 
+
 showIOSDeleteExpenseAlert(BuildContext context,QueryDocumentSnapshot userInfoList, QueryDocumentSnapshot userExpenseList,bool shouldDelete){
+
+    void deleteExpense(){
+      Timestamp expenseMonthy = userExpenseList.get('expenseDate');
+      DateTime currentMonth = DateTime.now();
+
+
+
+      if(expenseMonthy.toDate().month == currentMonth.month){
+        print(expenseMonthy.toDate().month);
+        print(currentMonth.month);
+      }
+
+      double currentExpenseCost = double.parse(userExpenseList.get('expenseCost'));
+      double currentTotalBudget = double.parse(userInfoList.get('userBudget'));
+      double currentTotalExpense = double.parse(userInfoList.get('totalExpense'));
+      double updatedTotalBudget = currentTotalBudget + currentExpenseCost;
+      double updatedTotalExpense = currentTotalExpense - currentExpenseCost;
+
+      if(expenseMonthy.toDate().month == currentMonth.month){
+        userInfoList.reference.update({'userBudget': updatedTotalBudget.toString()});
+        userInfoList.reference.update({'totalExpense': updatedTotalExpense.toString()});
+      }
+
+      userExpenseList.reference.delete();
+
+      Navigator.pop(context);
+    }
 
   showCupertinoDialog<void>(
     context: context,
@@ -204,32 +235,7 @@ showIOSDeleteExpenseAlert(BuildContext context,QueryDocumentSnapshot userInfoLis
         CupertinoDialogAction(
           child: Text('${S.of(context).confirm}'),
           onPressed: () {
-
-
-            Timestamp expenseMonthy = userExpenseList.get('expenseDate');
-            DateTime currentMonth = DateTime.now();
-
-
-
-            if(expenseMonthy.toDate().month == currentMonth.month){
-              print(expenseMonthy.toDate().month);
-              print(currentMonth.month);
-            }
-
-            double currentExpenseCost = double.parse(userExpenseList.get('expenseCost'));
-            double currentTotalBudget = double.parse(userInfoList.get('userBudget'));
-            double currentTotalExpense = double.parse(userInfoList.get('totalExpense'));
-            double updatedTotalBudget = currentTotalBudget + currentExpenseCost;
-            double updatedTotalExpense = currentTotalExpense - currentExpenseCost;
-
-            if(expenseMonthy.toDate().month == currentMonth.month){
-              userInfoList.reference.update({'userBudget': updatedTotalBudget.toString()});
-              userInfoList.reference.update({'totalExpense': updatedTotalExpense.toString()});
-            }
-
-            userExpenseList.reference.delete();
-
-            Navigator.pop(context);
+           deleteExpense();
           },
         ),
 
@@ -422,6 +428,30 @@ showEmailAlertDialog(BuildContext context) {
 
 showAlertDialogForExpense(BuildContext context , bool shouldDelete,QueryDocumentSnapshot userInfoList, QueryDocumentSnapshot userExpenseList) {
 
+ void deleteExpense(){
+    Timestamp expenseMonthy = userExpenseList.get('expenseDate');
+    DateTime currentMonth = DateTime.now();
+
+
+
+
+    double currentExpenseCost = double.parse(userExpenseList.get('expenseCost'));
+    double currentTotalBudget = double.parse(userInfoList.get('userBudget'));
+    double currentTotalExpense = double.parse(userInfoList.get('totalExpense'));
+    double updatedTotalBudget = currentTotalBudget + currentExpenseCost;
+    double updatedTotalExpense = currentTotalExpense - currentExpenseCost;
+
+    if(expenseMonthy.toDate().month == currentMonth.month){
+      userInfoList.reference.update({'userBudget': updatedTotalBudget.toString()});
+      userInfoList.reference.update({'totalExpense': updatedTotalExpense.toString()});
+    }
+
+
+
+    userExpenseList.reference.delete();
+
+    Navigator.pop(context);
+  }
   // set up the buttons
   Widget cancelButton = TextButton(
     child: Text("${S.of(context).cancel}",
@@ -441,28 +471,7 @@ showAlertDialogForExpense(BuildContext context , bool shouldDelete,QueryDocument
     onPressed:  () {
 
       //Here we Delete the current Expense
-      Timestamp expenseMonthy = userExpenseList.get('expenseDate');
-      DateTime currentMonth = DateTime.now();
-
-
-
-
-      double currentExpenseCost = double.parse(userExpenseList.get('expenseCost'));
-      double currentTotalBudget = double.parse(userInfoList.get('userBudget'));
-      double currentTotalExpense = double.parse(userInfoList.get('totalExpense'));
-      double updatedTotalBudget = currentTotalBudget + currentExpenseCost;
-      double updatedTotalExpense = currentTotalExpense - currentExpenseCost;
-
-      if(expenseMonthy.toDate().month == currentMonth.month){
-        userInfoList.reference.update({'userBudget': updatedTotalBudget.toString()});
-        userInfoList.reference.update({'totalExpense': updatedTotalExpense.toString()});
-      }
-
-
-
-      userExpenseList.reference.delete();
-
-      Navigator.pop(context);
+     deleteExpense();
     },
   );
 
@@ -492,8 +501,21 @@ showAlertDialogForExpense(BuildContext context , bool shouldDelete,QueryDocument
 
 
 showAlertDialogForMonthlyBill(BuildContext context , bool shouldDelete,QueryDocumentSnapshot userInfo, QueryDocumentSnapshot userMonthlyBillList) {
+void deleteMonthlyBill() {
+  double currentMonthlyBillCost = double.parse(userMonthlyBillList.get('billCost')); // 50
+  double currentTotalBudget = double.parse(userInfo.get('userBudget')); // 16000
+  double currentTotalMonthlyBillCost = double.parse(userInfo.get('totalMonthlyBillCost')); // 1670
+  double updatedTotalBudget = currentTotalBudget + currentMonthlyBillCost; // 16000 + 1670
+  double updatedTotalMonthlyBillCost = currentTotalMonthlyBillCost - currentMonthlyBillCost;
 
-  // set up the buttons
+  userInfo.reference.update({'userBudget': updatedTotalBudget.toString()});
+  userInfo.reference.update({'totalMonthlyBillCost': updatedTotalMonthlyBillCost.toString()});
+
+  userMonthlyBillList.reference.delete();
+
+  Navigator.pop(context);
+  Navigator.pop(context);
+}
   Widget cancelButton = TextButton(
     child: Text("${S.of(context).cancel}",
       style:TextStyle(
@@ -510,22 +532,8 @@ showAlertDialogForMonthlyBill(BuildContext context , bool shouldDelete,QueryDocu
           color: Colors.red
       ),),
     onPressed:  () {
-
       //Here we Delete the current Expense
-
-      double currentMonthlyBillCost = double.parse(userMonthlyBillList.get('billCost')); // 50
-      double currentTotalBudget = double.parse(userInfo.get('userBudget')); // 16000
-      double currentTotalMonthlyBillCost = double.parse(userInfo.get('totalMonthlyBillCost')); // 1670
-      double updatedTotalBudget = currentTotalBudget + currentMonthlyBillCost; // 16000 + 1670
-      double updatedTotalMonthlyBillCost = currentTotalMonthlyBillCost - currentMonthlyBillCost;
-
-      userInfo.reference.update({'userBudget': updatedTotalBudget.toString()});
-      userInfo.reference.update({'totalMonthlyBillCost': updatedTotalMonthlyBillCost.toString()});
-
-      userMonthlyBillList.reference.delete();
-
-      Navigator.pop(context);
-      Navigator.pop(context);
+      deleteMonthlyBill();
     },
   );
 

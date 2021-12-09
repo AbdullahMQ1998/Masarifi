@@ -213,6 +213,50 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
       dropdownValue = currentLang == "ar" ? "فاتورة الجوال" :'Phone';
 
 
+    void addMonthlyBill(){
+
+      formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
+      formattedTime = DateFormat().add_jm().format(selectedDate);
+
+
+      if(double.tryParse(monthlyBillCost) == null && monthlyBillCost.isNotEmpty){
+        showIOSGeneralAlert(context, '${S.of(context).rightNumber}');
+      }
+      if (checkNullorSpace()) {
+        //Update MonthlyIncome.
+        currentTotalBudget = double.parse(widget.userInfo[0].get('userBudget'));
+        currentTotalBudget -= double.parse(monthlyBillCost);
+        widget.userInfo[0].reference.update({'userBudget': currentTotalBudget.toString()});
+
+
+        //Update The total for monthly bills
+        currentTotalMonthlyBill = double.parse(widget.userInfo[0].get('totalMonthlyBillCost'));
+        currentTotalMonthlyBill += double.parse(monthlyBillCost);
+        widget.userInfo[0].reference.update({'totalMonthlyBillCost': currentTotalMonthlyBill.toString()});
+
+
+        //Update the ID for the bills
+        monthlyBill_Id = widget.userInfo[0].get('expenseNumber');
+        monthlyBill_Id += 1;
+        widget.userInfo[0].reference.update({'expenseNumber': monthlyBill_Id});
+
+        _fireStore.collection('monthly_bills').add({
+          'email': widget.loggedUser.email,
+          'billCost': monthlyBillCost,
+          'billDate': selectedDate,
+          'billName': monthlyBillName,
+          'bill_ID': monthlyBill_Id,
+          'billIcon': Platform.isIOS? monthlyBillCategoryString[picker] : currentLang == "ar" ? arabicToEnglish[dropdownValue] : dropdownValue,
+        });
+        Navigator.pop(context);
+        Navigator.pop(context);
+      } else {
+        Platform.isIOS?
+        showIOSGeneralAlert(context, "${S.of(context).makeSureyoufilled}"):
+        showErrorAlertDialog(context);
+      }
+    }
+
     final themChange = Provider.of<DarkThemProvider>(context);
     return Scaffold(
       backgroundColor: themChange.getDarkTheme()? Colors.grey.shade800 : null,
@@ -376,48 +420,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
 
                 FlatButton(
                   onPressed: () {
-
-
-                    formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
-                    formattedTime = DateFormat().add_jm().format(selectedDate);
-
-
-                    if(double.tryParse(monthlyBillCost) == null && monthlyBillCost.isNotEmpty){
-                      showIOSGeneralAlert(context, '${S.of(context).rightNumber}');
-                    }
-                    if (checkNullorSpace()) {
-                      //Update MonthlyIncome.
-                      currentTotalBudget = double.parse(widget.userInfo[0].get('userBudget'));
-                      currentTotalBudget -= double.parse(monthlyBillCost);
-                      widget.userInfo[0].reference.update({'userBudget': currentTotalBudget.toString()});
-
-
-                      //Update The total for monthly bills
-                      currentTotalMonthlyBill = double.parse(widget.userInfo[0].get('totalMonthlyBillCost'));
-                      currentTotalMonthlyBill += double.parse(monthlyBillCost);
-                      widget.userInfo[0].reference.update({'totalMonthlyBillCost': currentTotalMonthlyBill.toString()});
-
-
-                      //Update the ID for the bills
-                      monthlyBill_Id = widget.userInfo[0].get('expenseNumber');
-                      monthlyBill_Id += 1;
-                      widget.userInfo[0].reference.update({'expenseNumber': monthlyBill_Id});
-
-                      _fireStore.collection('monthly_bills').add({
-                        'email': widget.loggedUser.email,
-                        'billCost': monthlyBillCost,
-                        'billDate': selectedDate,
-                        'billName': monthlyBillName,
-                        'bill_ID': monthlyBill_Id,
-                        'billIcon': Platform.isIOS? monthlyBillCategoryString[picker] : currentLang == "ar" ? arabicToEnglish[dropdownValue] : dropdownValue,
-                      });
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    } else {
-                      Platform.isIOS?
-                      showIOSGeneralAlert(context, "${S.of(context).makeSureyoufilled}"):
-                      showErrorAlertDialog(context);
-                    }
+                  addMonthlyBill();
                   },
                   child: Text(
                     '${S.of(context).add}',
