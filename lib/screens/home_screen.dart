@@ -477,7 +477,7 @@ getCurrenLanguage();
                   backgroundColor:  Color(0xff01937C),
                   onPressed: () {
                     showModalBottomSheet(
-                        barrierColor: themChange.getDarkTheme() ? Colors.transparent : null,
+
                         context: context,
                         builder: (BuildContext context) =>
                             ChooseExpenseOrMonthlyScreen(

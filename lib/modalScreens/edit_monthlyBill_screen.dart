@@ -371,35 +371,38 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
                           ? TextField(
                               onSubmitted: (value) {
                                 setState(() {
-                                  double oldCost = double.parse(widget
-                                      .userMonthlyBillList
-                                      .get('billCost'));
-                                  double updatedCost = double.parse(billCost);
-                                  double differenceBetweenCosts =
-                                      updatedCost - oldCost;
+                                  if(double.parse(billCost) > 0) {
+                                    double oldCost = double.parse(widget
+                                        .userMonthlyBillList
+                                        .get('billCost'));
+                                    double updatedCost = double.parse(billCost);
+                                    double differenceBetweenCosts =
+                                        updatedCost - oldCost;
 
-                                  double currentTotalBudget = double.parse(
-                                      widget.userInfo.get('userBudget'));
-                                  double updatedTotalBudget =
-                                      currentTotalBudget -
-                                          differenceBetweenCosts;
-                                  updateMonthlyIncome =
-                                      updatedTotalBudget.toString();
+                                    double currentTotalBudget = double.parse(
+                                        widget.userInfo.get('userBudget'));
+                                    double updatedTotalBudget =
+                                        currentTotalBudget -
+                                            differenceBetweenCosts;
+                                    updateMonthlyIncome =
+                                        updatedTotalBudget.toString();
 
-                                  double currentTotalMonthlyBill = double.parse(
-                                      widget.userInfo
-                                          .get('totalMonthlyBillCost'));
-                                  double updatedTotalMonthlyBill =
-                                      currentTotalMonthlyBill +
-                                          differenceBetweenCosts;
-                                  updatedTotalMonthlyBillCost =
-                                      updatedTotalMonthlyBill.toString();
+                                    double currentTotalMonthlyBill = double
+                                        .parse(
+                                        widget.userInfo
+                                            .get('totalMonthlyBillCost'));
+                                    double updatedTotalMonthlyBill =
+                                        currentTotalMonthlyBill +
+                                            differenceBetweenCosts;
+                                    updatedTotalMonthlyBillCost =
+                                        updatedTotalMonthlyBill.toString();
 
-                                  billCostEnabled = false;
-                                  billCostEnabled2 = false;
-                                  if (billCost == null) {
-                                    billCost = widget.userMonthlyBillList
-                                        .get('billCost');
+                                    billCostEnabled = false;
+                                    billCostEnabled2 = false;
+                                    if (billCost == null) {
+                                      billCost = widget.userMonthlyBillList
+                                          .get('billCost');
+                                    }
                                   }
                                 });
                               },

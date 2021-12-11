@@ -132,7 +132,7 @@ class monthlyBillBubble extends StatelessWidget {
                 onPressed: (){
 
                   showModalBottomSheet(
-                    barrierColor: themChange.getDarkTheme()? Colors.transparent : null,
+
                       context: context,
                       builder: (BuildContext context) =>
                           EditMonthlyBillScreen((taskTitle) {
@@ -309,7 +309,7 @@ class ExpensesBubble extends StatelessWidget {
                           () {
 
                         showModalBottomSheet(
-                            barrierColor: themChange.getDarkTheme() ? Colors.transparent : null,
+
                             context: context,
                             builder: (BuildContext context) =>
                                 EditExpenseScreen((taskTitle) {

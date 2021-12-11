@@ -366,33 +366,35 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                           ? TextField(
                               onSubmitted: (value) {
                                 setState(() {
-                                  double oldCost = double.parse(widget
-                                      .userExpenseList
-                                      .get('expenseCost'));
-                                  double updatedCost =
-                                      double.parse(expenseCost);
-                                  double differenceBetweenCosts =
-                                      updatedCost - oldCost;
+                                  if(double.parse(expenseCost) > 0) {
+                                    double oldCost = double.parse(widget
+                                        .userExpenseList
+                                        .get('expenseCost'));
+                                    double updatedCost =
+                                    double.parse(expenseCost);
+                                    double differenceBetweenCosts =
+                                        updatedCost - oldCost;
 
-                                  double currentUserBudget = double.parse(
-                                      widget.userInfo.get('userBudget'));
-                                  double updatedMonthlyIncome =
-                                      currentUserBudget -
-                                          differenceBetweenCosts;
-                                  updatedTotalBudget = updatedMonthlyIncome;
+                                    double currentUserBudget = double.parse(
+                                        widget.userInfo.get('userBudget'));
+                                    double updatedMonthlyIncome =
+                                        currentUserBudget -
+                                            differenceBetweenCosts;
+                                    updatedTotalBudget = updatedMonthlyIncome;
 
-                                  double currentTotalExpense = double.parse(
-                                      widget.userInfo.get('totalExpense'));
-                                  double updatedTotalExpense =
-                                      currentTotalExpense +
-                                          differenceBetweenCosts;
-                                  updatedExpenseTotal = updatedTotalExpense;
+                                    double currentTotalExpense = double.parse(
+                                        widget.userInfo.get('totalExpense'));
+                                    double updatedTotalExpense =
+                                        currentTotalExpense +
+                                            differenceBetweenCosts;
+                                    updatedExpenseTotal = updatedTotalExpense;
 
-                                  expenseCostEnabled = false;
-                                  expenseCostEnabled2 = false;
-                                  if (expenseCost == null) {
-                                    expenseCost = widget.userExpenseList
-                                        .get('expenseCost');
+                                    expenseCostEnabled = false;
+                                    expenseCostEnabled2 = false;
+                                    if (expenseCost == null) {
+                                      expenseCost = widget.userExpenseList
+                                          .get('expenseCost');
+                                    }
                                   }
                                 });
                               },

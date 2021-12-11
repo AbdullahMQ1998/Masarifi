@@ -47,7 +47,7 @@ class ChooseExpenseOrMonthlyScreen extends StatelessWidget {
               ),
               child: Center(child: Text("${S.of(context).addExpense}",
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
                 color: Colors.white
               ),)),
@@ -74,7 +74,7 @@ class ChooseExpenseOrMonthlyScreen extends StatelessWidget {
               ),
               child: Center(child: Text("${S.of(context).addMonthlyBill}",
                 style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 12,
                     fontWeight: FontWeight.bold,
                     color: Colors.white
                 ),)),
