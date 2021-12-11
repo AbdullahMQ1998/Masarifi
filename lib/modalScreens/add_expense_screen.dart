@@ -222,11 +222,19 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
       formattedTime = DateFormat().add_jm().format(selectedDate);
       if (double.tryParse(expenseCost) == null &&
-          expenseCost.isNotEmpty && double.parse(expenseCost) <= 0) {
+          expenseCost.isNotEmpty) {
         showIOSGeneralAlert(
             context, '${S.of(context).rightNumber}');
       }
-      if (checkNullorSpace()) {
+
+      if(double.parse(expenseCost) <= 0){
+        Platform.isIOS?
+        showIOSGeneralAlert(context, '${S.of(context).rightNumber}')
+            :
+        showGeneralErrorAlertDialog(context, "${S.of(context).error}", "${S.of(context).rightNumber}");
+      }
+
+      else if (checkNullorSpace()) {
         currentTotalBudget =
             double.parse(widget.userInfo[0].get('userBudget'));
         currentTotalBudget -= double.parse(expenseCost);

@@ -258,7 +258,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
       if (expenseCost == null) {
         expenseCost = widget.userExpenseList.get('expenseCost');
       }
-      if(double.tryParse(expenseCost) != null)
+      if(double.tryParse(expenseCost) != null && double.parse(expenseCost) > 0)
         widget.userExpenseList.reference
             .update({'expenseCost': expenseCost});
 

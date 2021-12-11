@@ -219,10 +219,18 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
       formattedTime = DateFormat().add_jm().format(selectedDate);
 
 
-      if(double.tryParse(monthlyBillCost) == null && monthlyBillCost.isNotEmpty && double.parse(monthlyBillCost) <= 0){
+      if(double.tryParse(monthlyBillCost) == null && monthlyBillCost.isNotEmpty){
         showIOSGeneralAlert(context, '${S.of(context).rightNumber}');
       }
-      if (checkNullorSpace()) {
+
+      if(double.parse(monthlyBillCost) <= 0){
+      Platform.isIOS?
+      showIOSGeneralAlert(context, '${S.of(context).rightNumber}')
+          :
+      showGeneralErrorAlertDialog(context, "${S.of(context).error}", "${S.of(context).rightNumber}");
+      }
+      
+      else if (checkNullorSpace()) {
         //Update MonthlyIncome.
         currentTotalBudget = double.parse(widget.userInfo[0].get('userBudget'));
         currentTotalBudget -= double.parse(monthlyBillCost);

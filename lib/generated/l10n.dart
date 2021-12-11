@@ -45,10 +45,10 @@ class S {
     );
   }
 
-  /// `Total balance to spend`
+  /// `Total balance`
   String get balanceToSpend {
     return Intl.message(
-      'Total balance to spend',
+      'Total balance',
       name: 'balanceToSpend',
       desc: '',
       args: [],

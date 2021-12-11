@@ -265,7 +265,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
 
       widget.userMonthlyBillList.reference
           .update({'billName': billName});
-      if(double.tryParse(billCost) != null)
+      if(double.tryParse(billCost) != null && double.parse(billCost) > 0)
         widget.userMonthlyBillList.reference
             .update({'billCost': billCost});
       widget.userInfo.reference

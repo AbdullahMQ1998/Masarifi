@@ -28,7 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "alreadyHaveAccount" : MessageLookupByLibrary.simpleMessage("Already have an account?"),
     "areyousureDeleteAccount" : MessageLookupByLibrary.simpleMessage("All of your expenses,monthly bills and monthly reports will be deleted, are you sure you want to delete your account?"),
     "avgExpense" : MessageLookupByLibrary.simpleMessage("Avg Expense"),
-    "balanceToSpend" : MessageLookupByLibrary.simpleMessage("Total balance to spend"),
+    "balanceToSpend" : MessageLookupByLibrary.simpleMessage("Total balance"),
     "basedOn" : MessageLookupByLibrary.simpleMessage("Based on your monthly income"),
     "bestDay" : MessageLookupByLibrary.simpleMessage("Most Expensive Day"),
     "bestMonth" : MessageLookupByLibrary.simpleMessage("Most Expensive Month"),
