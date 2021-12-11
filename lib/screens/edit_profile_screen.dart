@@ -223,7 +223,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                    widget.userInfo.reference.update({'gender': currentLang == "ar"? genderTransaltorENG[gender] : gender});
                    widget.userInfo.reference.update({'occupation': currentLang == "ar"? occupationTranslator[occupation] : occupation});
 
-                   if(double.tryParse(monthlyIncome) != null)
+                   if(double.tryParse(monthlyIncome) != null && double.parse(monthlyIncome) > 0)
                    Navigator.pop(context);
 
                  },

@@ -281,7 +281,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
         }
       }
 
-      if(double.tryParse(expenseCost) != null)
+      if(double.tryParse(expenseCost) != null && double.parse(expenseCost) > 0)
         Navigator.pop(context);
       else{
         showIOSGeneralAlert(context, "${S.of(context).rightNumber}");

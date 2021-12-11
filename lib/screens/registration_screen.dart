@@ -176,6 +176,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ? showIOSGeneralAlert(context, err.message)
                         : showGeneralErrorAlertDialog(context, 'Error',
                         err.message);
+                    setState(() {
+                      showSpinner = false;
+                    });
                   }
                   );
 

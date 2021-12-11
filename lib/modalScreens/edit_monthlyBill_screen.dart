@@ -284,7 +284,7 @@ class _EditMonthlyBillScreenState extends State<EditMonthlyBillScreen> {
               .update({'billIcon': dropdownValue});
       }
 
-      if(double.tryParse(billCost) != null)
+      if(double.tryParse(billCost) != null && double.parse(billCost) > 0)
         Navigator.pop(context);
       else
         showIOSGeneralAlert(context, "${S.of(context).rightNumber}");

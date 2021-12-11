@@ -222,7 +222,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
       formattedTime = DateFormat().add_jm().format(selectedDate);
       if (double.tryParse(expenseCost) == null &&
-          expenseCost.isNotEmpty) {
+          expenseCost.isNotEmpty && double.parse(expenseCost) <= 0) {
         showIOSGeneralAlert(
             context, '${S.of(context).rightNumber}');
       }

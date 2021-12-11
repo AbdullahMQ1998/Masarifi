@@ -219,7 +219,7 @@ class _AddMonthlyBillScreenState extends State<AddMonthlyBillScreen> {
       formattedTime = DateFormat().add_jm().format(selectedDate);
 
 
-      if(double.tryParse(monthlyBillCost) == null && monthlyBillCost.isNotEmpty){
+      if(double.tryParse(monthlyBillCost) == null && monthlyBillCost.isNotEmpty && double.parse(monthlyBillCost) <= 0){
         showIOSGeneralAlert(context, '${S.of(context).rightNumber}');
       }
       if (checkNullorSpace()) {

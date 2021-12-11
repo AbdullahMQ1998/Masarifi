@@ -30,7 +30,7 @@ void textFieldDialog(BuildContext context,User user,QueryDocumentSnapshot userIn
             style: TextStyle(
                 color: Colors.red
             ),),
-          onPressed: () {
+          onPressed: () async {
             if(confirm == "DELETE"){
               for(int i = 0 ; i < userExpenseList.length;i++){
                 userExpenseList[i].reference.delete();
@@ -42,7 +42,7 @@ void textFieldDialog(BuildContext context,User user,QueryDocumentSnapshot userIn
                 monthlyReportList[i].reference.delete();
               }
               userInfo.reference.delete();
-              user.delete();
+              await FirebaseAuth.instance.currentUser.delete();
               Navigator.pushNamed(context, WelcomeScreen.id);
             }
             else {
@@ -80,7 +80,7 @@ _showDialog(BuildContext context,User user,QueryDocumentSnapshot userInfo,List<Q
     actions: [
       CupertinoDialogAction(
         child: Text('${S.of(context).confirm}'),
-        onPressed: () {
+        onPressed: () async {
           if(confirm == "DELETE"){
             for(int i = 0 ; i < userExpenseList.length;i++){
               userExpenseList[i].reference.delete();
@@ -92,7 +92,8 @@ _showDialog(BuildContext context,User user,QueryDocumentSnapshot userInfo,List<Q
               monthlyReportList[i].reference.delete();
             }
             userInfo.reference.delete();
-            user.delete();
+            await FirebaseAuth.instance.currentUser.delete();
+
             Navigator.pushNamed(context, WelcomeScreen.id);
           }
           else {
