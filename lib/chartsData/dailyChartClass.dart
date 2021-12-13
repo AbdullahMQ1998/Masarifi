@@ -9,7 +9,20 @@ class avgDayData {
   avgDayData(this.dayName,this.dayAmount);
 }
 
+int saturdayCounter;
+int sundayCounter ;
+int mondayCounter ;
+int tuesdayCounter ;
+int wednesdayCounter ;
+int thursdayCounter ;
+int fridayCounter  ;
+
 List<avgDayData> getDayChartData(String currentLang) {
+
+
+
+
+
 
   if(currentLang == 'ar'){
     final List<avgDayData> arabicChartData = [
@@ -42,13 +55,7 @@ List<avgDayData> getDayChartData(String currentLang) {
 
 
 
-int saturdayCounter  = 0;
-int sundayCounter  = 0;
-int mondayCounter  = 0;
-int tuesdayCounter  = 0;
-int wednesdayCounter  = 0;
-int thursdayCounter  = 0;
-int fridayCounter  = 0;
+
 
 Timestamp expenseDate;
 
@@ -62,6 +69,14 @@ int percentDaily = 1;
 
 void getOtherUsersDay(List<QueryDocumentSnapshot> otherUsersExpense) {
 
+
+   saturdayCounter = 0;
+   sundayCounter=0 ;
+   mondayCounter =0;
+  tuesdayCounter =0;
+  wednesdayCounter =0;
+  thursdayCounter =0;
+  fridayCounter  =0;
 
   DateTime currentDay = DateTime.now();
 
@@ -120,12 +135,15 @@ void getOtherUsersDay(List<QueryDocumentSnapshot> otherUsersExpense) {
     saturdayCounter: 'السبت',
   };
 
+
+
 }
 
 
 List<int> getMaxDailyExpenseCount(){
   List<int> sort = [];
   int max  = 0;
+
 
 
   max = sundayCounter;

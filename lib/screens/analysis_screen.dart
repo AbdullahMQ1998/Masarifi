@@ -9,7 +9,6 @@ import 'package:flash_chat/chartsData/categoryClass.dart';
 import 'package:flash_chat/chartsData/dailyChartClass.dart';
 import 'package:flash_chat/chartsData/monthlyChartClass.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:flash_chat/them_data.dart';
 import 'package:flash_chat/Provider/language_change_provider.dart';
 import 'package:flash_chat/generated/l10n.dart';
 
@@ -83,56 +82,59 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
         child: ListView(children: [
           Column(
             children: [
-              Container(
-                height: 600,
-                child:  SfCartesianChart(
-                  legend: Legend(
-                      isVisible: true,
-                      textStyle: TextStyle(
-                          color: themChange.getDarkTheme()
-                              ? Colors.white
-                              : Colors.black,
-                          fontWeight: FontWeight.bold)),
-                  title: ChartTitle(
-                      text: '${S.of(context).masarifiCategoryCount}',
-                      textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10,
-                          color: themChange.getDarkTheme()
-                              ? Colors.white
-                              : Colors.black)),
-                  primaryXAxis: CategoryAxis(
-                      labelStyle: TextStyle(
-                          color: themChange.getDarkTheme()
-                              ? Colors.white
-                              : Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13)),
-                  primaryYAxis: NumericAxis(
-                      minimum: 0,
-                      maximum: getMaxOtherUsersList()[0].toDouble(),
-                      interval: getMaxOtherUsersList()[0] / 4 ,
-                      labelStyle: TextStyle(
-                          color: themChange.getDarkTheme()
-                              ? Colors.white
-                              : Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13)),
-                  series: <CartesianSeries>[
-                    BarSeries<CategoryData, String>(
-                      dataSource: _charData,
-                      xValueMapper: (CategoryData data, _) =>
-                      data.continent,
-                      yValueMapper: (CategoryData data, _) =>
-                      data.gdp,
-                      name: '${S.of(context).categoryChart}',
-                      dataLabelSettings: DataLabelSettings(
-                        showCumulativeValues: true,
-                        useSeriesColor: true,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  height: 600,
+                  child:  SfCartesianChart(
+                    legend: Legend(
+                        isVisible: true,
+                        textStyle: TextStyle(
+                            color: themChange.getDarkTheme()
+                                ? Colors.white
+                                : Colors.black,
+                            fontWeight: FontWeight.bold)),
+                    title: ChartTitle(
+                        text: '${S.of(context).masarifiCategoryCount}',
+                        textStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                            color: themChange.getDarkTheme()
+                                ? Colors.white
+                                : Colors.black)),
+                    primaryXAxis: CategoryAxis(
+                        labelStyle: TextStyle(
+                            color: themChange.getDarkTheme()
+                                ? Colors.white
+                                : Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13)),
+                    primaryYAxis: NumericAxis(
+                        minimum: 0,
+                        maximum: getMaxOtherUsersList()[0].toDouble(),
+                        interval: getMaxOtherUsersList()[0] / 4 ,
+                        labelStyle: TextStyle(
+                            color: themChange.getDarkTheme()
+                                ? Colors.white
+                                : Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13)),
+                    series: <CartesianSeries>[
+                      BarSeries<CategoryData, String>(
+                        dataSource: _charData,
+                        xValueMapper: (CategoryData data, _) =>
+                        data.continent,
+                        yValueMapper: (CategoryData data, _) =>
+                        data.gdp,
+                        name: '${S.of(context).categoryChart}',
+                        dataLabelSettings: DataLabelSettings(
+                          showCumulativeValues: true,
+                          useSeriesColor: true,
 
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Container(
@@ -277,67 +279,71 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                 indent: 30,
                 endIndent: 30,
               ),
-              Container(
-                height: 400,
-                child: SfCartesianChart(
-                  legend: Legend(
-                      isVisible: true,
-                      textStyle: TextStyle(
-                          color: themChange.getDarkTheme()
-                              ? Colors.white
-                              : Colors.black,
-                          fontWeight: FontWeight.bold)),
-                  title: ChartTitle(
-                      text: '${S.of(context).masaryfyAverageUsersCatefories}',
-                      textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10,
-                          color: themChange.getDarkTheme()
-                              ? Colors.white
-                              : Colors.black)),
-                  primaryXAxis: CategoryAxis(
-                      labelStyle: TextStyle(
-                          color: themChange.getDarkTheme()
-                              ? Colors.white
-                              : Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13)),
-                  primaryYAxis: NumericAxis(
-                      minimum: 0,
-                      maximum: maxUser > maxOther ? maxUser : maxOther,
-                      interval: maxUser == 0 ? maxOther / 2 : maxUser / 2,
-                      labelStyle: TextStyle(
-                          color: themChange.getDarkTheme()
-                              ? Colors.white
-                              : Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13)),
-                  series: <CartesianSeries>[
-                    BarSeries<avgCategoryData, String>(
-                      dataSource: _avgcharData,
-                      xValueMapper: (avgCategoryData data, _) =>
-                          data.expenseName,
-                      yValueMapper: (avgCategoryData data, _) =>
-                          data.otherUserstotalAmount,
-                      name: '${S.of(context).avgExpense}',
-                      dataLabelSettings: DataLabelSettings(
-                        showCumulativeValues: true,
-                        useSeriesColor: true,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  height: 400,
+                  child: SfCartesianChart(
+                    legend: Legend(
+                      position: LegendPosition.top,
+                        isVisible: true,
+                        textStyle: TextStyle(
+                            color: themChange.getDarkTheme()
+                                ? Colors.white
+                                : Colors.black,
+                            fontWeight: FontWeight.bold)),
+                    title: ChartTitle(
+                        text: '${S.of(context).masaryfyAverageUsersCatefories}',
+                        textStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                            color: themChange.getDarkTheme()
+                                ? Colors.white
+                                : Colors.black)),
+                    primaryXAxis: CategoryAxis(
+                        labelStyle: TextStyle(
+                            color: themChange.getDarkTheme()
+                                ? Colors.white
+                                : Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13)),
+                    primaryYAxis: NumericAxis(
+                        minimum: 0,
+                        maximum: maxUser > maxOther ? maxUser : maxOther,
+                        interval: maxUser == 0 ? maxOther / 2 : maxUser / 2,
+                        labelStyle: TextStyle(
+                            color: themChange.getDarkTheme()
+                                ? Colors.white
+                                : Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13)),
+                    series: <CartesianSeries>[
+                      BarSeries<avgCategoryData, String>(
+                        dataSource: _avgcharData,
+                        xValueMapper: (avgCategoryData data, _) =>
+                            data.expenseName,
+                        yValueMapper: (avgCategoryData data, _) =>
+                            data.otherUserstotalAmount,
+                        name: '${S.of(context).avgExpense}',
+                        dataLabelSettings: DataLabelSettings(
+                          showCumulativeValues: true,
+                          useSeriesColor: true,
+                        ),
                       ),
-                    ),
-                    BarSeries<avgCategoryData, String>(
-                      dataSource: _avgcharData,
-                      xValueMapper: (avgCategoryData data, _) =>
-                          data.expenseName,
-                      yValueMapper: (avgCategoryData data, _) =>
-                          data.myTotalAmount,
-                      name: '${S.of(context).yourExpense}',
-                      dataLabelSettings: DataLabelSettings(
-                        showCumulativeValues: true,
-                        useSeriesColor: true,
+                      BarSeries<avgCategoryData, String>(
+                        dataSource: _avgcharData,
+                        xValueMapper: (avgCategoryData data, _) =>
+                            data.expenseName,
+                        yValueMapper: (avgCategoryData data, _) =>
+                            data.myTotalAmount,
+                        name: '${S.of(context).yourExpense}',
+                        dataLabelSettings: DataLabelSettings(
+                          showCumulativeValues: true,
+                          useSeriesColor: true,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Container(
@@ -453,54 +459,57 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                 indent: 20,
                 endIndent: 20,
               ),
-              Container(
-                height: 300,
-                child: SfCartesianChart(
-                  legend: Legend(
-                    position: LegendPosition.top,
-                      isVisible: true,
-                      textStyle: TextStyle(
-                          color: themChange.getDarkTheme()
-                              ? Colors.white
-                              : Colors.black,
-                          fontWeight: FontWeight.bold)),
-                  title: ChartTitle(
-                      text: '${S.of(context).masarifiUserDaily}',
-                      textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10,
-                          color: themChange.getDarkTheme()
-                              ? Colors.white
-                              : Colors.black)),
-                  primaryXAxis: CategoryAxis(
-                      labelStyle: TextStyle(
-                          color: themChange.getDarkTheme()
-                              ? Colors.white
-                              : Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13)),
-                  primaryYAxis: NumericAxis(
-                      minimum: 0,
-                      maximum: getMaxDailyExpenseCount()[0].toDouble(),
-                      interval: getMaxDailyExpenseCount()[0] / 4.0,
-                      labelStyle: TextStyle(
-                          color: themChange.getDarkTheme()
-                              ? Colors.white
-                              : Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13)),
-                  series: <CartesianSeries>[
-                    BarSeries<avgDayData, String>(
-                      dataSource: _dayData,
-                      xValueMapper: (avgDayData data, _) => data.dayName,
-                      yValueMapper: (avgDayData data, _) => data.dayAmount,
-                      name: '${S.of(context).dailyExpense}',
-                      dataLabelSettings: DataLabelSettings(
-                        showCumulativeValues: true,
-                        useSeriesColor: true,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  height: 300,
+                  child: SfCartesianChart(
+                    legend: Legend(
+                      position: LegendPosition.top,
+                        isVisible: true,
+                        textStyle: TextStyle(
+                            color: themChange.getDarkTheme()
+                                ? Colors.white
+                                : Colors.black,
+                            fontWeight: FontWeight.bold)),
+                    title: ChartTitle(
+                        text: '${S.of(context).masarifiUserDaily}',
+                        textStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                            color: themChange.getDarkTheme()
+                                ? Colors.white
+                                : Colors.black)),
+                    primaryXAxis: CategoryAxis(
+                        labelStyle: TextStyle(
+                            color: themChange.getDarkTheme()
+                                ? Colors.white
+                                : Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13)),
+                    primaryYAxis: NumericAxis(
+                        minimum: 0,
+                        maximum: getMaxDailyExpenseCount()[0].toDouble(),
+                        interval: getMaxDailyExpenseCount()[0] / 4.0,
+                        labelStyle: TextStyle(
+                            color: themChange.getDarkTheme()
+                                ? Colors.white
+                                : Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13)),
+                    series: <CartesianSeries>[
+                      BarSeries<avgDayData, String>(
+                        dataSource: _dayData,
+                        xValueMapper: (avgDayData data, _) => data.dayName,
+                        yValueMapper: (avgDayData data, _) => data.dayAmount,
+                        name: '${S.of(context).dailyExpense}',
+                        dataLabelSettings: DataLabelSettings(
+                          showCumulativeValues: true,
+                          useSeriesColor: true,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Divider(

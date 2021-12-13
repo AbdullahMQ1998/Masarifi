@@ -164,6 +164,7 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                     height: 40,
                   ),
                   TextField(
+                    maxLength: 10,
                     textAlign: TextAlign.center,
                     onChanged: (value) {
                        userName = value;
@@ -174,7 +175,8 @@ class _RegisterUserInfoState extends State<RegisterUserInfo> {
                     borderRadius: BorderRadius.all(Radius.circular(32.0)),
                   ),
                         fillColor: themChange.getDarkTheme()? Colors.grey.shade800 : Colors.grey.shade300,
-                        filled: true
+                        filled: true,
+                      counterText: ''
                     ),
                   ),
 

@@ -307,7 +307,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                             editUsername = false;
                                           });
                                         },
-                                        maxLength: 25,
+                                        maxLength: 10,
                                         autofocus: true,
                                         decoration: InputDecoration(
                                           hintText: userName,

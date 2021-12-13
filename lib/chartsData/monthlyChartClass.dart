@@ -13,6 +13,20 @@ class avgMonthData {
 }
 
 
+int januaryCounter ;
+int februaryCounter  ;
+int marchCounter ;
+int aprilCounter ;
+int mayCounter ;
+int juneCounter ;
+int julyCounter ;
+int augustCounter ;
+int septemberCounter;
+int octoberCounter ;
+int novemberCounter;
+int decemberCounter;
+
+
 List<avgMonthData> getMonthChartData(String currentLang) {
 
   if(currentLang == 'ar'){
@@ -53,18 +67,7 @@ List<avgMonthData> getMonthChartData(String currentLang) {
 }
 
 
-int januaryCounter  = 0;
-int februaryCounter  = 0;
-int marchCounter  = 0;
-int aprilCounter  = 0;
-int mayCounter  = 0;
-int juneCounter  = 0;
-int julyCounter  = 0;
-int augustCounter  = 0;
-int septemberCounter  = 0;
-int octoberCounter  = 0;
-int novemberCounter  = 0;
-int decemberCounter  = 0;
+
 
 
 Map<int , String> monthlyExpenseCount;
@@ -78,6 +81,19 @@ Timestamp expenseDate;
 
 
 void getOtherUsersMonth(List<QueryDocumentSnapshot> otherUsersExpense) {
+
+  januaryCounter  = 0;
+   februaryCounter  = 0;
+   marchCounter  = 0;
+   aprilCounter  = 0;
+   mayCounter  = 0;
+   juneCounter  = 0;
+   julyCounter  = 0;
+   augustCounter  = 0;
+   septemberCounter  = 0;
+   octoberCounter  = 0;
+   novemberCounter  = 0;
+   decemberCounter  = 0;
 
 
   DateTime currentMonth = DateTime.now();
