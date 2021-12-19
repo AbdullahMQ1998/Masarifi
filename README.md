@@ -1,6 +1,10 @@
 # Masaryfy_SWE
 
+![120](https://user-images.githubusercontent.com/63067823/146659947-64cd0e6b-7787-4e4a-b706-a2d3ec9cbe72.png)
+
 Masarifi built with flutter using Dart programming language
+
+![Preview](https://user-images.githubusercontent.com/63067823/146659969-d987f7e7-1080-43d7-a46b-fae4e07c8f31.jpg)
 
 
 It’s time to fix your finances! Have you ever wondered where has my money gone, or how much did I pay for that bill again? Are budgets just not your thing?
